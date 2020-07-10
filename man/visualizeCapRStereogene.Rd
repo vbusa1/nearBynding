@@ -16,7 +16,6 @@ visualizeCapRStereogene(dir_stereogene_output = ".",
                                   legend = TRUE,
                                   heatmap = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{dir_stereogene_output}{Directory of stereogene output. Default working
   directory}

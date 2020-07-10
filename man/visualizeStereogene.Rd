@@ -1,0 +1,43 @@
+\name{visualizeStereogene}
+\alias{visualizeStereogene}
+\title{
+Visualize binding for CapR contexts}
+\description{
+Creates a visual output of a single RNA structure context relative to protein
+binding.}
+\usage{
+visualizeCapRStereogene(dir_stereogene_output = ".",
+                                  context_file,
+                                  protein_file,
+                                  protein_file_input=NULL,
+                                  x_lim = c(-100, 100),
+                                  y_lim = NULL,
+                                  out_file = "out_file",
+                                  legend = TRUE,
+                                  heatmap = FALSE)
+}
+\arguments{
+  \item{dir_stereogene_output}{Directory of stereogene output. Default working
+  directory}
+  \item{context_file}{A single context file name for visualization with the
+  protein_file(s). File names must exclude extensions such as ".bedGraph".
+  Required.}
+  \item{protein_file}{A vector of at least one protein file name to be averaged
+  for visualization. File names must exclude extensions such as ".bedGraph".
+  All files in the list should be experimental or biological replicates.
+  Required.}
+  \item{protein_file_input}{A protein file name of background input to be
+  subtracted from protein_file signal. File name must exclude extension. Only
+  one input file is permitted. Optional.}
+  \item{x_lim}{A vector of two values denoting the lower and upper x axis
+  limits. Cannot exceed wSize/2 from write_config. Default (-100, 100)}
+  \item{y_lim}{A vector of two values denoting the lower and upper y axis
+  limits. Optional}
+  \item{out_file}{Name of output file, excluding extension. ".pdf" or ".jpeg"
+  will be added as relevant to the output file name. Default "out_file"}
+  \item{legend}{Whether a legend should be included with the output graph.
+  Default TRUE}
+  \item{heatmap}{Whether the output graph should be in the form of a heatmap
+  (TRUE) or of a line graph (FALSE). Default FALSE}
+}
+\author{Veronica Busa}
