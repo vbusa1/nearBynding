@@ -51,7 +51,7 @@ visualizeStereogene<-function(dir_stereogene_output = ".",
     }
     if(!is.null(protein_file_input)){
         dist_input <- read.table(paste0(dir_stereogene_output, "/",
-                                              CapR_prefix, "_liftOver~",
+                                        context_file, "_liftOver~",
                                               protein_file_input, '.dist'), header=TRUE)
     }
     dist<-as.data.frame(matrix(NA, ncol=(2*length(protein_file)) + 1,

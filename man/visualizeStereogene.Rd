@@ -1,20 +1,20 @@
 \name{visualizeStereogene}
 \alias{visualizeStereogene}
 \title{
-Visualize binding for CapR contexts}
+Visualize binding for a single RNA structure context}
 \description{
 Creates a visual output of a single RNA structure context relative to protein
 binding.}
 \usage{
-visualizeCapRStereogene(dir_stereogene_output = ".",
-                                  context_file,
-                                  protein_file,
-                                  protein_file_input=NULL,
-                                  x_lim = c(-100, 100),
-                                  y_lim = NULL,
-                                  out_file = "out_file",
-                                  legend = TRUE,
-                                  heatmap = FALSE)
+visualizeStereogene(dir_stereogene_output = ".",
+                                context_file,
+                                protein_file,
+                                protein_file_input=NULL,
+                                x_lim = c(-100, 100),
+                                y_lim = NULL,
+                                out_file = "out_file",
+                                legend = TRUE,
+                                heatmap = FALSE)
 }
 \arguments{
   \item{dir_stereogene_output}{Directory of stereogene output. Default working
