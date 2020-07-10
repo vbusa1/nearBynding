@@ -16,6 +16,141 @@ knitr::opts_chunk$set(
 )
 ```
 
+nearBynding is a package designed to discern annotated RNA structures proximal
+to protein binding. nearBynding allows users to annotate RNA structure contexts
+via CapR or input their own annotations in bedGraph format for protein binding
+proximity assessment. nearBynding accomodates Protein binding information from
+CLIP-seq experiments as either aligned CLIP-seq reads or peak-called intervals.
+This vignette will walk you through:
+
+ - The external software necessary to support this pipeline
+ - Creating a concatenated transcriptome
+ - Extracting and folding RNA from the transcriptome via CapR
+ - Mapping protein-binding and RNA structure information onto a transcriptome
+ - Running StereoGene to identify RNA structure proximal to protein binding
+ - Visualizing binding results
+
+## External Software Dependencies
+
+#### bedtools
+
+bedtools is available for installation 
+[here.](https://bedtools.readthedocs.io/en/latest/content/installation.html)
+
+Installation instructions will vary by operating system.
+
+#### CapR
+
+Download the zip file from the [github repository](https://github.com/fukunagatsu/CapR), 
+unzip the file, and move it to a directory where you want to permanently store 
+the function.
+
+In the command line, access the folder where the unzipped file is stored.
+
+```{r, eval=FALSE}
+cd CapR-master
+make
+./CapR
+```
+
+If installation is successful, the final line will output
+
+```{r, eval = F}
+Error: The number of argument is invalid.
+```
+
+#### StereoGene
+
+Download the zip file from the [github repository](https://github.com/favorov/stereogene), 
+unzip the file, and move it to a directory where you want to permanently store 
+the function.
+
+In the command line, access the folder where the unzipped file is stored.
+
+```{r, eval=FALSE}
+cd stereogene-master
+cd src
+make
+./stereogene -h
+```
+
+If installation is successful, the final line will output a menu of argument options.
+
+## Concatenate the Transcriptome
+
+Although nearBynding is designed to support whole-genome analyses, we will 
+exclusively be evaluating protein-coding genes of chromosomes 4 and 5 through
+this vignette.
+
+First, a list of transcripts must be identified for analysis. A recommended 
+criterium for selection is that the transcripts be expressed in the cell type 
+used for CLIP-seq experiments. For this vignette, 50 random transcripts have 
+been selected, and the 3'UTR structure of each transcript will be used for 
+analysis, though any region of a transcript such as 5'UTR or CDS could be 
+assessed instead.
+
+This step creates a chain file that will be used to map the selected regions of 
+transcripts end-to-end, excluding the intergenic regions and undesired transcripts 
+that comprise the majority of the genome.
+
+```{r, eval = F}
+# load transcript list
+load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+# get location of GTF file
+gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf", package="nearBynding")
+
+GenomeMappingToChainFile(genome_gtf = gtf,
+                         out_chain_name = "test.chain",
+                         RNA_fragment = "three_prime_utr",
+                         transcript_list = transcript_list,
+                         alignment = "hg38")
+```
+
+## Fold RNA via CapR
+
+In order to fold the 3'UTRs, the sequences must first be extracted. This is 
+achieved with the following code:
+
+```{r, eval = F}
+ExtractTranscriptomeSequence(transcript_list = transcript_list,
+                             ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
+                             genome_gtf = gtf,
+                             RNA_fragment = "three_prime_utr",
+                             exome_prefix = "chr4and5_3UTR")
+```
+
+The reference genome can be found through 
+[Ensembl](ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/), but for
+users who do not want to download that 3.2GB file for the sake of this vignette, 
+the FASTA output of the above code is available via:
+
+```{r, eval = F}
+chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa", package="nearBynding")
+```
+
+These sequences can then be submitted to CapR for folding.
+
+```{r, eval = F}
+runCapR(dir_CapR = "<local_directory>/CapR",
+        in_file = chr4and5_3UTR.fa)
+```
+
+Warning: This step can take hours or even days depending on how many transcripts 
+are submitted, how long the RNA fragments are, and the maximum distance between 
+base-paired nucleotides submitted to the CapR algorithm.
+
+## Map to Transcriptome
+
+
+
+## Run StereoGene
+
+
+
+## Visualize Results
+
+
+
 ## Figures
 
 The figure sizes have been customised so that you can easily put two images side-by-side. 
