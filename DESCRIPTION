@@ -1,0 +1,15 @@
+Package: nearBynding
+Type: Package
+Title: Discern RNA structure proximal to protein binding
+Version: 0.1.0
+Author: Veronica Busa
+Maintainer: Veronica Busa <vbusa1@jhmi.edu>
+Description: Provides a pipeline to input CLIP protein-binding data in either aligned BAM or peak-called bedGraph formats as well as optional RNA structure data to discern RNA structure proximal to protein binding within regions of the transcriptome defined by the user. RNA structure binding profiles can be visually and matematically compared across multiple formats.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.6.0) 
+Imports: R.utils, matrixStats, plyranges, transport, Rsamtools, S4Vectors, grDevices, graphics, rtracklayer, dplyr, GenomeInfoDb, methods, GenomicRanges, utils, stats, magrittr, TxDb.Hsapiens.UCSC.hg19.knownGene, TxDb.Hsapiens.UCSC.hg38.knownGene, ggplot2, gplots, BiocGenerics
+Suggests: knitr
+SystemRequirements: bedtools (>= 2.28.0), samtools (>= 1.10), Stereogene (>= v2.20), CapR (>= 1.1.1)
+VignetteBuilder: knitr
