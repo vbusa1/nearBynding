@@ -35,6 +35,9 @@ GenomeMappingToChainFile<-function(genome_gtf,
     if(alignment=="hg38"){
         seqinft<-as.data.frame(seqinfo(TxDb.Hsapiens.UCSC.hg38.knownGene))
     }
+    if(!(alignment %in% c("hg19", "hg38"))){
+        stop("Acceptable alignments are 'hg19' and 'hg38'")
+    }
 
     #create seqinfo object for all chromosomes to get lengths
     seqinf<-as(seqinft[nchar(rownames(seqinft)) < 6,],"Seqinfo")

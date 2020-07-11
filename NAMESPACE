@@ -1,4 +1,5 @@
 export('CleanBAMtoBG')
+export('CleanBEDtoBG')
 export('GenomeMappingToChainFile')
 export('write_config')
 export('runStereogene')

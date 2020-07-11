@@ -141,6 +141,27 @@ base-paired nucleotides submitted to the CapR algorithm.
 
 ## Map to Transcriptome
 
+The nearBynding pipeline can accomodate either a BAM file of aligned CLIP-seq 
+reads or a BED file of peak intervals. BAM and BED files must be sorted and 
+converted to a bedGraph file.
+
+
+### BAM file input
+
+```{r, eval = F}
+sorted_bam<-sortBam(bam, "chr4and5_sorted")
+
+CleanBAMtoBG(in_bam = sorted_bam)
+```
+
+### BED file input
+
+Note: the sorting function is built-in to the cleaning function.
+
+```{r, eval = F}
+
+
+```
 
 
 ## Run StereoGene
