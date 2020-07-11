@@ -1,25 +1,26 @@
-\name{visualizeCapRStereogene}
-\alias{visualizeCapRStereogene}
+\name{visualizeStereogene}
+\alias{visualizeStereogene}
 \title{
-Visualize binding for CapR contexts}
+Visualize binding for a single RNA structure context}
 \description{
-Creates a visual output of all CapR RNA structure contexts relative to protein
+Creates a visual output of a single RNA structure context relative to protein
 binding.}
 \usage{
-visualizeCapRStereogene(dir_stereogene_output = ".",
-                                  CapR_prefix,
-                                  protein_file,
-                                  protein_file_input=NULL,
-                                  x_lim = c(-100, 100),
-                                  y_lim = NULL,
-                                  out_file = "out_file",
-                                  legend = TRUE,
-                                  heatmap = FALSE)
+visualizeStereogene(dir_stereogene_output = ".",
+                                context_file,
+                                protein_file,
+                                protein_file_input=NULL,
+                                x_lim = c(-100, 100),
+                                y_lim = NULL,
+                                out_file = "out_file",
+                                legend = TRUE,
+                                heatmap = FALSE)
 }
 \arguments{
   \item{dir_stereogene_output}{Directory of stereogene output. Default working
   directory}
-  \item{CapR_prefix}{The prefix common to CapR output files of protein_file.
+  \item{context_file}{A single context file name for visualization with the
+  protein_file(s). File names must exclude extensions such as ".bedGraph".
   Required.}
   \item{protein_file}{A vector of at least one protein file name to be averaged
   for visualization. File names must exclude extensions such as ".bedGraph".

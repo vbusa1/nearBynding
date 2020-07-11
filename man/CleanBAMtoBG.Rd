@@ -3,7 +3,7 @@
 \title{
 Write BAM to bedGraph}
 \description{
-Writes a script to convert a BAM file to a clean bedGraph file.}
+Writes a script to convert a sorted BAM file to a clean bedGraph file.}
 \usage{
 CleanBAMtoBG(in_bam,
                out_bedGraph = NA,

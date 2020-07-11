@@ -15,10 +15,10 @@
 #' @export
 
 runStereogene<-function(track_files,
-                           dir_stereogene = ".",
-                           name_config,
-                           pcorProfile = NULL,
-                           confounder = NULL){
+                        dir_stereogene = ".",
+                        name_config,
+                        pcorProfile = NULL,
+                        confounder = NULL){
     if(length(track_files) < 2){
         stop("Must have at least two track or interval files for correlation.")
     }
