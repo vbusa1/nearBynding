@@ -2,7 +2,7 @@
 title: "nearBynding Vignette"
 author: "Veronica Busa"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{nearBynding Vignette}
   %\VignetteEngine{knitr::rmarkdown}
@@ -259,18 +259,18 @@ For CapR-derived RNA structure, all six contexts can be viewed simultaneously.
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
                         protein_file = "chr4and5_liftOver",
                         heatmap = T,
-                        out_file = "all_contexts",
+                        out_file = "all_contexts_heatmap",
                         x_lim = c(-500, 500))
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
                         protein_file = "chr4and5_liftOver",
                         x_lim = c(-500, 500),
-                        out_file = "all_contexts",
+                        out_file = "all_contexts_line",
                         y_lim = c(-18, 22))
 ```
 
 ```{r, fig.show='hold', echo = F, out.width = '50%'}
-knitr::include_graphics("all_contexts.jpeg")
-knitr::include_graphics("all_contexts.pdf")
+knitr::include_graphics("all_contexts_heatmap.jpeg")
+knitr::include_graphics("all_contexts_line.pdf")
 ```
 
 Alternatively, a single context can be viewed at a time.
@@ -278,18 +278,18 @@ Alternatively, a single context can be viewed at a time.
 ```{r, eval = F}
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     protein_file = "chr4and5_liftOver",
-                    out_file = "stem_only",
+                    out_file = "stem_heatmap",
                     x_lim = c(-500, 500))
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     protein_file = "chr4and5_liftOver",
                     heatmap = T,
-                    out_file = "stem_only",
+                    out_file = "stem_line",
                     x_lim = c(-500, 500))
 ```
 
 ```{r, fig.show='hold', echo = F, out.width = '50%'}
-knitr::include_graphics("stem_only.jpeg")
-knitr::include_graphics("stem_only.pdf")
+knitr::include_graphics("stem_heatmap.jpeg")
+knitr::include_graphics("stem_line.pdf")
 ```
 
 Although this specific, limited example does not provide a particularly visually 
