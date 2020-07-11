@@ -29,6 +29,11 @@ This vignette will walk you through:
  - Mapping protein-binding and RNA structure information onto a transcriptome
  - Running StereoGene to identify RNA structure proximal to protein binding
  - Visualizing binding results
+ 
+Before running any of these examples, it is highly recommended that the user 
+establishes a new empty directory and uses `setwd()` to make certain that all 
+outputs are deposited there. Some of the functions below create multiple output 
+files.
 
 ## External Software Dependencies
 
@@ -145,38 +150,150 @@ The nearBynding pipeline can accomodate either a BAM file of aligned CLIP-seq
 reads or a BED file of peak intervals. BAM and BED files must be sorted and 
 converted to a bedGraph file.
 
-
-### BAM file input
+#### BAM file input
 
 ```{r, eval = F}
+bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 sorted_bam<-sortBam(bam, "chr4and5_sorted")
 
 CleanBAMtoBG(in_bam = sorted_bam)
 ```
 
-### BED file input
+#### BED file input
 
-Note: the sorting function is built-in to the cleaning function.
+Note: the sorting function is built-in to the cleaning function for BED files.
 
 ```{r, eval = F}
+# Convert BAM to BED for sake of example
+# Don't actually need to use CleanBEDtoBG unless starting from a BED file
+out_bed <- "bamto.bed"
+system2("bedtools", paste0("bamtobed -i ", bam, " > ", out_bed))
 
-
+CleanBEDtoBG(in_bed = out_bed,
+             alignment = "hg38")
 ```
 
+#### Map Protein Binding and RNA Structure to the Transcriptome
+
+The bedGraph files can then be mapped onto the concatenated transcriptome using 
+the chain file created by `GenomeMappingToChainFile()`. This way, only the protein 
+binding from transcriptomic regions of interest will be considered in the final 
+protein binding analysis.
+
+```{r, eval = F}
+liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
+                   chain = "test.chain",
+                   output_bg = "chr4and5_liftOver.bedGraph",
+                   out_chr = "chr4and5_3UTR.size")
+```
+
+The RNA structure information from the CapR output also needs to mapped onto the 
+concatenated transcriptome. There are six different binding contexts 
+calculated by CapR -- *stem*, *hairpin*, *multibranch*, *exterior*, *internal*, 
+and *bulge*. `processCapRout()` parses the CapR output, converts it into six
+separate bedGraph files, and then performs `liftOverToExomic()` for all the files.
+
+```{r, eval = F}
+processCapRout(CapR_outfile = "chr4and5_3UTR.out",
+               chain = "test.chain",
+               output_prefix = "chr4and5_3UTR",
+               chrom_size = "chr4and5_3UTR.size",
+               genome_gtf = gtf,
+               RNA_fragment = "three_prime_utr")
+```
+
+It is possible for users to input their own RNA structure information rather 
+than using CapR. If the information is in BED format, `CleanBEDtoBG()` can be 
+applied to RNA structure data to convert it to a bedGraph. That bedGraph should 
+then be input into `liftOverToExomicBG()` to make sure that the RNA structure data 
+is mapped to the same transcriptome as the protein binding data.
 
 ## Run StereoGene
 
+This is the process that directly answers the question, "What does RNA structure 
+look like around where the protein is binding?" StereoGene is used to calculate 
+the cross-correlation between RNA structure and protein binding in order to 
+visualize the RNA structure landscape surrounding protein binding.
 
+If CapR is used to determine RNA structure, `runStereogeneOnCapR()` initiates 
+StereoGene for a given protein against all CapR-generated RNA structure contexts.
+
+```{r, eval = F}
+runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
+                    chrom_size = "chr4and5_3UTR.size",
+                    name_config = "chr4and5_3UTR.cfg",
+                    dir_stereogene = "<local_directory>stereogene/src",
+                    input_prefix = "chr4and5_3UTR")
+```
+
+If external RNA structure data is being tested, `runStereogene()` initiates 
+analysis for a given protein and a single RNA structure context.
+
+Note: The input track file order matters! The correct order is:
+
+  1) RNA structure
+  2) protein binding
+  
+Otherwise, data visualization will be inverted and all downstream analysis will 
+be backwards.
+
+```{r, eval = F}
+runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph", 
+                              "chr4and5_liftOver.bedGraph")
+              dir_stereogene = "<local_directory>stereogene/src",
+              name_config = "chr4and5_3UTR.cfg")
+```
+
+*For the sake of this vignette, use `outfiles()` to pull the StereoGene output *
+*files to your local directory if you are struggling with any of the upstream *
+*steps but still wish to visualize the results.*
 
 ## Visualize Results
 
+The cross-correlation output of StereoGene can be visualized as either a heatmap 
+or a line plot. Examples of both are below.
 
+For CapR-derived RNA structure, all six contexts can be viewed simultaneously.
 
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r, eval = F}
+visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
+                        protein_file = "chr4and5_liftOver",
+                        heatmap = T,
+                        out_file = "all_contexts",
+                        x_lim = c(-500, 500))
+visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
+                        protein_file = "chr4and5_liftOver",
+                        x_lim = c(-500, 500),
+                        out_file = "all_contexts",
+                        y_lim = c(-18, 22))
 ```
+
+```{r, fig.show='hold', echo = F, out.width = '50%'}
+knitr::include_graphics("all_contexts.jpeg")
+knitr::include_graphics("all_contexts.pdf")
+```
+
+Alternatively, a single context can be viewed at a time.
+
+```{r, eval = F}
+visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
+                    protein_file = "chr4and5_liftOver",
+                    out_file = "stem_only",
+                    x_lim = c(-500, 500))
+visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
+                    protein_file = "chr4and5_liftOver",
+                    heatmap = T,
+                    out_file = "stem_only",
+                    x_lim = c(-500, 500))
+```
+
+```{r, fig.show='hold', echo = F, out.width = '50%'}
+knitr::include_graphics("stem_only.jpeg")
+knitr::include_graphics("stem_only.pdf")
+```
+
+Although this specific, limited example does not provide a particularly visually 
+stimulating image, larger data sets (which provide many more StereoGene windows) 
+result in narrower peaks and less noise.
+
+*Questions? Comments? Please email Veronica Busa at vbusa1@jhmi.edu*
