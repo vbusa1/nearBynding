@@ -29,6 +29,7 @@ This vignette will walk you through:
  - Mapping protein-binding and RNA structure information onto a transcriptome
  - Running StereoGene to identify RNA structure proximal to protein binding
  - Visualizing binding results
+ - Determining the distance between binding contexts
  
 Before running any of these examples, it is highly recommended that the user 
 establishes a new empty directory and uses `setwd()` to make certain that all 
@@ -295,5 +296,33 @@ knitr::include_graphics("stem_line.pdf")
 Although this specific, limited example does not provide a particularly visually 
 stimulating image, larger data sets (which provide many more StereoGene windows) 
 result in narrower peaks and less noise.
+
+## Calculate Distance
+
+In order to determine the similarity of two binding contexts, we can calculate 
+the Wasserstein distance between curves. A small value suggests two binding 
+contexts are very similar, whereas larger values suggest substantial differences. 
+
+For example, calculate the distance between the stem and hairpin contexts 
+visualized above.
+
+```{r, eval = F}
+bindingContextDistance(RNA_context = "chr4and5_3UTR_stem_liftOver",
+                       protein_file = "chr4and5_liftOver",
+                       RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+[1] 2.134331
+```
+
+Now compare it to the distance between internal and hairpin contexts.
+
+```{r, eval = F}
+bindingContextDistance(RNA_context = "chr4and5_3UTR_internal_liftOver",
+                       protein_file = "chr4and5_liftOver",
+                       RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+[1] 0.3205145
+```
+
+We can see that the stem context is less similar to the hairpin context than the 
+internal context, and this is reflected in the calculated distances.
 
 *Questions? Comments? Please email Veronica Busa at vbusa1@jhmi.edu*
