@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(nearBynding)
+library(Rsamtools)
 ```
 
 nearBynding is a package designed to discern annotated RNA structures proximal
@@ -38,6 +40,8 @@ files.
 
 ## External Software Dependencies
 
+Add all dependency directories to your PATH after installation.
+
 #### bedtools
 
 bedtools is available for installation 
@@ -61,9 +65,7 @@ make
 
 If installation is successful, the final line will output
 
-```{r, eval = F}
-Error: The number of argument is invalid.
-```
+`Error: The number of argument is invalid.`
 
 #### StereoGene
 
@@ -99,7 +101,7 @@ This step creates a chain file that will be used to map the selected regions of
 transcripts end-to-end, excluding the intergenic regions and undesired transcripts 
 that comprise the majority of the genome.
 
-```{r, eval = F}
+```{r}
 # load transcript list
 load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
 # get location of GTF file
@@ -130,15 +132,14 @@ The reference genome can be found through
 users who do not want to download that 3.2GB file for the sake of this vignette, 
 the FASTA output of the above code is available via:
 
-```{r, eval = F}
+```{r}
 chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa", package="nearBynding")
 ```
 
 These sequences can then be submitted to CapR for folding.
 
-```{r, eval = F}
-runCapR(dir_CapR = "<local_directory>/CapR",
-        in_file = chr4and5_3UTR.fa)
+```{r}
+runCapR(in_file = chr4and5_3UTR.fa)
 ```
 
 Warning: This step can take hours or even days depending on how many transcripts 
@@ -153,7 +154,7 @@ converted to a bedGraph file.
 
 #### BAM file input
 
-```{r, eval = F}
+```{r}
 bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 sorted_bam<-sortBam(bam, "chr4and5_sorted")
 
@@ -181,7 +182,7 @@ the chain file created by `GenomeMappingToChainFile()`. This way, only the prote
 binding from transcriptomic regions of interest will be considered in the final 
 protein binding analysis.
 
-```{r, eval = F}
+```{r}
 liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
                    chain = "test.chain",
                    output_bg = "chr4and5_liftOver.bedGraph",
@@ -194,6 +195,17 @@ calculated by CapR -- *stem*, *hairpin*, *multibranch*, *exterior*, *internal*,
 and *bulge*. `processCapRout()` parses the CapR output, converts it into six
 separate bedGraph files, and then performs `liftOverToExomic()` for all the files.
 
+
+```{r, echo=F}
+out<- 
+processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out", 
+                                          package="nearBynding"),
+               chain = "test.chain",
+               output_prefix = "chr4and5_3UTR",
+               chrom_size = "chr4and5_3UTR.size",
+               genome_gtf = gtf,
+               RNA_fragment = "three_prime_utr")
+```
 ```{r, eval = F}
 processCapRout(CapR_outfile = "chr4and5_3UTR.out",
                chain = "test.chain",
@@ -219,11 +231,10 @@ visualize the RNA structure landscape surrounding protein binding.
 If CapR is used to determine RNA structure, `runStereogeneOnCapR()` initiates 
 StereoGene for a given protein against all CapR-generated RNA structure contexts.
 
-```{r, eval = F}
+```{r}
 runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
                     chrom_size = "chr4and5_3UTR.size",
                     name_config = "chr4and5_3UTR.cfg",
-                    dir_stereogene = "<local_directory>stereogene/src",
                     input_prefix = "chr4and5_3UTR")
 ```
 
@@ -240,8 +251,7 @@ be backwards.
 
 ```{r, eval = F}
 runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph", 
-                              "chr4and5_liftOver.bedGraph")
-              dir_stereogene = "<local_directory>stereogene/src",
+                              "chr4and5_liftOver.bedGraph"),
               name_config = "chr4and5_3UTR.cfg")
 ```
 
@@ -306,20 +316,18 @@ contexts are very similar, whereas larger values suggest substantial differences
 For example, calculate the distance between the stem and hairpin contexts 
 visualized above.
 
-```{r, eval = F}
+```{r}
 bindingContextDistance(RNA_context = "chr4and5_3UTR_stem_liftOver",
                        protein_file = "chr4and5_liftOver",
                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
-[1] 2.134331
 ```
 
 Now compare it to the distance between internal and hairpin contexts.
 
-```{r, eval = F}
+```{r}
 bindingContextDistance(RNA_context = "chr4and5_3UTR_internal_liftOver",
                        protein_file = "chr4and5_liftOver",
                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
-[1] 0.3205145
 ```
 
 We can see that the stem context is less similar to the hairpin context than the 

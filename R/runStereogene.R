@@ -4,8 +4,6 @@
 #'
 #' @param track_files Vector of at least two track or interval file names to be
 #' pairwise-correlated by StereoGene. Required.
-#' @param dir_stereogene Directory in which Stereogene is located.
-#' Default current directory
 #' @param name_config Name of corresponding configuration file. Required
 #' @param pcorProfile Track for partial correlation. More information for this
 #' can be found in the StereoGene README. Optional
@@ -15,7 +13,6 @@
 #' @export
 
 runStereogene<-function(track_files,
-                        dir_stereogene = ".",
                         name_config,
                         pcorProfile = NULL,
                         confounder = NULL){
@@ -43,6 +40,6 @@ runStereogene<-function(track_files,
         confound<-paste0("-confounder ", confounder, " ")
     }
 
-    system2(paste0(dir_stereogene, "/Stereogene"),
+    system2("StereoGene",
             paste0(config,partial_corr,confound,tracks))
 }

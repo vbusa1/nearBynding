@@ -2,7 +2,6 @@
 #'
 #' @description Runs CapR
 #'
-#' @param dir_CapR Directory in which CapR is located. Default current directory
 #' @param in_file An .fa file like from ExtractTranscriptomeSequence that is a
 #' list of fasta sequences to be folded. Required
 #' @param out_file Name of the CapR output file of nucleotide folding
@@ -13,12 +12,11 @@
 #'
 #' @export
 
-runCapR <- function(dir_CapR = ".",
-                    in_file,
+runCapR <- function(in_file,
                     out_file = NA,
                     max_dist = 100){
     if(is.na(out_file)){
         out_file = paste0(substr(in_file, 0, nchar(in_file)-2), "out")
     }
-    system2(paste0(dir_CapR, "/CapR"), args= c(in_file, out_file, max_dist))
+    system2("CapR", args= c(in_file, out_file, max_dist))
 }

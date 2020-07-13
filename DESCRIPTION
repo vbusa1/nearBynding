@@ -9,7 +9,45 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.6.0) 
-Imports: R.utils, matrixStats, plyranges, transport, Rsamtools, S4Vectors, grDevices, graphics, rtracklayer, dplyr, GenomeInfoDb, methods, GenomicRanges, utils, stats, magrittr, TxDb.Hsapiens.UCSC.hg19.knownGene, TxDb.Hsapiens.UCSC.hg38.knownGene, ggplot2, gplots, BiocGenerics
+Imports: R.utils, 
+        matrixStats, 
+        plyranges, 
+        transport, 
+        Rsamtools, 
+        S4Vectors, 
+        grDevices, 
+        graphics, 
+        rtracklayer, 
+        dplyr, 
+        GenomeInfoDb, 
+        methods, 
+        GenomicRanges, 
+        utils, 
+        stats, 
+        magrittr, 
+        TxDb.Hsapiens.UCSC.hg19.knownGene, 
+        TxDb.Hsapiens.UCSC.hg38.knownGene, 
+        ggplot2, 
+        gplots, 
+        BiocGenerics
 Suggests: knitr
 SystemRequirements: bedtools (>= 2.28.0), Stereogene (>= v2.20), CapR (>= 1.1.1)
 VignetteBuilder: knitr
+Collate: 'assessGrouping.R'
+        'bindingContextDistance.R'
+        'bindingContextDistanceCapR.R'
+        'CleanBAMtoBG.R'
+        'CleanBEDtoBG.R'
+        'ExtractTranscriptomeSequence.R'
+        'GenomeMappingToChainFile.R'
+        'get_outfiles.R'
+        'liftOverToExomicBG.R'
+        'processCapRout.R'
+        'runCapR.R'
+        'runStereogene.R'
+        'runStereogeneOnCapR.R'
+        'visualizeCapRStereogene.R'
+        'visualizeStereogene.R'
+        'write_config.R'
+        'write_fasta.R'
+    

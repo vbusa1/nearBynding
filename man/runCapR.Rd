@@ -5,13 +5,11 @@ Run CapR}
 \description{
 Calls CapR on local machine and inputs .fa sequences for folding.}
 \usage{
-runCapR(dir_CapR = ".",
-                    in_file,
+runCapR(in_file,
                     out_file = NA,
                     max_dist = 100)
 }
 \arguments{
-  \item{dir_CapR}{Directory in which CapR is located. Default working directory}
   \item{in_file}{An .fa file like from ExtractTranscriptomeSequence that is a
   list of fasta sequences to be folded. Required}
   \item{out_file}{Name of the CapR output file of nucleotide folding
