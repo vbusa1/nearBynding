@@ -231,7 +231,7 @@ visualize the RNA structure landscape surrounding protein binding.
 If CapR is used to determine RNA structure, `runStereogeneOnCapR()` initiates 
 StereoGene for a given protein against all CapR-generated RNA structure contexts.
 
-```{r}
+```{r, eval = F}
 runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
                     chrom_size = "chr4and5_3UTR.size",
                     name_config = "chr4and5_3UTR.cfg",
@@ -266,6 +266,9 @@ or a line plot. Examples of both are below.
 
 For CapR-derived RNA structure, all six contexts can be viewed simultaneously.
 
+```{r, echo = F}
+get_outfiles()
+```
 ```{r, eval = F}
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
                         protein_file = "chr4and5_liftOver",
