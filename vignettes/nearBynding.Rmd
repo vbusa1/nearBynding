@@ -3,6 +3,7 @@ title: "nearBynding Vignette"
 author: "Veronica Busa"
 date: "`r Sys.Date()`"
 output: rmarkdown::pdf_document
+urlcolor: blue
 vignette: >
   %\VignetteIndexEntry{nearBynding Vignette}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,10 +21,9 @@ library(Rsamtools)
 
 nearBynding is a package designed to discern annotated RNA structures proximal
 to protein binding. nearBynding allows users to annotate RNA structure contexts
-via CapR or input their own annotations in bedGraph format for protein binding
-proximity assessment. nearBynding accomodates Protein binding information from
-CLIP-seq experiments as either aligned CLIP-seq reads or peak-called intervals.
-This vignette will walk you through:
+via CapR or input their own annotations in bedGraph format. It accomodates 
+protein binding information from CLIP-seq experiments as either aligned CLIP-seq 
+reads or peak-called intervals. This vignette will walk you through:
 
  - The external software necessary to support this pipeline
  - Creating a concatenated transcriptome
