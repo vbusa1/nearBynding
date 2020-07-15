@@ -18,58 +18,68 @@
 #'
 #' @export
 
-liftOverToExomicBG<-function(input,
-                             chain,
-                             chrom_size,
-                             output_bg,
-                             format = "bedGraph"){
-    #allow flexible naming systems for forward and reverse files
-    if(length(input) == 2){
-        f_bg <- input[1]
-        r_bg <- input[2]
-        plus <- import(f_bg, format = format)
-        minus <- import(r_bg, format = format)
-    } else if(length(input)==1){
-        f_bg <- input
-        plus <- import(f_bg, format = format)
-        minus <- plus
-    } else{print("input must be a single file or a vector of file names in the
+liftOverToExomicBG <- function(input,
+                               chain,
+                               chrom_size,
+                               output_bg,
+                               format = "bedGraph") {
+  # allow flexible naming systems for forward and reverse files
+  if (length(input) == 2) {
+    f_bg <- input[1]
+    r_bg <- input[2]
+    plus <- import(f_bg, format = format)
+    minus <- import(r_bg, format = format)
+  } else if (length(input) == 1) {
+    f_bg <- input
+    plus <- import(f_bg, format = format)
+    minus <- plus
+  } else {
+    print("input must be a single file or a vector of file names in the
                  format of c(forward_reads, reverse_reads) of type BED or
-                 bedGraph.")}
+                 bedGraph.")
+  }
 
-    BiocGenerics::strand(plus) <- "+"
-    BiocGenerics::strand(minus) <- "-"
-    chain_object <- import(chain, exclude="junk")
+  BiocGenerics::strand(plus) <- "+"
+  BiocGenerics::strand(minus) <- "-"
+  chain_object <- import(chain, exclude = "junk")
 
-    # Perform liftOver for + and - strands given an exome chain object;
-    # reduce to only relevant intervals and combine into one bedGraph
-    liftOver_plus <- liftOver(plus, chain_object)
-    # remove any blank intervals (shouldn't be any > 1)
-    liftOver_plus <- liftOver_plus[(elementNROWS(range(liftOver_plus)) ==
-                                        1L)] %>%
-        unlist()
-    liftOver_minus <- liftOver(minus, chain_object)
-    liftOver_minus <- liftOver_minus[(elementNROWS(range(liftOver_minus)) ==
-                                          1L)] %>%
-        unlist()
-    liftOver_plus <- liftOver_plus[lapply(as.character(liftOver_plus@seqnames),
-                        function(x){grepl("plus", x) == TRUE}) %>% unlist()]
-    liftOver_minus<-liftOver_minus[lapply(as.character(liftOver_minus@seqnames),
-                        function(x){grepl("minus", x) == TRUE}) %>% unlist()]
-    liftOver<-bind_ranges(liftOver_minus, liftOver_plus)
+  # Perform liftOver for + and - strands given an exome chain object;
+  # reduce to only relevant intervals and combine into one bedGraph
+  liftOver_plus <- liftOver(plus, chain_object)
+  # remove any blank intervals (shouldn't be any > 1)
+  liftOver_plus <- liftOver_plus[(elementNROWS(range(liftOver_plus)) ==
+    1L)] %>%
+    unlist()
+  liftOver_minus <- liftOver(minus, chain_object)
+  liftOver_minus <- liftOver_minus[(elementNROWS(range(liftOver_minus)) ==
+    1L)] %>%
+    unlist()
+  liftOver_plus <- liftOver_plus[lapply(
+    as.character(liftOver_plus@seqnames),
+    function(x) {
+      grepl("plus", x) == TRUE
+    }
+  ) %>% unlist()]
+  liftOver_minus <- liftOver_minus[lapply(
+    as.character(liftOver_minus@seqnames),
+    function(x) {
+      grepl("minus", x) == TRUE
+    }
+  ) %>% unlist()]
+  liftOver <- bind_ranges(liftOver_minus, liftOver_plus)
 
-    #must re-introduce chromosome lengths into seqinfo
-    seq_info<-read.delim(chrom_size, header=FALSE)
-    colnames(seq_info)<-c("chr", "length")
+  # must re-introduce chromosome lengths into seqinfo
+  seq_info <- read.delim(chrom_size, header = FALSE)
+  colnames(seq_info) <- c("chr", "length")
 
-    liftOver@seqinfo@seqlengths<-
-        seq_info[which(seq_info$chr %in% liftOver@seqinfo@seqnames),2] %>%
+  liftOver@seqinfo@seqlengths <-
+    seq_info[which(seq_info$chr %in% liftOver@seqinfo@seqnames), 2] %>%
+    as.character() %>%
+    as.integer()
+  # remove duplicates
+  liftOver <- unique(liftOver)
+  liftOver <- liftOver[countOverlaps(liftOver, liftOver) <= 1L]
 
-        as.character() %>% as.integer()
-    # remove duplicates
-    liftOver<-unique(liftOver)
-    liftOver<-liftOver[countOverlaps(liftOver,liftOver) <= 1L]
-
-    # output exome bg file
-    export(liftOver, con = output_bg, format = "bedGraph")
+  # output exome bg file
+  export(liftOver, con = output_bg, format = "bedGraph")
 }

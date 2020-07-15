@@ -36,51 +36,68 @@
 #'
 #' @export
 
-write_config<-function(name_config = "config.cfg",
-                       chrom_size,
-                       Rscript = TRUE,
-                       verbose = FALSE,
-                       na_noise = FALSE,
-                       bin = 1,
-                       threshold = 0,
-                       cross_width = 200,
-                       wSize = 10000,
-                       kernel_width = 1000,
-                       outLC = FALSE,
-                       LCScale = "LOG",
-                       LC_FDR = .5){
-    if(missing(chrom_size)){
-        stop("please provide a chrom_size file")
-    }
+write_config <- function(name_config = "config.cfg",
+                         chrom_size,
+                         Rscript = TRUE,
+                         verbose = FALSE,
+                         na_noise = FALSE,
+                         bin = 1,
+                         threshold = 0,
+                         cross_width = 200,
+                         wSize = 10000,
+                         kernel_width = 1000,
+                         outLC = FALSE,
+                         LCScale = "LOG",
+                         LC_FDR = .5) {
+  if (missing(chrom_size)) {
+    stop("please provide a chrom_size file")
+  }
 
-    if(Rscript == TRUE){R = 1}else{R = 0}
-    if(verbose == TRUE){V = 1}else{V = 0}
-    if(na_noise == TRUE){N = 1}else{N = 0}
-    if(outLC == TRUE){L = 1}else{L = 0}
+  if (Rscript == TRUE) {
+    R <- 1
+  } else {
+    R <- 0
+  }
+  if (verbose == TRUE) {
+    V <- 1
+  } else {
+    V <- 0
+  }
+  if (na_noise == TRUE) {
+    N <- 1
+  } else {
+    N <- 0
+  }
+  if (outLC == TRUE) {
+    L <- 1
+  } else {
+    L <- 0
+  }
 
-    conf<-paste("#!bash/bin", "",
-                "profPath =./",
-                "trackPath=./",
-                "resPath=./",
-                paste0("chrom=", chrom_size),
-                paste0("Rscript=", R),
-                paste0("verbose=", V),
-                paste0("NA=", N),
-                "outRes=TAB",
-                "writeDistr=NONE",
-                "Distances=0",
-                paste0("bin=", bin),
-                paste0("threshold=", threshold),
-                paste0("wSize=", wSize),
-                "maxZero=100",
-                "maxNA=100",
-                "nShuffle=100000",
-                paste0("outLC=", L),
-                paste0("LCScale=", LCScale),
-                paste0("crossWidth=", cross_width),
-                paste0("KernelSigma=", kernel_width),
-                paste0("L_FDR =", LC_FDR),
-                paste0("R_FDR =", LC_FDR),
-                sep="\n")
-    writeLines(conf, name_config)
+  conf <- paste("#!bash/bin", "",
+    "profPath =./",
+    "trackPath=./",
+    "resPath=./",
+    paste0("chrom=", chrom_size),
+    paste0("Rscript=", R),
+    paste0("verbose=", V),
+    paste0("NA=", N),
+    "outRes=TAB",
+    "writeDistr=NONE",
+    "Distances=0",
+    paste0("bin=", bin),
+    paste0("threshold=", threshold),
+    paste0("wSize=", wSize),
+    "maxZero=100",
+    "maxNA=100",
+    "nShuffle=100000",
+    paste0("outLC=", L),
+    paste0("LCScale=", LCScale),
+    paste0("crossWidth=", cross_width),
+    paste0("KernelSigma=", kernel_width),
+    paste0("L_FDR =", LC_FDR),
+    paste0("R_FDR =", LC_FDR),
+    sep = "\n"
+  )
+  writeLines(conf, name_config)
 }
