@@ -12,34 +12,36 @@
 #'
 #' @export
 
-runStereogene<-function(track_files,
-                        name_config,
-                        pcorProfile = NULL,
-                        confounder = NULL){
-    if(length(track_files) < 2){
-        stop("Must have at least two track or interval files for correlation.")
-    }
-    if(length(name_config) < 1){
-        stop("Must provide a name for the configuration file.")
-    }
+runStereogene <- function(track_files,
+                          name_config,
+                          pcorProfile = NULL,
+                          confounder = NULL) {
+  if (length(track_files) < 2) {
+    stop("Must have at least two track or interval files for correlation.")
+  }
+  if (length(name_config) < 1) {
+    stop("Must provide a name for the configuration file.")
+  }
 
-    tracks <- ""
-    for(track in track_files){
-        tracks<-paste0(tracks, " ", track)
-    }
+  tracks <- ""
+  for (track in track_files) {
+    tracks <- paste0(tracks, " ", track)
+  }
 
-    config<-paste0("-cfg ", name_config, " ")
+  config <- paste0("-cfg ", name_config, " ")
 
-    partial_corr <- ""
-    if(length(pcorProfile) == 1){
-        partial_corr<-paste0("-pcorProfile ", pcorProfile, " ")
-    }
+  partial_corr <- ""
+  if (length(pcorProfile) == 1) {
+    partial_corr <- paste0("-pcorProfile ", pcorProfile, " ")
+  }
 
-    confound <- ""
-    if(length(confounder) == 1){
-        confound<-paste0("-confounder ", confounder, " ")
-    }
+  confound <- ""
+  if (length(confounder) == 1) {
+    confound <- paste0("-confounder ", confounder, " ")
+  }
 
-    system2("StereoGene",
-            paste0(config,partial_corr,confound,tracks))
+  system2(
+    "StereoGene",
+    paste0(config, partial_corr, confound, tracks)
+  )
 }

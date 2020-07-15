@@ -19,67 +19,86 @@
 #'
 #' @export
 
-runStereogeneOnCapR<-function(dir_CapR_bg = ".",
-                              input_prefix,
-                              protein_file,
-                              output_prefix = input_prefix,
-                              name_config = "config.cfg",
-                              chrom_size,
-                              ...){
-    if(missing(chrom_size)){
-        stop("please provide a chrom_size file")
-    }
+runStereogeneOnCapR <- function(dir_CapR_bg = ".",
+                                input_prefix,
+                                protein_file,
+                                output_prefix = input_prefix,
+                                name_config = "config.cfg",
+                                chrom_size,
+                                ...) {
+  if (missing(chrom_size)) {
+    stop("please provide a chrom_size file")
+  }
 
-    doCall(write_config, args = list(name_config = name_config,
-                                     chrom_size = chrom_size,
-                                     ...))
+  doCall(write_config, args = list(
+    name_config = name_config,
+    chrom_size = chrom_size,
+    ...
+  ))
 
-    track_files<-c(paste0(dir_CapR_bg, "/", input_prefix,
-                          "_hairpin_liftOver.bedGraph"), protein_file)
-    name_sh<-paste0(output_prefix,"_stereogene_hairpin.sh")
-    doCall(runStereogene, args = list(...,
-                                      track_files = track_files,
-                                      name_sh = name_sh,
-                                      name_config = name_config))
+  track_files <- c(paste0(
+    dir_CapR_bg, "/", input_prefix,
+    "_hairpin_liftOver.bedGraph"
+  ), protein_file)
+  name_sh <- paste0(output_prefix, "_stereogene_hairpin.sh")
+  doCall(runStereogene, args = list(...,
+    track_files = track_files,
+    name_sh = name_sh,
+    name_config = name_config
+  ))
 
-    track_files<-c(paste0(dir_CapR_bg, "/", input_prefix,
-                          "_internal_liftOver.bedGraph"), protein_file)
-    name_sh<-paste0(output_prefix,"_stereogene_internal.sh")
-    doCall(runStereogene, args = list(...,
-                                      track_files = track_files,
-                                      name_sh = name_sh,
-                                      name_config = name_config))
+  track_files <- c(paste0(
+    dir_CapR_bg, "/", input_prefix,
+    "_internal_liftOver.bedGraph"
+  ), protein_file)
+  name_sh <- paste0(output_prefix, "_stereogene_internal.sh")
+  doCall(runStereogene, args = list(...,
+    track_files = track_files,
+    name_sh = name_sh,
+    name_config = name_config
+  ))
 
-    track_files<-c(paste0(dir_CapR_bg, "/", input_prefix,
-                          "_exterior_liftOver.bedGraph"), protein_file)
-    name_sh<-paste0(output_prefix,"_stereogene_exterior.sh")
-    doCall(runStereogene, args = list(...,
-                                      track_files = track_files,
-                                      name_sh = name_sh,
-                                      name_config = name_config))
+  track_files <- c(paste0(
+    dir_CapR_bg, "/", input_prefix,
+    "_exterior_liftOver.bedGraph"
+  ), protein_file)
+  name_sh <- paste0(output_prefix, "_stereogene_exterior.sh")
+  doCall(runStereogene, args = list(...,
+    track_files = track_files,
+    name_sh = name_sh,
+    name_config = name_config
+  ))
 
-    track_files<-c(paste0(dir_CapR_bg, "/", input_prefix,
-                          "_stem_liftOver.bedGraph"), protein_file)
-    name_sh<-paste0(output_prefix,"_stereogene_stem.sh")
-    doCall(runStereogene, args = list(...,
-                                      track_files = track_files,
-                                      name_sh = name_sh,
-                                      name_config = name_config))
+  track_files <- c(paste0(
+    dir_CapR_bg, "/", input_prefix,
+    "_stem_liftOver.bedGraph"
+  ), protein_file)
+  name_sh <- paste0(output_prefix, "_stereogene_stem.sh")
+  doCall(runStereogene, args = list(...,
+    track_files = track_files,
+    name_sh = name_sh,
+    name_config = name_config
+  ))
 
-    track_files<-c(paste0(dir_CapR_bg, "/", input_prefix,
-                          "_multibranch_liftOver.bedGraph"), protein_file)
-    name_sh<-paste0(output_prefix,"_stereogene_multibranch.sh")
-    doCall(runStereogene, args = list(...,
-                                      track_files = track_files,
-                                      name_sh = name_sh,
-                                      name_config = name_config))
+  track_files <- c(paste0(
+    dir_CapR_bg, "/", input_prefix,
+    "_multibranch_liftOver.bedGraph"
+  ), protein_file)
+  name_sh <- paste0(output_prefix, "_stereogene_multibranch.sh")
+  doCall(runStereogene, args = list(...,
+    track_files = track_files,
+    name_sh = name_sh,
+    name_config = name_config
+  ))
 
-    track_files<-c(paste0(dir_CapR_bg, "/", input_prefix,
-                          "_bulge_liftOver.bedGraph"), protein_file)
-    name_sh<-paste0(output_prefix,"_stereogene_bulge.sh")
-    doCall(runStereogene, args = list(...,
-                                      track_files = track_files,
-                                      name_sh = name_sh,
-                                      name_config = name_config))
+  track_files <- c(paste0(
+    dir_CapR_bg, "/", input_prefix,
+    "_bulge_liftOver.bedGraph"
+  ), protein_file)
+  name_sh <- paste0(output_prefix, "_stereogene_bulge.sh")
+  doCall(runStereogene, args = list(...,
+    track_files = track_files,
+    name_sh = name_sh,
+    name_config = name_config
+  ))
 }
-
