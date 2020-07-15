@@ -10,6 +10,7 @@ CleanBEDtoBG(in_bed,
                        unwanted_chromosomes = NULL,
                        alignment = "hg19")
 }
+
 \arguments{
   \item{in_bed}{Name of sorted BAM file to be converted to a BedGraph file.
   Required}
@@ -19,4 +20,14 @@ CleanBEDtoBG(in_bed,
   in the BAM file.}
   \item{alignment}{The human genome alignment used, either "hg19" or "hg38".
   Default "hg19"}
+}
+\value{
+deposits bedGraph from BED in same directory
+}
+\examples{
+out_bed <- "bamto.bed"
+system2("bedtools", paste0("bamtobed -i ", bam, " > ", out_bed))
+
+CleanBEDtoBG(in_bed = out_bed,
+             alignment = "hg38")
 }

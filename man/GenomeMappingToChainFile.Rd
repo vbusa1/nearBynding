@@ -35,5 +35,8 @@ GenomeMappingToChainFile(genome_gtf,
   \item{check_overwrite}{Check for file wth the same out_chain_name before
   writing new chain file. Default FALSE.}
 }
+\values{
+writes a chain file into directory
+}
 \author{Veronica Busa}
 

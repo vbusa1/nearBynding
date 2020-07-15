@@ -3,7 +3,8 @@
 \title{
 Input CapR contexts to Stereogene}
 \description{
-Writes a configuration file and Stereogene script and runs Stereogene for all CapR tracks}
+Writes a configuration file and Stereogene script and runs Stereogene for all
+CapR tracks}
 \usage{
 runStereogeneOnCapR(dir_CapR_bg = ".",
                               input_prefix,
@@ -13,7 +14,6 @@ runStereogeneOnCapR(dir_CapR_bg = ".",
                               chrom_size,
                               ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{dir_CapR_bg}{Location of lifted-over CapR bedGraph files. Default
   current directory}
@@ -28,6 +28,9 @@ runStereogeneOnCapR(dir_CapR_bg = ".",
   length, as from liftOverToExomicBG. Required}
   \item{...}{includes all other parameters acceptable to write_config and
   write_stereogene}
+}
+\value{
+generates StereoGene output files, including *.dist files
 }
 \references{
 Stavrovskaya, Elena D., Tejasvi Niranjan, Elana J. Fertig, Sarah J. Wheelan,

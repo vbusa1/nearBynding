@@ -20,6 +20,9 @@ runStereogene(track_files,
   \item{confounder}{Confounder filename. More information for this can be found
   in the StereoGene README. Optional}
 }
+\values{
+generates StereoGene output files ini directory
+}
 \references{
 Stavrovskaya, Elena D., Tejasvi Niranjan, Elana J. Fertig, Sarah J. Wheelan,
 Alexander V. Favorov, and Andrey A. Mironov. “StereoGene: Rapid Estimation

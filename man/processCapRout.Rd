@@ -27,3 +27,7 @@ processCapRout(CapR_outfile,
   \item{chain}{The name of the chain file to be used. Format should be like
   chain files derived from GRangesMappingToChainFile. Required}
 }
+\value{
+wrtes bedGraph files of structure signal for each of the six CapR contexts
+1) mapped to the genome and 2) lifted-over to the transcriptome
+}

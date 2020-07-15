@@ -22,8 +22,8 @@ library(Rsamtools)
 nearBynding is a package designed to discern annotated RNA structures proximal
 to protein binding. nearBynding allows users to annotate RNA structure contexts
 via CapR or input their own annotations in bedGraph format. It accomodates 
-protein binding information from CLIP-seq experiments as either aligned CLIP-seq 
-reads or peak-called intervals. This vignette will walk you through:
+protein binding information from CLIP-seq experiments as either aligned 
+CLIP-seq reads or peak-called intervals. This vignette will walk you through:
 
  - The external software necessary to support this pipeline
  - Creating a concatenated transcriptome
@@ -51,7 +51,8 @@ Installation instructions will vary by operating system.
 
 #### CapR
 
-Download the zip file from the [github repository](https://github.com/fukunagatsu/CapR), 
+Download the zip file from the
+[github repository](https://github.com/fukunagatsu/CapR), 
 unzip the file, and move it to a directory where you want to permanently store 
 the function.
 
@@ -69,7 +70,8 @@ If installation is successful, the final line will output
 
 #### StereoGene
 
-Download the zip file from the [github repository](https://github.com/favorov/stereogene), 
+Download the zip file from the 
+[github repository](https://github.com/favorov/stereogene), 
 unzip the file, and move it to a directory where you want to permanently store 
 the function.
 
@@ -82,7 +84,8 @@ make
 ./stereogene -h
 ```
 
-If installation is successful, the final line will output a menu of argument options.
+If installation is successful, the final line will output a menu of argument 
+options.
 
 ## Concatenate the Transcriptome
 
@@ -98,14 +101,15 @@ analysis, though any region of a transcript such as 5'UTR or CDS could be
 assessed instead.
 
 This step creates a chain file that will be used to map the selected regions of 
-transcripts end-to-end, excluding the intergenic regions and undesired transcripts 
-that comprise the majority of the genome.
+transcripts end-to-end, excluding the intergenic regions and undesired 
+transcripts that comprise the majority of the genome.
 
 ```{r}
 # load transcript list
 load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
 # get location of GTF file
-gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf", package="nearBynding")
+gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf", 
+                 package="nearBynding")
 
 GenomeMappingToChainFile(genome_gtf = gtf,
                          out_chain_name = "test.chain",
@@ -121,19 +125,20 @@ achieved with the following code:
 
 ```{r, eval = F}
 ExtractTranscriptomeSequence(transcript_list = transcript_list,
-                             ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
-                             genome_gtf = gtf,
-                             RNA_fragment = "three_prime_utr",
-                             exome_prefix = "chr4and5_3UTR")
+                     ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
+                     genome_gtf = gtf,
+                     RNA_fragment = "three_prime_utr",
+                     exome_prefix = "chr4and5_3UTR")
 ```
 
 The reference genome can be found through 
-[Ensembl](ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/), but for
-users who do not want to download that 3.2GB file for the sake of this vignette, 
-the FASTA output of the above code is available via:
+[Ensembl](ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/), but 
+for users who do not want to download that 3.2GB file for the sake of this 
+vignette, the FASTA output of the above code is available via:
 
 ```{r}
-chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa", package="nearBynding")
+chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa", 
+                                package="nearBynding")
 ```
 
 These sequences can then be submitted to CapR for folding.
@@ -142,9 +147,9 @@ These sequences can then be submitted to CapR for folding.
 runCapR(in_file = chr4and5_3UTR.fa)
 ```
 
-Warning: This step can take hours or even days depending on how many transcripts 
-are submitted, how long the RNA fragments are, and the maximum distance between 
-base-paired nucleotides submitted to the CapR algorithm.
+Warning: This step can take hours or even days depending on how many 
+transcripts are submitted, how long the RNA fragments are, and the maximum 
+distance between base-paired nucleotides submitted to the CapR algorithm.
 
 ## Map to Transcriptome
 
@@ -178,9 +183,9 @@ CleanBEDtoBG(in_bed = out_bed,
 #### Map Protein Binding and RNA Structure to the Transcriptome
 
 The bedGraph files can then be mapped onto the concatenated transcriptome using 
-the chain file created by `GenomeMappingToChainFile()`. This way, only the protein 
-binding from transcriptomic regions of interest will be considered in the final 
-protein binding analysis.
+the chain file created by `GenomeMappingToChainFile()`. This way, only the 
+protein binding from transcriptomic regions of interest will be considered in 
+the final protein binding analysis.
 
 ```{r}
 liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
@@ -189,11 +194,12 @@ liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
                    out_chr = "chr4and5_3UTR.size")
 ```
 
-The RNA structure information from the CapR output also needs to mapped onto the 
-concatenated transcriptome. There are six different binding contexts 
+The RNA structure information from the CapR output also needs to mapped onto 
+the concatenated transcriptome. There are six different binding contexts 
 calculated by CapR -- *stem*, *hairpin*, *multibranch*, *exterior*, *internal*, 
 and *bulge*. `processCapRout()` parses the CapR output, converts it into six
-separate bedGraph files, and then performs `liftOverToExomic()` for all the files.
+separate bedGraph files, and then performs `liftOverToExomic()` for all the 
+files.
 
 
 ```{r, echo=F}
@@ -218,18 +224,19 @@ processCapRout(CapR_outfile = "chr4and5_3UTR.out",
 It is possible for users to input their own RNA structure information rather 
 than using CapR. If the information is in BED format, `CleanBEDtoBG()` can be 
 applied to RNA structure data to convert it to a bedGraph. That bedGraph should 
-then be input into `liftOverToExomicBG()` to make sure that the RNA structure data 
-is mapped to the same transcriptome as the protein binding data.
+then be input into `liftOverToExomicBG()` to make sure that the RNA structure 
+data is mapped to the same transcriptome as the protein binding data.
 
 ## Run StereoGene
 
-This is the process that directly answers the question, "What does RNA structure 
-look like around where the protein is binding?" StereoGene is used to calculate 
-the cross-correlation between RNA structure and protein binding in order to 
-visualize the RNA structure landscape surrounding protein binding.
+This is the process that directly answers the question, "What does RNA 
+structure look like around where the protein is binding?" StereoGene is used to 
+calculate the cross-correlation between RNA structure and protein binding in 
+order to visualize the RNA structure landscape surrounding protein binding.
 
 If CapR is used to determine RNA structure, `runStereogeneOnCapR()` initiates 
-StereoGene for a given protein against all CapR-generated RNA structure contexts.
+StereoGene for a given protein against all CapR-generated RNA structure 
+contexts.
 
 ```{r, eval = F}
 runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
@@ -261,8 +268,8 @@ runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph",
 
 ## Visualize Results
 
-The cross-correlation output of StereoGene can be visualized as either a heatmap 
-or a line plot. Examples of both are below.
+The cross-correlation output of StereoGene can be visualized as either a 
+heatmap or a line plot. Examples of both are below.
 
 For CapR-derived RNA structure, all six contexts can be viewed simultaneously.
 
@@ -306,15 +313,16 @@ knitr::include_graphics("stem_heatmap.jpeg")
 knitr::include_graphics("stem_line.pdf")
 ```
 
-Although this specific, limited example does not provide a particularly visually 
-stimulating image, larger data sets (which provide many more StereoGene windows) 
-result in narrower peaks and less noise.
+Although this specific, limited example does not provide a particularly 
+visually stimulating image, larger data sets (which provide many more 
+StereoGene windows) result in narrower peaks and less noise.
 
 ## Calculate Distance
 
 In order to determine the similarity of two binding contexts, we can calculate 
 the Wasserstein distance between curves. A small value suggests two binding 
-contexts are very similar, whereas larger values suggest substantial differences. 
+contexts are very similar, whereas larger values suggest substantial 
+differences. 
 
 For example, calculate the distance between the stem and hairpin contexts 
 visualized above.
@@ -333,7 +341,7 @@ bindingContextDistance(RNA_context = "chr4and5_3UTR_internal_liftOver",
                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
 ```
 
-We can see that the stem context is less similar to the hairpin context than the 
-internal context, and this is reflected in the calculated distances.
+We can see that the stem context is less similar to the hairpin context than 
+the internal context, and this is reflected in the calculated distances.
 
 *Questions? Comments? Please email Veronica Busa at vbusa1@jhmi.edu*

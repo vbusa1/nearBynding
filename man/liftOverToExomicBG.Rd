@@ -27,4 +27,7 @@ liftOverToExomicBG(input,
   \item{format}{File type of input file(s). Recommended "BED" or "bedGraph".
   Default "bedGraph"}
 }
+\values{
+writes lifted-over bedGraph file
+}
 \author{Veronica Busa}

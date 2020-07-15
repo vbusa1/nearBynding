@@ -51,12 +51,14 @@ bindingContextDistanceCapR(dir_stereogene_output = ".",
   holistic binding context, while large ranges amplify distal noise in the
   binding data. Cannot exceed wSize/2 from write_config. Default c(-200, 200)}
 }
-\value{
-The Wasserstein distance between the two protein file sets provided for the RNA
-structure context specified, minus the input binding signal if applicable.
-}
-\author{Veronica Busa}
 \note{
 Wasserstein distance calculations are reciprocal, so it does not matter which
 protein is first or second so long as replicates and input files correspond to
 one another.}
+\value{
+Wasserstein distance between the two protein file sets provided for the RNA
+structure context specified, minus the input binding signal if applicable
+}
+
+\author{Veronica Busa}
+
