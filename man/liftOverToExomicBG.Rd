@@ -30,4 +30,25 @@ liftOverToExomicBG(input,
 \value{
 writes lifted-over bedGraph file
 }
+\examples{
+## first, get chain file
+load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+                 package="nearBynding")
+GenomeMappingToChainFile(genome_gtf = gtf,
+                         out_chain_name = "test.chain",
+                         RNA_fragment = "three_prime_utr",
+                         transcript_list = transcript_list,
+                         alignment = "hg38")
+
+## next, get BAM to bedGraph file
+bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
+sorted_bam<-Rsamtools::sortBam(bam, "chr4and5_sorted")
+CleanBAMtoBG(in_bam = sorted_bam)
+
+liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
+                   chain = "test.chain",
+                   output_bg = "chr4and5_liftOver.bedGraph",
+                   out_chr = "chr4and5_3UTR.size")
+}
 \author{Veronica Busa}

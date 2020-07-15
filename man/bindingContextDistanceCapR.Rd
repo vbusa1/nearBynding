@@ -17,7 +17,6 @@ bindingContextDistanceCapR(dir_stereogene_output = ".",
                                   context = "all",
                                   range = c(-200, 200))
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{dir_stereogene_output}{Directory of Stereogene output for first protein.
   Default current directory.}
@@ -58,6 +57,17 @@ one another.}
 \value{
 Wasserstein distance between the two protein file sets provided for the RNA
 structure context specified, minus the input binding signal if applicable
+}
+\examples{
+## load example StereoGene output
+get_outfiles()
+
+## This boring example compares a protein's binding with itself for all contexts
+## therefore the distance is 0
+bindingContextDistanceCapR(CapR_prefix = "chr4and5_3UTR",
+                            protein_file = "chr4and5_liftOver",
+                            CapR_prefix_2 = "chr4and5_3UTR",
+                            protein_file_2 = "chr4and5_liftOver")
 }
 
 \author{Veronica Busa}

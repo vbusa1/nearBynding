@@ -29,11 +29,25 @@ assessGrouping(distances,
   distribution. Default 10000.}
 }
 \value{
-\item{output = "KS.pvalue"}{the p-vaalue of the Kolmogorov-Smirnov test
+\item{output = "KS.pvalue"}{the p-value of the Kolmogorov-Smirnov test
 comparing test and control distributions}
 
 \item{output = "plot"}{a ggplot object plotting the test and control
 distributions}
 
 \item{output = "measurements"}{a list or test and control measurement distances}
+}
+\examples{
+## create random distance data frame
+dist<-expand.grid(letters, letters)
+dist$distance<-rnorm(nrow(dist))
+
+annot<-data.frame(sample<-letters, category<- rep(1:13, 2))
+
+## get KS p-value
+assessGrouping(dist, annot)
+
+## get plot of test vs control distributions
+assessGrouping(dist, annot,
+                output = "plot")
 }

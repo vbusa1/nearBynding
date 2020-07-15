@@ -38,5 +38,18 @@ GenomeMappingToChainFile(genome_gtf,
 \value{
 writes a chain file into directory
 }
+\examples{
+## load transcript list
+load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+## get GTF file
+gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+                 package="nearBynding")
+
+GenomeMappingToChainFile(genome_gtf = gtf,
+                         out_chain_name = "test.chain",
+                         RNA_fragment = "three_prime_utr",
+                         transcript_list = transcript_list,
+                         alignment = "hg38")
+}
 \author{Veronica Busa}
 

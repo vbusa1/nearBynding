@@ -29,4 +29,9 @@ write_fasta(paste0(sample(c("A", "T", "G", "C"), 50, replace = TRUE),
             "test.fa")
 ## run CapR
 runCapR("test.fa")
+
+
+chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa",
+                                package="nearBynding")
+runCapR(chr4and5_3UTR.fa)
 }

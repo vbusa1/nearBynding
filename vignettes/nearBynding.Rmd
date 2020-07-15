@@ -107,7 +107,7 @@ transcripts that comprise the majority of the genome.
 ```{r}
 # load transcript list
 load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
-# get location of GTF file
+# get GTF file
 gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf", 
                  package="nearBynding")
 

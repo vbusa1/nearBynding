@@ -99,15 +99,15 @@ assessGrouping<-function(distances,
         return(list(test_output = test_output,
                     ctrl_output = ctrl_output))
     } else if(output == "KS.pvalue"){
-        return(ks.test(test_output, ctrl_output,
-                       alternative = "greater")$p.value)
+        return(suppressWarnings(ks.test(test_output, ctrl_output,
+                       alternative = "greater")$p.value))
     } else if(output == "plot"){
         group <- c(rep("ctrl", length(ctrl_output)),
                    rep("test", length(test_output)))
         dat_plot <- data.frame(KSD = c(ctrl_output, test_output), group = group)
         plot<-ggplot(dat_plot,
-                     aes_string(x = KSD, group = group, color = group)) +
-            stat_ecdf(size=1) +
+                     aes(x = KSD, group = group, color = group)) +
+            stat_ecdf(size=1, na.rm = TRUE) +
             theme_classic() +
             theme(legend.position ="top") +
             ylab("cummulative distribution") +
