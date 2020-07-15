@@ -9,7 +9,7 @@
 #' @param chain The name of the chain file to be used for liftOver. Format
 #' should be like chain files derived from GRangesMappingToChainFile function.
 #' Required
-#' @param output The name of the lifted-over output bedGraph file. Required
+#' @param output_bg The name of the lifted-over output bedGraph file. Required
 #' @param write_chr Whether to output a table of mapped chromosome names and
 #' lengths. Recommended TRUE for downstream pipeline functions. Default TRUE
 #' @param out_chr Name of the chromosome names and lengths table file. Required
@@ -47,15 +47,17 @@ liftOverToExomicBG<-function(input,
     # reduce to only relevant intervals and combine into one bedGraph
     liftOver_plus <- liftOver(plus, chain_object)
     # remove any blank intervals (shouldn't be any > 1)
-    liftOver_plus <- liftOver_plus[(elementNROWS(range(liftOver_plus)) == 1L)] %>%
+    liftOver_plus <- liftOver_plus[(elementNROWS(range(liftOver_plus)) ==
+                                        1L)] %>%
         unlist()
     liftOver_minus <- liftOver(minus, chain_object)
-    liftOver_minus <- liftOver_minus[(elementNROWS(range(liftOver_minus)) == 1L)] %>%
+    liftOver_minus <- liftOver_minus[(elementNROWS(range(liftOver_minus)) ==
+                                          1L)] %>%
         unlist()
     liftOver_plus <- liftOver_plus[lapply(as.character(liftOver_plus@seqnames),
-                            function(x){grepl("plus", x) == TRUE}) %>% unlist()]
-    liftOver_minus <- liftOver_minus[lapply(as.character(liftOver_minus@seqnames),
-                            function(x){grepl("minus", x) == TRUE}) %>% unlist()]
+                        function(x){grepl("plus", x) == TRUE}) %>% unlist()]
+    liftOver_minus<-liftOver_minus[lapply(as.character(liftOver_minus@seqnames),
+                        function(x){grepl("minus", x) == TRUE}) %>% unlist()]
     liftOver<-bind_ranges(liftOver_minus, liftOver_plus)
 
     #must re-introduce chromosome lengths into seqinfo

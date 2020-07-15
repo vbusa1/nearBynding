@@ -40,4 +40,22 @@ visualizeStereogene(dir_stereogene_output = ".",
   \item{heatmap}{Whether the output graph should be in the form of a heatmap
   (TRUE) or of a line graph (FALSE). Default FALSE}
 }
+\value{
+heatmap (JPEG) or line graph (PDF) image file
+}
+\examples{
+## pull example files
+get_outfiles()
+## heatmap
+visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
+                    protein_file = "chr4and5_liftOver",
+                    out_file = "stem_heatmap",
+                    x_lim = c(-500, 500))
+## line graph
+visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
+                    protein_file = "chr4and5_liftOver",
+                    heatmap = TRUE,
+                    out_file = "stem_line",
+                    x_lim = c(-500, 500))
+}
 \author{Veronica Busa}

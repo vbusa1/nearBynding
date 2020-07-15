@@ -53,6 +53,14 @@ write_config(name_config = "config.cfg",
 \note{Not all StereoGene parameters are included in this function so refer to
 the StereoGene manual and modify the output .cfg file manually if additional
 parameters are desired.}
+\value{
+writes a configuration file into directory
+}
+\examples{
+## Write a config file named "test.cfg" with chromosome size file "test.size"
+write_config(name_config = "test.cfg",
+              chrom_sze = "test.size")
+}
 \references{
 Stavrovskaya, Elena D., Tejasvi Niranjan, Elana J. Fertig, Sarah J. Wheelan,
 Alexander V. Favorov, and Andrey A. Mironov. “StereoGene: Rapid Estimation

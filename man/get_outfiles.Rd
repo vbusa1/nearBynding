@@ -12,3 +12,10 @@ get_outfiles(dir = ".")
   \item{dir}{Directory into which files ought to be stored. Default current
   work directory.}
 }
+\value{
+deposits six *.dist StereoGene output files into the selected directory
+}
+\examples{
+## pull example StereoGene output files
+get_outfiles()
+}

@@ -44,10 +44,9 @@ assessGrouping<-function(distances,
         stop("The first two columns of the annotations data frame should be
              sample name and the category of the sample for grouping")
     }
-    dist_cols<-c("Var1", "Var2", "dist")
-    ann_cols<-c("sample", "category")
-    colnames(distances)[c(1,2,3)]<-dist_cols
-    colnames(annotations)[c(1,2)]<-ann_cols
+
+    colnames(distances)[c(1,2,3)]<-c("Var1", "Var2", "dist")
+    colnames(annotations)[c(1,2)]<-c("sample", "category")
 
     # filter for distances with proper annotations
     test_distances<-dplyr::filter(distances, Var1 %in% annotations$sample &

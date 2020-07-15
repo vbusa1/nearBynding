@@ -3,7 +3,7 @@
 \title{
 Assess categorical grouping}
 \description{
-Assess grouping of samples assigned to the same category relative to random via 
+Assess grouping of samples assigned to the same category relative to random via
 Kolmogorov-Smirnov test or visually.}
 \usage{
 assessGrouping(distances,
@@ -13,18 +13,27 @@ assessGrouping(distances,
                          ctrl_iterations = 10000)
 }
 \arguments{
-  \item{distances}{Data frame with at least three columns where the first three 
+  \item{distances}{Data frame with at least three columns where the first three
   columns are sample 1 name, sample 2 name, and the distance between them.}
-  \item{annotations}{Data frame with at least two columns where the first two 
-  columns are sample name and the category of the sample for grouping. Sample 
+  \item{annotations}{Data frame with at least two columns where the first two
+  columns are sample name and the category of the sample for grouping. Sample
   names must match sample 1 and sample 2 names in distances data frame.}
-  \item{measurement}{The measurement for comparison between cases and controls 
+  \item{measurement}{The measurement for comparison between cases and controls
   and statistical analysis ("mean", "max", or "min). Default "mean"}
-  \item{output}{What information will be returned, either a list of test and 
-  control measurement distances ("measurements"), the p-value of the 
-  Kolmogorov-Smirnov test comparing test and control distributions 
-  ("KS.pvalue"), or a ggplot object plotting the test and control distributions 
+  \item{output}{What information will be returned, either a list of test and
+  control measurement distances ("measurements"), the p-value of the
+  Kolmogorov-Smirnov test comparing test and control distributions
+  ("KS.pvalue"), or a ggplot object plotting the test and control distributions
   ("plot"). Default "KS.pvalue"}
-  \item{ctrl_iterations}{The number of iterations to test for the control 
+  \item{ctrl_iterations}{The number of iterations to test for the control
   distribution. Default 10000.}
+}
+\value{
+\item{output = "KS.pvalue"}{the p-vaalue of the Kolmogorov-Smirnov test
+comparing test and control distributions}
+
+\item{output = "plot"}{a ggplot object plotting the test and control
+distributions}
+
+\item{output = "measurements"}{a list or test and control measurement distances}
 }

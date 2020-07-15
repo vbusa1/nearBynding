@@ -11,7 +11,6 @@ ExtractTranscriptomeSequence(transcript_list,
                                RNA_fragment="exon",
                                exome_prefix="exome")
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{transcript_list}{a vector of transcript names that represent the most
   expressed isoform of their respective genes and correspond to GTF annotation
@@ -25,5 +24,8 @@ ExtractTranscriptomeSequence(transcript_list,
   file but often include "gene", "transcript", "exon", "CDS", "five_prime_utr",
   and/or "three_prime_utr". Default "exon" for the whole exome.}
   \item{exome_prefix}{The prefix for all output files. Default "exome"}
+}
+\value{
+writes FASTA file of transcriptome sequences into directory
 }
 \author{Veronica Busa}

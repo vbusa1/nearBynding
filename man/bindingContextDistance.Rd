@@ -45,3 +45,20 @@ bindingContextDistance(dir_stereogene_output = ".",
   holistic binding context, while large ranges amplify distal noise in the
   binding data. Cannot exceed wSize/2 from write_config. Default c(-200, 200)}
 }
+\value{
+Wasserstein distance between the two protein file sets provided for the RNA
+structure context specified, minus the input binding signal if applicable
+}
+\examples{
+## pull example files
+get_outfiles()
+## distance between stem and hairpin contexts
+bindingContextDistance(RNA_context = "chr4and5_3UTR_stem_liftOver",
+                       protein_file = "chr4and5_liftOver",
+                       RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+
+## distance between internal and hairpin contexts
+bindingContextDistance(RNA_context = "chr4and5_3UTR_internal_liftOver",
+                       protein_file = "chr4and5_liftOver",
+                       RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+}

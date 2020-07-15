@@ -18,13 +18,20 @@ CleanBAMtoBG(in_bam,
   \item{unwanted_chromosomes}{A vector of unwanted chromosomes that are present
   in the BAM file.}
 }
+\value{
+deposits bedGraph from BAM in same directory
+}
+\examples{
+bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
+#sort BAM first
+sorted_bam<-Rsamtools::sortBam(bam, "chr4and5_sorted")
+CleanBAMtoBG(in_bam = sorted_bam)
+
+\dontrun{
+## If BAM has unwanted chromosome "EBV"
+CleanBAMtoBG(in_bam = "ENCFF288LEG.bam",
+              unwanted_chromosomes = "EBV")
+}
+}
 
 \author{Veronica Busa}
-
-
-\examples{
-\dontrun{
-CleanBAMtoBG(in_bam="ENCFF288LEG.bam",
-unwanted_chromosomes="EBV")
-}
-}
