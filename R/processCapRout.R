@@ -113,8 +113,7 @@ processCapRout<-function(CapR_outfile,
                                          "_bulge.bedGraph"),
                        chain = chain,
                        output_bg = paste0(output_prefix,
-                                          "_bulge_liftOver.bedGraph"),
-                       write_chr = FALSE)
+                                          "_bulge_liftOver.bedGraph"))
     # exterior
     df_exterior<-bg_shell
     df_exterior$score<-exterior_cut %>% as.numeric()
@@ -126,8 +125,7 @@ processCapRout<-function(CapR_outfile,
                                          "_exterior.bedGraph"),
                        chain = chain,
                        output_bg = paste0(output_prefix,
-                                          "_exterior_liftOver.bedGraph"),
-                       write_chr = FALSE)
+                                          "_exterior_liftOver.bedGraph"))
     # hairpin
     df_hairpin<-bg_shell
     df_hairpin$score<-hairpin_cut %>% as.numeric()
@@ -139,8 +137,7 @@ processCapRout<-function(CapR_outfile,
                                          "_hairpin.bedGraph"),
                        chain = chain,
                        output_bg = paste0(output_prefix,
-                                          "_hairpin_liftOver.bedGraph"),
-                       write_chr = FALSE)
+                                          "_hairpin_liftOver.bedGraph"))
     # internal
     df_internal<-bg_shell
     df_internal$score<-internal_cut %>% as.numeric()
@@ -152,8 +149,7 @@ processCapRout<-function(CapR_outfile,
                                          "_internal.bedGraph"),
                        chain = chain,
                        output_bg = paste0(output_prefix,
-                                          "_internal_liftOver.bedGraph"),
-                       write_chr = FALSE)
+                                          "_internal_liftOver.bedGraph"))
     # multibranch
     df_multibranch<-bg_shell
     df_multibranch$score<-multibranch_cut %>% as.numeric()
@@ -165,8 +161,7 @@ processCapRout<-function(CapR_outfile,
                                          "_multibranch.bedGraph"),
                        chain = chain,
                        output_bg = paste0(output_prefix,
-                                          "_multibranch_liftOver.bedGraph"),
-                       write_chr = FALSE)
+                                          "_multibranch_liftOver.bedGraph"))
     # stem
     df_stem<-bg_shell
     df_stem$score<-stem_cut %>% as.numeric()
@@ -177,6 +172,5 @@ processCapRout<-function(CapR_outfile,
     liftOverToExomicBG(input = paste0(output_prefix, "_stem.bedGraph"),
                        chain = chain,
                        output_bg = paste0(output_prefix,
-                                          "_stem_liftOver.bedGraph"),
-                       write_chr = FALSE)
+                                          "_stem_liftOver.bedGraph"))
 }

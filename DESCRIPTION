@@ -50,4 +50,5 @@ Collate: 'assessGrouping.R'
         'visualizeStereogene.R'
         'write_config.R'
         'write_fasta.R'
+        'getChainChrSize.R'
 RoxygenNote: 7.1.1

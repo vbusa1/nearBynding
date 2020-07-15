@@ -15,6 +15,7 @@ export(write_fasta)
 export(ExtractTranscriptomeSequence)
 export(visualizeStereogene)
 export(get_outfiles)
+export(getChainChrSize)
 
 import(rtracklayer)
 import(S4Vectors)

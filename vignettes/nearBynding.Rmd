@@ -184,6 +184,7 @@ in the final protein binding analysis.
 ```{r}
 liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
                    chain = "test.chain",
+                   chrom_size = "chr4and5_3UTR.size",
                    output_bg = "chr4and5_liftOver.bedGraph")
 ```
 
@@ -198,7 +199,6 @@ files.
 
 
 ```{r, echo=F}
-out<- 
 processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out", 
                                           package="nearBynding"),
                chain = "test.chain",
