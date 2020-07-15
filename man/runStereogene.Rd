@@ -21,7 +21,7 @@ runStereogene(track_files,
   in the StereoGene README. Optional}
 }
 \value{
-generates StereoGene output files ini directory
+generates StereoGene output files in directory
 }
 \references{
 Stavrovskaya, Elena D., Tejasvi Niranjan, Elana J. Fertig, Sarah J. Wheelan,
