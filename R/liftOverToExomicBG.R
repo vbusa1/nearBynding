@@ -9,11 +9,10 @@
 #' @param chain The name of the chain file to be used for liftOver. Format
 #' should be like chain files derived from GRangesMappingToChainFile function.
 #' Required
+#' @param chrom_size Name of chromosome size file in two-column format without
+#' a header where first column is chromosome name and second column is
+#' chromosome length, as from liftOverToExomicBG Required
 #' @param output_bg The name of the lifted-over output bedGraph file. Required
-#' @param write_chr Whether to output a table of mapped chromosome names and
-#' lengths. Recommended TRUE for downstream pipeline functions. Default TRUE
-#' @param out_chr Name of the chromosome names and lengths table file. Required
-#' if write_chr is TRUE
 #' @param format File type of input file(s). Recommended "BED" or "bedGraph".
 #' Default "bedGraph"
 #'
@@ -21,9 +20,8 @@
 
 liftOverToExomicBG<-function(input,
                              chain,
+                             chrom_size,
                              output_bg,
-                             write_chr = TRUE,
-                             out_chr,
                              format = "bedGraph"){
     #allow flexible naming systems for forward and reverse files
     if(length(input) == 2){
@@ -61,35 +59,9 @@ liftOverToExomicBG<-function(input,
     liftOver<-bind_ranges(liftOver_minus, liftOver_plus)
 
     #must re-introduce chromosome lengths into seqinfo
-    seqnames_liftedOver <- c()
-    for(chr in names(chain_object)){
-        seqnames_liftedOver <- append(seqnames_liftedOver,
-                                unique(space(chain_object@listData[[chr]])))
-    }
-    lines <- c()
-    for (chr in seqnames_liftedOver) {
-        con <- file(chain, "r")
-        while(TRUE) {
-            line = readLines(con, 1)
-            if(length(line) == 0) break
-            else if(grepl(chr, line)){
-                lines <- c(lines, line)
-                break
-            }
-        }
-        close(con)
-    }
-    seq_info<-do.call(rbind.data.frame, lapply(lines,
-                            function(x){strsplit(x, " ") %>%
-                            unlist()}))[,8:9] %>%
-        unique()
+    seq_info<-read.delim(chrom_size, header=FALSE)
     colnames(seq_info)<-c("chr", "length")
-    #save seq.length file
-    if(write_chr == TRUE){
-        if(missing(out_chr)){
-            stop("out_chr is required when write_chr is TRUE")}
-        write.table(seq_info, out_chr, sep="\t",
-                    col.names = FALSE, row.names = FALSE, quote = FALSE)}
+
     liftOver@seqinfo@seqlengths<-
         seq_info[which(seq_info$chr %in% liftOver@seqinfo@seqnames),2] %>%
 

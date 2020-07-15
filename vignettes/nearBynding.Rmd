@@ -118,6 +118,14 @@ GenomeMappingToChainFile(genome_gtf = gtf,
                          alignment = "hg38")
 ```
 
+A file containing the sizes of each concatenated chromosome in the chain file 
+will be required for downstream analysis.
+
+```{r}
+getChainChrSize(chain = "test.chain", 
+                out_chr = "chr4and5_3UTR.size")
+```
+
 ## Fold RNA via CapR
 
 In order to fold the 3'UTRs, the sequences must first be extracted. This is 
@@ -154,8 +162,8 @@ distance between base-paired nucleotides submitted to the CapR algorithm.
 ## Map to Transcriptome
 
 The nearBynding pipeline can accomodate either a BAM file of aligned CLIP-seq 
-reads or a BED file of peak intervals. BAM and BED files must be sorted and 
-converted to a bedGraph file.
+reads or a BED file of peak intervals. BAM files must be sorted and 
+converted to a bedGraph file first, whereas BED files can be read-in directly.
 
 #### BAM file input
 
@@ -166,33 +174,20 @@ sorted_bam<-sortBam(bam, "chr4and5_sorted")
 CleanBAMtoBG(in_bam = sorted_bam)
 ```
 
-#### BED file input
-
-Note: the sorting function is built-in to the cleaning function for BED files.
-
-```{r, eval = F}
-# Convert BAM to BED for sake of example
-# Don't actually need to use CleanBEDtoBG unless starting from a BED file
-out_bed <- "bamto.bed"
-system2("bedtools", paste0("bamtobed -i ", bam, " > ", out_bed))
-
-CleanBEDtoBG(in_bed = out_bed,
-             alignment = "hg38")
-```
-
 #### Map Protein Binding and RNA Structure to the Transcriptome
 
-The bedGraph files can then be mapped onto the concatenated transcriptome using 
-the chain file created by `GenomeMappingToChainFile()`. This way, only the 
-protein binding from transcriptomic regions of interest will be considered in 
-the final protein binding analysis.
+BED or bedGraph files can then be mapped onto the concatenated transcriptome 
+using the chain file created by `GenomeMappingToChainFile()`. This way, only 
+the protein binding from transcriptomic regions of interest will be considered 
+in the final protein binding analysis.
 
 ```{r}
 liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
                    chain = "test.chain",
-                   output_bg = "chr4and5_liftOver.bedGraph",
-                   out_chr = "chr4and5_3UTR.size")
+                   output_bg = "chr4and5_liftOver.bedGraph")
 ```
+
+For BED file inputs, use the additional argument `format = "BED"`.
 
 The RNA structure information from the CapR output also needs to mapped onto 
 the concatenated transcriptome. There are six different binding contexts 
@@ -222,10 +217,9 @@ processCapRout(CapR_outfile = "chr4and5_3UTR.out",
 ```
 
 It is possible for users to input their own RNA structure information rather 
-than using CapR. If the information is in BED format, `CleanBEDtoBG()` can be 
-applied to RNA structure data to convert it to a bedGraph. That bedGraph should 
-then be input into `liftOverToExomicBG()` to make sure that the RNA structure 
-data is mapped to the same transcriptome as the protein binding data.
+than using CapR. The information should be in BED file format and can be input 
+into `liftOverToExomicBG()` to map the RNA structure data to the same 
+transcriptome as the protein binding data.
 
 ## Run StereoGene
 

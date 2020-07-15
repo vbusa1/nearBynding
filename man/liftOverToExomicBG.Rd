@@ -9,8 +9,6 @@ to transcriptome.}
 liftOverToExomicBG(input,
                      chain,
                      output_bg,
-                     write_chr = TRUE,
-                     out_chr,
                      format = "bedGraph")
 }
 \arguments{
@@ -20,10 +18,6 @@ liftOverToExomicBG(input,
   \item{chain}{The name of the chain file to be used for liftOver. Format should
   be like chain files derived from GRangesMappingToChainFile function. Required}
   \item{output_bg}{The name of the lifted-over output bedGraph file. Required}
-  \item{write_chr}{Whether to output a table of mapped chromosome names and
-  lengths. Recommended TRUE for downstream pipeline functions. Default TRUE}
-  \item{out_chr}{Name of the chromosome names and lengths table file. Required
-  if write_chr is TRUE}
   \item{format}{File type of input file(s). Recommended "BED" or "bedGraph".
   Default "bedGraph"}
 }
@@ -48,7 +42,6 @@ CleanBAMtoBG(in_bam = sorted_bam)
 
 liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
                    chain = "test.chain",
-                   output_bg = "chr4and5_liftOver.bedGraph",
-                   out_chr = "chr4and5_3UTR.size")
+                   output_bg = "chr4and5_liftOver.bedGraph")
 }
 \author{Veronica Busa}

@@ -28,6 +28,32 @@ processCapRout(CapR_outfile,
   chain files derived from GRangesMappingToChainFile. Required}
 }
 \value{
-wrtes bedGraph files of structure signal for each of the six CapR contexts
+writes bedGraph files of structure signal for each of the six CapR contexts
 1) mapped to the genome and 2) lifted-over to the transcriptome
+}
+\examples{
+## make chain file
+load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+                 package="nearBynding")
+GenomeMappingToChainFile(genome_gtf = gtf,
+                         out_chain_name = "test.chain",
+                         RNA_fragment = "three_prime_utr",
+                         transcript_list = transcript_list,
+                         alignment = "hg38")
+## get chromosome size file
+getChainChrSize(chain = "test.chain",
+                out_chr = "chr4and5_3UTR.size")
+
+## run CapR
+chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa",
+                                  package="nearBynding")
+runCapR(chr4and5_3UTR.fa)
+
+processCapRout(CapR_outfile = "chr4and5_3UTR.out",
+               chain = "test.chain",
+               output_prefix = "chr4and5_3UTR",
+               chrom_size = "chr4and5_3UTR.size",
+               genome_gtf = gtf,
+               RNA_fragment = "three_prime_utr")
 }
