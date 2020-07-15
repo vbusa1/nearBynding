@@ -59,7 +59,7 @@ processCapRout<-function(CapR_outfile,
 
     # double check that transcriptome length total (chr size file)
     # equals number of folded transcript positions
-    chr_size<-read.delim(chrom_size, header=F)
+    chr_size<-read.delim(chrom_size, header=FALSE)
 
     if(sum(chr_size$V2)-length(bulge_cut) != 0){
         stop("The length of the CapR output does not equal the length of
@@ -68,7 +68,7 @@ processCapRout<-function(CapR_outfile,
     }
 
     gtf <- import(genome_gtf)
-    gtf <- gtf %>% filter(type == RNA_fragment)
+    gtf <- with(gtf, plyranges::filter(gtf, type == RNA_fragment))
 
     # write bedgraph file for each transcript
     # create bedGraph for each structure separately
@@ -80,7 +80,7 @@ processCapRout<-function(CapR_outfile,
         bg_shell[n:(n + sum(gtf_t@ranges@width)-1),"chr"]<-
             gtf_t@seqnames@values %>% as.character()
         if(gtf_t@strand@values[1] == "+"){
-            for(unit in 1:length(gtf_t)){
+            for(unit in seq_len(length(gtf_t))){
                 gtf_t_unit<-gtf_t[unit]
                 bg_shell[n:(n+gtf_t_unit@ranges@width-1),"start"]<-
                     gtf_t_unit@ranges@start:(gtf_t_unit@ranges@start +
@@ -92,7 +92,7 @@ processCapRout<-function(CapR_outfile,
                 gtf_t_unit<-gtf_t[unit]
                 bg_shell[n:(n+gtf_t_unit@ranges@width-1),"start"]<-
                     rev(gtf_t_unit@ranges@start:(gtf_t_unit@ranges@start +
-                                                     gtf_t_unit@ranges@width-1))
+                                                 gtf_t_unit@ranges@width-1))
                 n<-n+gtf_t_unit@ranges@width
             }
         }
@@ -106,7 +106,7 @@ processCapRout<-function(CapR_outfile,
     df_bulge<-bg_shell
     df_bulge$score<-bulge_cut %>% as.numeric()
     GRanges_bulge<-makeGRangesFromDataFrame(df_bulge,
-                                            keep.extra.columns = T)
+                                            keep.extra.columns = TRUE)
     export.bedGraph(GRanges_bulge, paste0(output_prefix,
                                           "_bulge.bedGraph"))
     liftOverToExomicBG(input = paste0(output_prefix,
@@ -114,12 +114,12 @@ processCapRout<-function(CapR_outfile,
                        chain = chain,
                        output_bg = paste0(output_prefix,
                                           "_bulge_liftOver.bedGraph"),
-                       write_chr = F)
+                       write_chr = FALSE)
     # exterior
     df_exterior<-bg_shell
     df_exterior$score<-exterior_cut %>% as.numeric()
     GRanges_exterior<-makeGRangesFromDataFrame(df_exterior,
-                                               keep.extra.columns = T)
+                                               keep.extra.columns = TRUE)
     export.bedGraph(GRanges_exterior, paste0(output_prefix,
                                              "_exterior.bedGraph"))
     liftOverToExomicBG(input = paste0(output_prefix,
@@ -127,12 +127,12 @@ processCapRout<-function(CapR_outfile,
                        chain = chain,
                        output_bg = paste0(output_prefix,
                                           "_exterior_liftOver.bedGraph"),
-                       write_chr = F)
+                       write_chr = FALSE)
     # hairpin
     df_hairpin<-bg_shell
     df_hairpin$score<-hairpin_cut %>% as.numeric()
     GRanges_hairpin<-makeGRangesFromDataFrame(df_hairpin,
-                                              keep.extra.columns = T)
+                                              keep.extra.columns = TRUE)
     export.bedGraph(GRanges_hairpin, paste0(output_prefix,
                                             "_hairpin.bedGraph"))
     liftOverToExomicBG(input = paste0(output_prefix,
@@ -140,12 +140,12 @@ processCapRout<-function(CapR_outfile,
                        chain = chain,
                        output_bg = paste0(output_prefix,
                                           "_hairpin_liftOver.bedGraph"),
-                       write_chr = F)
+                       write_chr = FALSE)
     # internal
     df_internal<-bg_shell
     df_internal$score<-internal_cut %>% as.numeric()
     GRanges_internal<-makeGRangesFromDataFrame(df_internal,
-                                               keep.extra.columns = T)
+                                               keep.extra.columns = TRUE)
     export.bedGraph(GRanges_internal, paste0(output_prefix,
                                              "_internal.bedGraph"))
     liftOverToExomicBG(input = paste0(output_prefix,
@@ -153,12 +153,12 @@ processCapRout<-function(CapR_outfile,
                        chain = chain,
                        output_bg = paste0(output_prefix,
                                           "_internal_liftOver.bedGraph"),
-                       write_chr = F)
+                       write_chr = FALSE)
     # multibranch
     df_multibranch<-bg_shell
     df_multibranch$score<-multibranch_cut %>% as.numeric()
     GRanges_multibranch<-makeGRangesFromDataFrame(df_multibranch,
-                                                  keep.extra.columns = T)
+                                                  keep.extra.columns = TRUE)
     export.bedGraph(GRanges_multibranch, paste0(output_prefix,
                                                 "_multibranch.bedGraph"))
     liftOverToExomicBG(input = paste0(output_prefix,
@@ -166,17 +166,17 @@ processCapRout<-function(CapR_outfile,
                        chain = chain,
                        output_bg = paste0(output_prefix,
                                           "_multibranch_liftOver.bedGraph"),
-                       write_chr = F)
+                       write_chr = FALSE)
     # stem
     df_stem<-bg_shell
     df_stem$score<-stem_cut %>% as.numeric()
     GRanges_stem<-makeGRangesFromDataFrame(df_stem,
-                                           keep.extra.columns = T)
+                                           keep.extra.columns = TRUE)
     export.bedGraph(GRanges_stem, paste0(output_prefix,
                                          "_stem.bedGraph"))
     liftOverToExomicBG(input = paste0(output_prefix, "_stem.bedGraph"),
                        chain = chain,
                        output_bg = paste0(output_prefix,
                                           "_stem_liftOver.bedGraph"),
-                       write_chr = F)
+                       write_chr = FALSE)
 }

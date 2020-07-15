@@ -65,7 +65,7 @@ GenomeMappingToChainFile<-function(genome_gtf,
     }
 
     gtf<-import(genome_gtf)
-    gtf<-gtf %>% plyranges::filter(type == RNA_fragment)
+    gtf <- with(gtf, plyranges::filter(gtf, type == RNA_fragment))
     gtf_transcripts<-gtf[(elementMetadata(gtf)[,"transcript_id"] %in%
                               transcript_list)]
 
@@ -85,7 +85,8 @@ GenomeMappingToChainFile<-function(genome_gtf,
     for(str in c("-", "+")){
         if(verbose == TRUE){print(paste("Chromosome", chr,
                                       "strand", str, "starting"))}
-        gtf_hold <- gtf_transcripts %>% plyranges::filter(strand == str, seqnames == chr)
+        gtf_hold <- gtf_transcripts %>% plyranges::filter(strand == str,
+                                                          seqnames == chr)
         # in case of chromosomes without data on one strand
         if(length(ranges(gtf_hold)) == 0){next}
         length_chr<-sum(width(ranges(gtf_hold)))
@@ -128,8 +129,8 @@ GenomeMappingToChainFile<-function(genome_gtf,
         row <- row + nrow(txpt) + 2
         }
         # append the chains for the chromosome to the chain file
-        write.table(chrom_chains, file=out_chain_name, append=T, sep="\t",
-                    row.names = F, col.names = F, quote = F, na="")
+        write.table(chrom_chains, file=out_chain_name, append=TRUE, sep="\t",
+                    row.names = FALSE, col.names = FALSE, quote = FALSE, na="")
         if(verbose==TRUE){print(paste("Chromosome", chr, "strand", str,
                                       "complete"))}
     }

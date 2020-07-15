@@ -43,6 +43,7 @@ visualizeStereogene<-function(dir_stereogene_output = ".",
                                      input. This is likely in error")}
     if(length(protein_file_input) > 1){stop("Only input one background track
                                           per protein.")}
+    dist_1 <- NULL
     for(n in seq(length(protein_file))){
         assign(paste0("dist_", n),
                read.table(paste0(dir_stereogene_output, "/", context_file,
@@ -51,8 +52,8 @@ visualizeStereogene<-function(dir_stereogene_output = ".",
     }
     if(!is.null(protein_file_input)){
         dist_input <- read.table(paste0(dir_stereogene_output, "/",
-                                        context_file, "_liftOver~",
-                                              protein_file_input, '.dist'), header=TRUE)
+                                    context_file, "_liftOver~",
+                                    protein_file_input, '.dist'), header=TRUE)
     }
     dist<-as.data.frame(matrix(NA, ncol=(2*length(protein_file)) + 1,
                                      nrow = nrow(dist_1)))
@@ -67,7 +68,7 @@ visualizeStereogene<-function(dir_stereogene_output = ".",
     }
     if(!is.null(protein_file_input)){
         dist[, 2:(length(protein_file)+1)]<-dist[,
-                                                             2:(length(protein_file)+1)]-dist_input$Fg
+                                2:(length(protein_file)+1)]-dist_input$Fg
         dist[, (length(protein_file)+2):ncol(dist)]<-
             dist[, (length(protein_file)+2):ncol(dist)]-
             dist_input$Bkg
@@ -78,17 +79,17 @@ visualizeStereogene<-function(dir_stereogene_output = ".",
         dist$Bkg<-dist$Bkg1
     }else{
         dist$Fg<-rowMeans(dist[,
-                                           2:(length(protein_file)+1)])
+                    2:(length(protein_file)+1)])
         dist$Fg_se<-rowSds(as.matrix(dist[,
-                                                      2:(length(protein_file)+1)]))/sqrt(length(protein_file))
+                    2:(length(protein_file)+1)]))/sqrt(length(protein_file))
         dist$Bkg<-rowMeans(dist[,
-                                            (length(protein_file)+2):((length(protein_file)*2)+1)])
+                    (length(protein_file)+2):((length(protein_file)*2)+1)])
         dist$Bkg_se<-rowSds(as.matrix(dist[,
-                                                       (length(protein_file)+2):((length(protein_file)*2)+1)]))/
+                    (length(protein_file)+2):((length(protein_file)*2)+1)]))/
             sqrt(length(protein_file))
     }
 
-    if(heatmap == F){ # create line plot
+    if(heatmap == FALSE){ # create line plot
         out_file<- paste0(out_file, ".pdf")
         # save plot to pdf
         pdf(out_file, height = 4, width = 6)
@@ -117,7 +118,7 @@ visualizeStereogene<-function(dir_stereogene_output = ".",
                dist$x, dist$Fg+dist$Fg_se,
                length=0, angle=90, code=3,
                col = rgb(blue = 1, red = 0, green = 0, alpha = .5))
-        if(legend == T){
+        if(legend == TRUE){
             legend("bottomright", legend=c("Background", "Signal"),
                    col=c("black", "blue"), lty=1, cex=0.8)
         }
@@ -138,13 +139,13 @@ visualizeStereogene<-function(dir_stereogene_output = ".",
                          min(dist$Fg)))-.1
             y_lim<-c(-max(abs(max_y), abs(min_y)), max(abs(max_y), abs(min_y)))
         }
-        key = T
-        if(legend == F){key = F}
+        key = TRUE
+        if(legend == FALSE){key = FALSE}
         # make plot
         jpeg(out_file, height = 4, width = 15, units = "in", res = 100)
         heatmap.2(heatmap_plot, Rowv = NA, Colv = NA, col = redblue(256),
-                  dendrogram = "none", labCol = F, trace = "none",
-                  density.info = "none", symkey = F, key = key,
+                  dendrogram = "none", labCol = FALSE, trace = "none",
+                  density.info = "none", symkey = FALSE, key = key,
                   colsep = c(zero - 1, zero), sepcolor = "grey",
                   margins = c(1, 20),
                   breaks = seq(y_lim[1], y_lim[2], length.out = 257))

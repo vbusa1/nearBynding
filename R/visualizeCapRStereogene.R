@@ -42,6 +42,7 @@ visualizeCapRStereogene<-function(dir_stereogene_output = ".",
                                      input. This is likely in error")}
     if(length(protein_file_input) > 1){stop("Only input one background track
                                           per protein.")}
+    dist_bulge_1 <- NULL
     for(n in seq(length(protein_file))){
         assign(paste0("dist_bulge_", n),
                read.table(paste0(dir_stereogene_output, "/", CapR_prefix,
@@ -249,7 +250,7 @@ visualizeCapRStereogene<-function(dir_stereogene_output = ".",
 
     }
 
-    if(heatmap == F){ # create line plot
+    if(heatmap == FALSE){ # create line plot
         out_file<- paste0(out_file, ".pdf")
         # save plot to pdf
         pdf(out_file, height = 4, width = 6)
@@ -338,7 +339,7 @@ visualizeCapRStereogene<-function(dir_stereogene_output = ".",
                dist_exterior$x, dist_exterior$Fg+dist_exterior$Fg_se,
                length=0, angle=90, code=3,
                col = rgb(blue = 1, red = 0, green = 1, alpha = .5))
-        if(legend == T){
+        if(legend == TRUE){
             legend("bottomright", legend=c("Background", "Bulge", "Multibranch",
                                     "Stem", "Hairpin", "Internal", "Exterior"),
                    col=c("black", "blue", "red", "green", "purple",
@@ -373,13 +374,13 @@ visualizeCapRStereogene<-function(dir_stereogene_output = ".",
                          min(dist_bulge$Fg)))-.1
             y_lim<-c(-max(abs(max_y), abs(min_y)), max(abs(max_y), abs(min_y)))
         }
-        key = T
-        if(legend == F){key = F}
+        key = TRUE
+        if(legend == FALSE){key = FALSE}
         # make plot
         jpeg(out_file, height = 4, width = 8, units = "in", res = 300)
         heatmap.2(heatmap_plot, Rowv = NA, Colv = NA, col = redblue(256),
-                  dendrogram = "none", labCol = F, trace = "none",
-                  density.info = "none", symkey = F, key = key,
+                  dendrogram = "none", labCol = FALSE, trace = "none",
+                  density.info = "none", symkey = FALSE, key = key,
                   colsep = c(zero - 1, zero), sepcolor = "grey",
                   margins = c(1, 8),
                   breaks = seq(y_lim[1], y_lim[2], length.out = 257))

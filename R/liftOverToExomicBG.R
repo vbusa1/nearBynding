@@ -53,9 +53,9 @@ liftOverToExomicBG<-function(input,
     liftOver_minus <- liftOver_minus[(elementNROWS(range(liftOver_minus)) == 1L)] %>%
         unlist()
     liftOver_plus <- liftOver_plus[lapply(as.character(liftOver_plus@seqnames),
-                            function(x){grepl("plus", x) == T}) %>% unlist()]
+                            function(x){grepl("plus", x) == TRUE}) %>% unlist()]
     liftOver_minus <- liftOver_minus[lapply(as.character(liftOver_minus@seqnames),
-                            function(x){grepl("minus", x) == T}) %>% unlist()]
+                            function(x){grepl("minus", x) == TRUE}) %>% unlist()]
     liftOver<-bind_ranges(liftOver_minus, liftOver_plus)
 
     #must re-introduce chromosome lengths into seqinfo
@@ -87,7 +87,7 @@ liftOverToExomicBG<-function(input,
         if(missing(out_chr)){
             stop("out_chr is required when write_chr is TRUE")}
         write.table(seq_info, out_chr, sep="\t",
-                                   col.names = F, row.names = F, quote = F)}
+                    col.names = FALSE, row.names = FALSE, quote = FALSE)}
     liftOver@seqinfo@seqlengths<-
         seq_info[which(seq_info$chr %in% liftOver@seqinfo@seqnames),2] %>%
 

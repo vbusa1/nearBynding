@@ -44,14 +44,15 @@ assessGrouping<-function(distances,
         stop("The first two columns of the annotations data frame should be
              sample name and the category of the sample for grouping")
     }
-
-    colnames(distances)[1:3]<-c("Var1", "Var2", "dist")
-    colnames(annotations)[1:2]<-c("sample", "category")
+    dist_cols<-c("Var1", "Var2", "dist")
+    ann_cols<-c("sample", "category")
+    colnames(distances)[c(1,2,3)]<-dist_cols
+    colnames(annotations)[c(1,2)]<-ann_cols
 
     # filter for distances with proper annotations
     test_distances<-dplyr::filter(distances, Var1 %in% annotations$sample &
                                Var2 %in% annotations$sample)
-    test_distances<-test_distances[!duplicated(t(apply(test_distances[,1:2],
+    test_distances<-test_distances[!duplicated(t(apply(test_distances[,c(1,2)],
                                         1, sort))),] # remove duplicate pairs
     test_distances<-dplyr::filter(test_distances, Var1 != Var2)
     test_categories<-dplyr::filter(annotations, sample %in% distances$Var1 |
@@ -105,7 +106,8 @@ assessGrouping<-function(distances,
         group <- c(rep("ctrl", length(ctrl_output)),
                    rep("test", length(test_output)))
         dat_plot <- data.frame(KSD = c(ctrl_output, test_output), group = group)
-        plot<-ggplot(dat_plot, aes(x = KSD, group = group, color = group)) +
+        plot<-ggplot(dat_plot,
+                     aes_string(x = KSD, group = group, color = group)) +
             stat_ecdf(size=1) +
             theme_classic() +
             theme(legend.position ="top") +

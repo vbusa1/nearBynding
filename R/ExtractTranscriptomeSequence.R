@@ -32,7 +32,7 @@ ExtractTranscriptomeSequence<-function(transcript_list,
         return("Please provide a genome GTF file via the genome_gtf parameter.")
     }else{
         gtf <- import(genome_gtf)
-        gtf <- gtf %>% plyranges::filter(type == RNA_fragment)
+        gtf <- with(gtf, plyranges::filter(gtf, type == RNA_fragment))
         gtf_transcripts <-gtf [(elementMetadata(gtf)[,"transcript_id"] %in%
                                   transcript_list)]
         input_bed <- paste0(exome_prefix, ".bed")
@@ -43,8 +43,8 @@ ExtractTranscriptomeSequence<-function(transcript_list,
                      strands = strand(gtf_transcripts))
         #remove junky transcripts and write BED file
         df <- filter(df, nchar(as.character(seqnames)) < 6)
-        write.table(df, input_bed, sep="\t", quote = F,
-                    row.names = F, col.names = F)
+        write.table(df, input_bed, sep="\t", quote = FALSE,
+                    row.names = FALSE, col.names = FALSE)
     }
 
     # call bedtools on local system, get FASTA sequences
@@ -55,7 +55,8 @@ ExtractTranscriptomeSequence<-function(transcript_list,
     # FASTA sequences are fragmented;
     # must compile sequences into whole transcripts to input into
     # CapR folding algorithm
-    edit_tbl <- read.table(paste0(exome_prefix, ".tmp"), stringsAsFactors = F)
+    edit_tbl <- read.table(paste0(exome_prefix, ".tmp"),
+                           stringsAsFactors = FALSE)
     system2("rm", paste0(exome_prefix, ".tmp"))
     edit_tbl$V1 <- substr(edit_tbl$V1, 1, nchar(edit_tbl$V1) - 2)
     edit_tbl$strand <- df$strand[match(df$names, edit_tbl$V1)] #get strand info

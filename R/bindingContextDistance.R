@@ -5,19 +5,20 @@
 #'
 #' @param dir_stereogene_output Directory of Stereogene output for first
 #' protein. Default current directory.
-#' @param RNA_context Name of the RNA context file input to Stereogene.File names
-#' must exclude extensions such as ".bedGraph". Requred
-#' @param protein_file A vector of at least one protein file name to be averaged
-#' for calculation of distance. File names must exclude extensions such as
-#' ".bedGraph". All files in the list should be experimental/biological
+#' @param RNA_context Name of the RNA context file input to Stereogene.File
+#' names must exclude extensions such as ".bedGraph". Requred
+#' @param protein_file A vector of at least one protein file name to be
+#' averaged for calculation of distance. File names must exclude extensions
+#' such as ".bedGraph". All files in the list should be experimental/biological
 #' replicates. Required.
 #' @param protein_file_input A protein file name of background input to be
 #' subtracted from protein_file signal. File name must exclude extension. Only
 #' one input file is permitted. Optional.
 #' @param dir_stereogene_output_2 Directory of Stereogene output for second
 #' protein. Default dir_stereogene_output.
-#' @param RNA_context_2 Name of the RNA context file input to Stereogene.File names
-#' must exclude extensions such as ".bedGraph". Default same as RNA_context.
+#' @param RNA_context_2 Name of the RNA context file input to Stereogene. File
+#' names must exclude extensions such as ".bedGraph". Default same as
+#' RNA_context.
 #' @param protein_file_2 Similar to protein_file. A second vector of at least
 #' one protein file name to be averaged for calculation of distance. File names
 #' must exclude extensions such as ".bedGraph". All files in the list should be
@@ -68,6 +69,7 @@ bindingContextDistance<-function(dir_stereogene_output = ".",
     if(is.null(protein_file_2)){
         protein_file_2<-protein_file
     }
+    dist_1 <- NULL
     for(n in seq(length(protein_file))){
         assign(paste0("dist_", n),
                read.table(paste0(dir_stereogene_output, "/", RNA_context, "~",
@@ -78,10 +80,11 @@ bindingContextDistance<-function(dir_stereogene_output = ".",
     if(!is.null(protein_file_input)){
         dist_input <- read.table(paste0(dir_stereogene_output,
                                         "/", RNA_context, "~",
-                                        protein_file_input,'.dist'), header=TRUE) %>%
+                                        protein_file_input,'.dist'),
+                                 header=TRUE) %>%
             dplyr::filter(range[1] <= x, x <= range[2])
     }
-    dist<-as.data.frame(matrix(NA, ncol=(2*length(protein_file)) + 1,
+    dist <- as.data.frame(matrix(NA, ncol=(2*length(protein_file)) + 1,
                                nrow = nrow(dist_1)))
     colnames(dist)<-c("x", paste0("Fg", seq(length(protein_file))),
                       paste0("Bkg", seq(length(protein_file))))
@@ -101,11 +104,11 @@ bindingContextDistance<-function(dir_stereogene_output = ".",
         dist$Fg<-rowMeans(dist[, 2:(length(protein_file) + 1)])
         dist$Fg_se<-rowSds(as.matrix(dist[,
                                           2:(length(protein_file) +
-                                                 1)]))/sqrt(length(protein_file))
+                                            1)]))/sqrt(length(protein_file))
         dist$Bkg<-rowMeans(dist[, (length(protein_file) +
                                        1):(ncol(dist) - 2)])
         dist$Bkg_se<-rowSds(as.matrix(dist[, (length(protein_file) +
-                                                  1):(ncol(dist) - 3)]))/sqrt(length(protein_file))
+                            1):(ncol(dist) - 3)]))/sqrt(length(protein_file))
     } else{
         dist$Fg<-dist[, 2]
         dist$Fg_se <- 0
@@ -146,23 +149,23 @@ bindingContextDistance<-function(dir_stereogene_output = ".",
                                                        1)]-second_dist_input$Fg
         second_dist[, (length(protein_file_2) +
                            1):ncol(second_dist)]<-second_dist[ ,
-                                                               (length(protein_file_2) +
-                                                                    1):ncol(second_dist)] -
+                                                 (length(protein_file_2) +
+                                                    1):ncol(second_dist)] -
             second_dist_input$Bkg
     }
     if(length(protein_file) > 1){
         second_dist$Fg <- rowMeans(second_dist[,
                                                2:(length(protein_file) + 1)])
         second_dist$Fg_se <- rowSds(as.matrix(second_dist[,
-                                                          2:(length(protein_file) +
-                                                                 1)]))/sqrt(length(protein_file))
+                                                 2:(length(protein_file) +
+                                               1)]))/sqrt(length(protein_file))
         second_dist$Bkg <- rowMeans(second_dist[,
                                                 (length(protein_file) +
-                                                     1):(ncol(second_dist) - 2)])
+                                                    1):(ncol(second_dist) - 2)])
         second_dist$Bkg_se<-rowSds(as.matrix(second_dist[,
-                                                         (length(protein_file) +
-                                                              1):(ncol(second_dist) -
-                                                                      3)]))/sqrt(length(protein_file))
+                                                (length(protein_file) +
+                                                    1):(ncol(second_dist) -
+                                                3)]))/sqrt(length(protein_file))
     } else{
         second_dist$Fg <- second_dist[, 2]
         second_dist$Fg_se <- 0

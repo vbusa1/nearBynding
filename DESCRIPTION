@@ -8,7 +8,7 @@ Description: Provides a pipeline to input CLIP protein-binding data in either al
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.6.0) 
+Depends: R (>= 4.0) 
 Imports: R.utils, 
         matrixStats, 
         plyranges, 
@@ -50,4 +50,4 @@ Collate: 'assessGrouping.R'
         'visualizeStereogene.R'
         'write_config.R'
         'write_fasta.R'
-    
+RoxygenNote: 7.1.1

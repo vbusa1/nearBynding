@@ -16,8 +16,9 @@
 #' one input file is permitted. Optional.
 #' @param dir_stereogene_output_2 Directory of Stereogene output for second
 #' protein. Default current directory.
-#' @param CapR_prefix_2 The prefix common to CapR output files of protein_file_2,
-#' if applicable.Equivalent to output_prefix from runStereogeneOnCapR. Default ""
+#' @param CapR_prefix_2 The prefix common to CapR output files of
+#' protein_file_2, if applicable.Equivalent to output_prefix from r
+#' unStereogeneOnCapR. Default ""
 #' @param protein_file_2 Similar to protein_file. A second vector of at least
 #' one protein file name to be averaged for calculation of distance. File names
 #' must exclude extensions such as ".bedGraph". All files in the list should be
@@ -71,7 +72,9 @@ bindingContextDistanceCapR<-function(dir_stereogene_output = ".",
     if(is.null(dir_stereogene_output_2)){
         dir_stereogene_output_2<-dir_stereogene_output
     }
-    get_dist<-function(context){
+    get_dist <- NULL
+    dist_1 <- NULL
+    get_dist <- function(context){
         for(n in seq(length(protein_file))){
             assign(paste0("dist_", n),
                    read.table(paste0(dir_stereogene_output, "/", CapR_prefix,

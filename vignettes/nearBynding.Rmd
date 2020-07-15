@@ -266,7 +266,7 @@ or a line plot. Examples of both are below.
 
 For CapR-derived RNA structure, all six contexts can be viewed simultaneously.
 
-```{r, echo = F}
+```{r, echo = F, results='hide'}
 get_outfiles()
 ```
 ```{r, eval = F}
