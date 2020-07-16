@@ -125,6 +125,7 @@ processCapRout <- function(CapR_outfile,
       output_prefix,
       "_bulge.bedGraph"
     ),
+    chrom_size = chrom_size,
     chain = chain,
     output_bg = paste0(
       output_prefix,
@@ -146,6 +147,7 @@ processCapRout <- function(CapR_outfile,
       output_prefix,
       "_exterior.bedGraph"
     ),
+    chrom_size = chrom_size,
     chain = chain,
     output_bg = paste0(
       output_prefix,
@@ -167,6 +169,7 @@ processCapRout <- function(CapR_outfile,
       output_prefix,
       "_hairpin.bedGraph"
     ),
+    chrom_size = chrom_size,
     chain = chain,
     output_bg = paste0(
       output_prefix,
@@ -188,6 +191,7 @@ processCapRout <- function(CapR_outfile,
       output_prefix,
       "_internal.bedGraph"
     ),
+    chrom_size = chrom_size,
     chain = chain,
     output_bg = paste0(
       output_prefix,
@@ -209,6 +213,7 @@ processCapRout <- function(CapR_outfile,
       output_prefix,
       "_multibranch.bedGraph"
     ),
+    chrom_size = chrom_size,
     chain = chain,
     output_bg = paste0(
       output_prefix,
@@ -226,7 +231,9 @@ processCapRout <- function(CapR_outfile,
     "_stem.bedGraph"
   ))
   liftOverToExomicBG(
-    input = paste0(output_prefix, "_stem.bedGraph"),
+    input = paste0(output_prefix,
+                   "_stem.bedGraph"),
+    chrom_size = chrom_size,
     chain = chain,
     output_bg = paste0(
       output_prefix,
