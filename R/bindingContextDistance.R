@@ -82,6 +82,7 @@ bindingContextDistance <- function(dir_stereogene_output = ".",
     protein_file_2 <- protein_file
   }
   dist_1 <- NULL
+  second_dist_1 <- NULL
   for (n in seq(length(protein_file))) {
     assign(
       paste0("dist_", n),

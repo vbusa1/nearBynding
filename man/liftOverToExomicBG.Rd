@@ -8,6 +8,7 @@ to transcriptome.}
 \usage{
 liftOverToExomicBG(input,
                      chain,
+                     chrom_size,
                      output_bg,
                      format = "bedGraph")
 }
@@ -17,6 +18,9 @@ liftOverToExomicBG(input,
   Files must be BED or bedGraph format. Required}
   \item{chain}{The name of the chain file to be used for liftOver. Format should
   be like chain files derived from GRangesMappingToChainFile function. Required}
+  \iten{chrom_size}{Name of chromosome size file in two-column format without a
+  header where first column is chromosome name and second column is chromosome
+  length, as from getChainChrSize. Required}
   \item{output_bg}{The name of the lifted-over output bedGraph file. Required}
   \item{format}{File type of input file(s). Recommended "BED" or "bedGraph".
   Default "bedGraph"}

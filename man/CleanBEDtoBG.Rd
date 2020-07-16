@@ -25,6 +25,7 @@ CleanBEDtoBG(in_bed,
 deposits bedGraph from BED in same directory
 }
 \examples{
+bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 out_bed <- "bamto.bed"
 system2("bedtools", paste0("bamtobed -i ", bam, " > ", out_bed))
 

@@ -88,6 +88,7 @@ bindingContextDistanceCapR <- function(dir_stereogene_output = ".",
   }
   get_dist <- NULL
   dist_1 <- NULL
+  second_dist_1 <- NULL
   get_dist <- function(context) {
     for (n in seq(length(protein_file))) {
       assign(
