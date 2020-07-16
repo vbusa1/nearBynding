@@ -59,7 +59,7 @@ writes a configuration file into directory
 \examples{
 ## Write a config file named "test.cfg" with chromosome size file "test.size"
 write_config(name_config = "test.cfg",
-              chrom_sze = "test.size")
+              chrom_size = "test.size")
 }
 \references{
 Stavrovskaya, Elena D., Tejasvi Niranjan, Elana J. Fertig, Sarah J. Wheelan,

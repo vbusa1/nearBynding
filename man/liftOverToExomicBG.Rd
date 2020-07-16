@@ -18,7 +18,7 @@ liftOverToExomicBG(input,
   Files must be BED or bedGraph format. Required}
   \item{chain}{The name of the chain file to be used for liftOver. Format should
   be like chain files derived from GRangesMappingToChainFile function. Required}
-  \iten{chrom_size}{Name of chromosome size file in two-column format without a
+  \item{chrom_size}{Name of chromosome size file in two-column format without a
   header where first column is chromosome name and second column is chromosome
   length, as from getChainChrSize. Required}
   \item{output_bg}{The name of the lifted-over output bedGraph file. Required}
@@ -46,6 +46,7 @@ CleanBAMtoBG(in_bam = sorted_bam)
 
 liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
                    chain = "test.chain",
+                   chrom_size = "chr4and5_3UTR.size",
                    output_bg = "chr4and5_liftOver.bedGraph")
 }
 \author{Veronica Busa}

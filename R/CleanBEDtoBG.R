@@ -11,8 +11,6 @@
 #' @param alignment The human genome alignment used, either "hg19" or "hg38".
 #' Default "hg19"
 #'
-#' @notes Requires bedtools in the local environment to run.
-#'
 #' @export
 
 CleanBEDtoBG <- function(in_bed,

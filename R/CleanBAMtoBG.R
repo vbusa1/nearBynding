@@ -9,8 +9,6 @@
 #' @param unwanted_chromosomes A vector of unwanted chromosomes that are present
 #' in the BAM file.
 #'
-#' @notes Requires bedtools in the local environment to run.
-#'
 #' @export
 
 CleanBAMtoBG <- function(in_bam,

@@ -48,9 +48,11 @@ getChainChrSize(chain = "test.chain",
 ## run CapR
 chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa",
                                   package="nearBynding")
-runCapR(chr4and5_3UTR.fa)
+runCapR(chr4and5_3UTR.fa,
+        max_dist = 25)
 
-processCapRout(CapR_outfile = "chr4and5_3UTR.out",
+processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out",
+                                          package="nearBynding"),
                chain = "test.chain",
                output_prefix = "chr4and5_3UTR",
                chrom_size = "chr4and5_3UTR.size",
