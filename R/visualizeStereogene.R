@@ -63,7 +63,7 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
   if (!is.null(protein_file_input)) {
     dist_input <- read.table(paste0(
       dir_stereogene_output, "/",
-      context_file, "_liftOver~",
+      context_file, "~",
       protein_file_input, ".dist"
     ), header = TRUE)
   }
