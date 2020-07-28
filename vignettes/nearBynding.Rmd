@@ -293,12 +293,12 @@ Alternatively, a single context can be viewed at a time.
 ```{r, eval = F}
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     protein_file = "chr4and5_liftOver",
-                    out_file = "stem_heatmap",
+                    out_file = "stem_line",
                     x_lim = c(-500, 500))
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     protein_file = "chr4and5_liftOver",
                     heatmap = T,
-                    out_file = "stem_line",
+                    out_file = "stem_heatmap",
                     x_lim = c(-500, 500))
 ```
 
