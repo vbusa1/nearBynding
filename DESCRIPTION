@@ -4,8 +4,15 @@ Title: Discern RNA structure proximal to protein binding
 Version: 0.1.6
 Author: Veronica Busa
 Maintainer: Veronica Busa <vbusa1@jhmi.edu>
-Description: Provides a pipeline to input CLIP protein-binding data in either aligned BAM or peak-called bedGraph formats as well as optional RNA structure data to discern RNA structure proximal to protein binding within regions of the transcriptome defined by the user. RNA structure binding profiles can be visually and matematically compared across multiple formats.
+Description: Provides a pipeline to input CLIP protein-binding 
+        data in either aligned BAM or peak-called bedGraph formats 
+        as well as optional RNA structure data to discern RNA structure 
+        proximal to protein binding within regions of the transcriptome 
+        defined by the user. RNA structure binding profiles can be 
+        visually and matematically compared across multiple formats.
 License: Artistic-2.0
+biocViews: Visualization, MotifDiscovery, DataRepresentation,
+        StructuralPrediction, Clustering
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.6) 
