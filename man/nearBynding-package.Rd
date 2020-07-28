@@ -19,7 +19,7 @@ Type: \tab Package\cr
 Title: \tab nearBynding package \cr
 Version: \tab 0.1.6\cr
 Date: \tab July 21, 2020`\cr
-License: \tab GPL-3\cr
+License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
 URL: \tab http://github.com/vbusa1/nearBynding\cr
 }}
