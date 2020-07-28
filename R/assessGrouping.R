@@ -49,8 +49,8 @@ assessGrouping <- function(distances,
   colnames(annotations)[c(1, 2)] <- c("sample", "category")
 
   # filter for distances with proper annotations
-  test_distances <- dplyr::filter(distances, .data/Var1 %in% annotations$sample &
-    .data/Var2 %in% annotations$sample)
+  test_distances <- dplyr::filter(distances,.data$Var1 %in% annotations$sample &
+    .data$Var2 %in% annotations$sample)
   test_distances <- test_distances[!duplicated(t(apply(
     test_distances[, c(1, 2)],
     1, sort
@@ -70,7 +70,8 @@ assessGrouping <- function(distances,
     dplyr::filter(.data$no_rows > 1)
 
   test_output <- lapply(unique_categories$category, function(i) {
-    subset_samples <- dplyr::filter(test_categories, .data$category == i)$sample %>%
+    subset_samples <- dplyr::filter(test_categories,
+                                    .data$category == i)$sample %>%
       as.character()
     subset_distances <- dplyr::filter(test_distances, .data$Var1 %in%
       subset_samples & .data$Var2 %in% subset_samples)$dist
