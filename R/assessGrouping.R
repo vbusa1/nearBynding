@@ -55,7 +55,7 @@ assessGrouping <- function(distances,
     test_distances[, c(1, 2)],
     1, sort
   ))), ] # remove duplicate pairs
-  test_distances <- dplyr::filter(test_distances, Var1 != Var2)
+  test_distances <- dplyr::filter(test_distances, .data$Var1 != .data$Var2)
   test_categories <- dplyr::filter(annotations, sample %in% distances$Var1 |
     sample %in% distances$Var2)
   if (nrow(test_distances) < 2 | nrow(test_categories) < 2) {
@@ -65,15 +65,15 @@ assessGrouping <- function(distances,
 
   # get categories for which there is at least two samples
   unique_categories <- test_categories %>%
-    dplyr::group_by(category) %>%
-    dplyr::summarise(no_rows = length(category), .groups = "drop") %>%
-    dplyr::filter(no_rows > 1)
+    dplyr::group_by(.data$category) %>%
+    dplyr::summarise(no_rows = length(.data$category), .groups = "drop") %>%
+    dplyr::filter(.data$no_rows > 1)
 
   test_output <- lapply(unique_categories$category, function(i) {
-    subset_samples <- dplyr::filter(test_categories, category == i)$sample %>%
+    subset_samples <- dplyr::filter(test_categories, .data$category == i)$sample %>%
       as.character()
-    subset_distances <- dplyr::filter(test_distances, Var1 %in%
-      subset_samples & Var2 %in% subset_samples)$dist
+    subset_distances <- dplyr::filter(test_distances, .data$Var1 %in%
+      subset_samples & .data$Var2 %in% subset_samples)$dist
 
     if (measurement == "mean") {
       return(mean(subset_distances))
@@ -116,7 +116,7 @@ assessGrouping <- function(distances,
     dat_plot <- data.frame(KSD = c(ctrl_output, test_output), group = group)
     plot <- ggplot(
       dat_plot,
-      aes(x = KSD, group = group, color = group)
+      aes(x = .data$KSD, group = group, color = group)
     ) +
       stat_ecdf(size = 1, na.rm = TRUE) +
       theme_classic() +

@@ -93,7 +93,7 @@ bindingContextDistance <- function(dir_stereogene_output = ".",
       header = TRUE
       )
     ) %>%
-      dplyr::filter(range[1] <= x, x <= range[2])
+      dplyr::filter(range[1] <= .data$x, .data$x <= range[2])
   }
   if (!is.null(protein_file_input)) {
     dist_input <- read.table(paste0(
@@ -103,7 +103,7 @@ bindingContextDistance <- function(dir_stereogene_output = ".",
     ),
     header = TRUE
     ) %>%
-      dplyr::filter(range[1] <= x, x <= range[2])
+      dplyr::filter(range[1] <= .data$x, .data$x <= range[2])
   }
   dist <- as.data.frame(matrix(NA,
     ncol = (2 * length(protein_file)) + 1,
@@ -153,14 +153,14 @@ bindingContextDistance <- function(dir_stereogene_output = ".",
         protein_file_2[n], ".dist"
       ), header = TRUE)
     ) %>%
-      dplyr::filter(range[1] <= x, x <= range[2])
+      dplyr::filter(range[1] <= .data$x, .data$x <= range[2])
   }
   if (!is.null(protein_file_input_2)) {
     second_dist_input <- read.table(paste0(
       dir_stereogene_output_2, "/", RNA_context_2, "~",
       protein_file_input_2, ".dist"
     ), header = TRUE) %>%
-      dplyr::filter(range[1] <= x, x <= range[2])
+      dplyr::filter(range[1] <= .data$x, .data$x <= range[2])
   }
   second_dist <- as.data.frame(matrix(NA,
     ncol = (2 * length(protein_file_2)) + 1,

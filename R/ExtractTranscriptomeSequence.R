@@ -72,7 +72,7 @@ ExtractTranscriptomeSequence <- function(transcript_list,
   hold_matrix <- matrix(NA, ncol = 2, nrow = length(unique(edit_tbl$V1)))
   hold_matrix[, 1] <- unique(edit_tbl$V1)
   for (txpt in unique(edit_tbl$V1)) {
-    filter(edit_tbl, V1 == txpt) -> txpt_tbl
+    filter(edit_tbl, .data$V1 == txpt) -> txpt_tbl
     if (unique(txpt_tbl$strand) == "-") { # write - strand seqs in reverse
       seq <- paste(rev(txpt_tbl$V2), collapse = "", sep = "")
     } else {

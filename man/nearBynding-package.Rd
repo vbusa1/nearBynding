@@ -17,7 +17,7 @@ aligned CLIP-seq reads or peak-called intervals.
 Package: \tab nearBynding\cr
 Type: \tab Package\cr
 Title: \tab nearBynding package \cr
-Version: \tab 0.1.6\cr
+Version: \tab 0.1.7\cr
 Date: \tab July 21, 2020`\cr
 License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
