@@ -38,6 +38,9 @@ GenomeMappingToChainFile(genome_gtf = gtf,
                          RNA_fragment = "three_prime_utr",
                          transcript_list = transcript_list,
                          alignment = "hg38")
+## and chain file chromosome sizes
+getChainChrSize(chain = "test.chain",
+                out_chr = "chr4and5_3UTR.size")
 
 ## next, get BAM to bedGraph file
 bam <- system.file("extdata/chr4and5.bam", package="nearBynding")

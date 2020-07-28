@@ -23,6 +23,14 @@ runStereogene(track_files,
 \value{
 generates StereoGene output files in directory
 }
+
+\examples{
+\dontrun{
+runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph",
+                              "chr4and5_liftOver.bedGraph"),
+              name_config = "chr4and5_3UTR.cfg")
+}
+}
 \references{
 Stavrovskaya, Elena D., Tejasvi Niranjan, Elana J. Fertig, Sarah J. Wheelan,
 Alexander V. Favorov, and Andrey A. Mironov. “StereoGene: Rapid Estimation

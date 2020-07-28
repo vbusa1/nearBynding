@@ -28,4 +28,14 @@ ExtractTranscriptomeSequence(transcript_list,
 \value{
 writes FASTA file of transcriptome sequences into directory
 }
+
+\examples{
+\dontrun{
+ExtractTranscriptomeSequence(transcript_list = transcript_list,
+                     ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
+                     genome_gtf = gtf,
+                     RNA_fragment = "three_prime_utr",
+                     exome_prefix = "chr4and5_3UTR")
+}}
+
 \author{Veronica Busa}

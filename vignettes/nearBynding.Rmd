@@ -21,7 +21,7 @@ library(Rsamtools)
 
 nearBynding is a package designed to discern annotated RNA structures proximal
 to protein binding. nearBynding allows users to annotate RNA structure contexts
-via CapR or input their own annotations in bedGraph format. It accomodates 
+via CapR or input their own annotations in BED/bedGraph format. It accomodates 
 protein binding information from CLIP-seq experiments as either aligned 
 CLIP-seq reads or peak-called intervals. This vignette will walk you through:
 
