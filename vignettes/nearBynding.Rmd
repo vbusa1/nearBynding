@@ -339,3 +339,8 @@ We can see that the stem context is less similar to the hairpin context than
 the internal context, and this is reflected in the calculated distances.
 
 *Questions? Comments? Please email Veronica Busa at vbusa1@jhmi.edu*
+
+```{r}
+sessionInfo()
+```
+
