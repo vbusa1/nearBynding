@@ -197,7 +197,6 @@ and *bulge*. `processCapRout()` parses the CapR output, converts it into six
 separate bedGraph files, and then performs `liftOverToExomic()` for all the 
 files.
 
-
 ```{r, echo=F}
 processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out", 
                                           package="nearBynding"),
