@@ -131,7 +131,7 @@ getChainChrSize(chain = "test.chain",
 In order to fold the 3'UTRs, the sequences must first be extracted. This is 
 achieved with the following code:
 
-```{r, eval = F}
+```{r, eval = FALSE}
 ExtractTranscriptomeSequence(transcript_list = transcript_list,
                      ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
                      genome_gtf = gtf,
@@ -144,14 +144,14 @@ The reference genome can be found through
 for users who do not want to download that 3.2GB file for the sake of this 
 vignette, the FASTA output of the above code is available via:
 
-```{r}
+```{r, eval = FALSE}
 chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa", 
                                 package="nearBynding")
 ```
 
 These sequences can then be submitted to CapR for folding.
 
-```{r}
+```{r, eval = FALSE}
 runCapR(in_file = chr4and5_3UTR.fa)
 ```
 
@@ -167,7 +167,7 @@ converted to a bedGraph file first, whereas BED files can be read-in directly.
 
 #### BAM file input
 
-```{r}
+```{r, eval = FALSE}
 bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 sorted_bam<-sortBam(bam, "chr4and5_sorted")
 
