@@ -1,7 +1,7 @@
 Package: nearBynding
 Type: Package
 Title: Discern RNA structure proximal to protein binding
-Version: 0.99.1
+Version: 0.99.2
 Author: Veronica Busa
 Maintainer: Veronica Busa <vbusa1@jhmi.edu>
 Description: Provides a pipeline to discern RNA structure proximal to protein 
