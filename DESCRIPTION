@@ -1,9 +1,8 @@
 Package: nearBynding
 Type: Package
 Title: Discern RNA structure proximal to protein binding
-Version: 0.99.3
-Author: Veronica Busa
-Maintainer: Veronica Busa <vbusa1@jhmi.edu>
+Version: 0.99.4
+Authors@R: person("Veronica", "Busa", email="vbusa1@jhmi.edu", role=c("cre"))
 Description: Provides a pipeline to discern RNA structure proximal to protein 
         binding within regions of the transcriptome  defined by the user. CLIP 
         protein-binding data can be input as either aligned BAM or peak-called 

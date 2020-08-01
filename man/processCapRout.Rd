@@ -45,12 +45,6 @@ GenomeMappingToChainFile(genome_gtf = gtf,
 getChainChrSize(chain = "test.chain",
                 out_chr = "chr4and5_3UTR.size")
 
-## run CapR
-chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa",
-                                  package="nearBynding")
-runCapR(chr4and5_3UTR.fa,
-        max_dist = 25)
-
 processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out",
                                           package="nearBynding"),
                chain = "test.chain",

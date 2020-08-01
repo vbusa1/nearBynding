@@ -27,8 +27,10 @@ deposits bedGraph from BED in same directory
 \examples{
 bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 out_bed <- "bamto.bed"
+\dontrun{
 system2("bedtools", paste0("bamtobed -i ", bam, " > ", out_bed))
 
 CleanBEDtoBG(in_bed = out_bed,
              alignment = "hg38")
+}
 }

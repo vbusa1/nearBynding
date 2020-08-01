@@ -42,12 +42,11 @@ GenomeMappingToChainFile(genome_gtf = gtf,
 getChainChrSize(chain = "test.chain",
                 out_chr = "chr4and5_3UTR.size")
 
-## next, get BAM to bedGraph file
-bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
-sorted_bam<-Rsamtools::sortBam(bam, "chr4and5_sorted")
-CleanBAMtoBG(in_bam = sorted_bam)
+## get bedGraph file
+chr4and5_sorted.bedGraph<-system.file("extdata/chr4and5_sorted.bedGraph",
+                                        package="nearBynding")
 
-liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
+liftOverToExomicBG(input = chr4and5_sorted.bedGraph,
                    chain = "test.chain",
                    chrom_size = "chr4and5_3UTR.size",
                    output_bg = "chr4and5_liftOver.bedGraph")
