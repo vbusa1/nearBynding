@@ -5,11 +5,11 @@
 \title{Discern RNA structure proximal to protein binding}
 
 \description{
-nearBynding is a package designed to discern annotated RNA structures proximal
-to protein binding. It allows users to annotate RNA structure contexts
-via CapR or input their own annotations in BED/bedGraph format and it
-accomodates protein binding information from CLIP-seq experiments as either
-aligned CLIP-seq reads or peak-called intervals.
+nearBynding is a package designed to discern annotated RNA structures at and
+proximal to the site of protein binding. It allows users to annotate RNA
+structure contexts via CapR or input their own annotations in BED/bedGraph
+format and it accomodates protein binding information from CLIP-seq experiments
+as either aligned CLIP-seq reads or peak-called intervals.
 }
 
 \details{

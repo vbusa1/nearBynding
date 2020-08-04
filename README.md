@@ -1,11 +1,12 @@
 # nearBynding
 
-`nearBynding` is an R package that discerns RNA structure proximal to protein 
-binding within regions of the transcriptome defined by the user. Input CLIP 
-protein-binding data can either be in aligned BAM or peak-called BED/bedGraph 
-formats. RNA structure can either be internally calculated via CapR or can be 
-provided by the user as a BED/bedGraph. RNA structure binding profiles can be 
-visually and mathematically compared between proteins across multiple formats.
+`nearBynding` is an R package that discerns RNA structure at and proximal to 
+the site of protein binding within regions of the transcriptome defined by the 
+user. Input CLIP protein-binding data can either be in aligned BAM or 
+peak-called BED/bedGraph formats. RNA structure can either be internally 
+calculated via CapR or can be provided by the user as a BED/bedGraph. RNA 
+structure binding profiles can be visually and mathematically compared between 
+proteins across multiple formats.
 
 ## Installation
 
