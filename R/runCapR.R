@@ -15,8 +15,8 @@
 runCapR <- function(in_file,
                     out_file = NA,
                     max_dist = 100) {
-  if (is.na(out_file)) {
-    out_file <- paste0(substr(in_file, 0, nchar(in_file) - 2), "out")
-  }
-  system2("CapR", args = c(in_file, out_file, max_dist))
+    if (is.na(out_file)) {
+        out_file <- paste0(substr(in_file, 0, nchar(in_file) - 2), "out")
+    }
+    system2("CapR", args = c(in_file, out_file, max_dist))
 }

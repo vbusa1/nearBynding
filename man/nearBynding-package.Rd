@@ -17,7 +17,7 @@ as either aligned CLIP-seq reads or peak-called intervals.
 Package: \tab nearBynding\cr
 Type: \tab Package\cr
 Title: \tab nearBynding package \cr
-Version: \tab 0.99.4\cr
+Version: \tab 0.99.5\cr
 Date: \tab July 21, 2020`\cr
 License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
@@ -49,23 +49,23 @@ library(Rsamtools)
 load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
 # get GTF file
 gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
-                 package="nearBynding")
+                package="nearBynding")
 # make chain file
 GenomeMappingToChainFile(genome_gtf = gtf,
-                         out_chain_name = "test.chain",
-                         RNA_fragment = "three_prime_utr",
-                         transcript_list = transcript_list,
-                         alignment = "hg38")
+                        out_chain_name = "test.chain",
+                        RNA_fragment = "three_prime_utr",
+                        transcript_list = transcript_list,
+                        alignment = "hg38")
 # get size of chromosomes of chain file
 getChainChrSize(chain = "test.chain",
                 out_chr = "chr4and5_3UTR.size")
 
 # get transcript sequences
 ExtractTranscriptomeSequence(transcript_list = transcript_list,
-                     ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
-                     genome_gtf = gtf,
-                     RNA_fragment = "three_prime_utr",
-                     exome_prefix = "chr4and5_3UTR")
+                    ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
+                    genome_gtf = gtf,
+                    RNA_fragment = "three_prime_utr",
+                    exome_prefix = "chr4and5_3UTR")
 # run CapR on extracted sequences
 runCapR(in_file = "chr4and5_3UTR.fa")
 
@@ -77,15 +77,15 @@ CleanBAMtoBG(in_bam = sorted_bam)
 
 # lift over protein binding and RNA structure to chain
 liftOverToExomicBG(input = "chr4and5_sorted.bedGraph",
-                   chain = "test.chain",
-                   chrom_size = "chr4and5_3UTR.size",
-                   output_bg = "chr4and5_liftOver.bedGraph")
+                    chain = "test.chain",
+                    chrom_size = "chr4and5_3UTR.size",
+                    output_bg = "chr4and5_liftOver.bedGraph")
 processCapRout(CapR_outfile = "chr4and5_3UTR.out",
-               chain = "test.chain",
-               output_prefix = "chr4and5_3UTR",
-               chrom_size = "chr4and5_3UTR.size",
-               genome_gtf = gtf,
-               RNA_fragment = "three_prime_utr")
+                chain = "test.chain",
+                output_prefix = "chr4and5_3UTR",
+                chrom_size = "chr4and5_3UTR.size",
+                genome_gtf = gtf,
+                RNA_fragment = "three_prime_utr")
 
 # input to StereoGene
 runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",

@@ -13,44 +13,35 @@
 #'
 #' @export
 
-CleanBEDtoBG <- function(in_bed,
-                         out_bedGraph = NA,
-                         unwanted_chromosomes = NULL,
-                         alignment = "hg19") {
-  if (alignment == "hg19") {
-    genome <- system.file("extdata/hg19.genome", package = "nearBynding")
-  }
-  if (alignment == "hg38") {
-    genome <- system.file("extdata/hg38.genome", package = "nearBynding")
-  }
-  if (!(alignment %in% c("hg19", "hg38"))) {
-    stop("Acceptable alignments are 'hg19' and 'hg38'")
-  }
-
-  # sort bed
-  out_bed_sorted <- paste0(substr(in_bed, 0, nchar(in_bed) - 4), "_sorted.bed")
-  system2("sort", paste0("-k 1,1 -k2,2n ", in_bed, " > ", out_bed_sorted))
-
-  if (is.na(out_bedGraph)) {
-    out_bedGraph <- paste0(substr(in_bed, 0, nchar(in_bed) - 3), "bedGraph")
-  }
-
-  if (length(unwanted_chromosomes) > 0) {
-    tmp <- tempfile(tmpdir = ".")
-
-    system2("sort", paste0("'/", paste(unwanted_chromosomes,
-      collapse = "/d;/"
-    ), "/d' ", out_bed_sorted, " > ", tmp))
-    system2("bedtools", paste0(
-      "genomecov -i ", tmp, " -g ",
-      genome, " -bg > ", out_bedGraph
-    ))
-    system2("rm", tmp)
-  } else {
-    system2("bedtools", paste0(
-      "genomecov -i ", out_bed_sorted, " -g ",
-      genome, " -bg > ", out_bedGraph
-    ))
-  }
-  system2("rm", out_bed_sorted)
+CleanBEDtoBG <- function(in_bed, out_bedGraph = NA,
+                            unwanted_chromosomes = NULL,
+                            alignment = "hg19") {
+    if (alignment == "hg19") {
+        genome <- system.file("extdata/hg19.genome", package = "nearBynding")
+    }
+    if (alignment == "hg38") {
+        genome <- system.file("extdata/hg38.genome", package = "nearBynding")
+    }
+    if (!(alignment %in% c("hg19", "hg38"))) {
+        stop("Acceptable alignments are 'hg19' and 'hg38'")
+    }
+    # sort bed
+    out_bed_sorted <- paste0(substr(in_bed, 0, nchar(in_bed) - 4),"_sorted.bed")
+    system2("sort", paste0("-k 1,1 -k2,2n ", in_bed, " > ", out_bed_sorted))
+    if (is.na(out_bedGraph)) {
+        out_bedGraph <- paste0(substr(in_bed, 0, nchar(in_bed) - 3), "bedGraph")
+    }
+    if (length(unwanted_chromosomes) > 0) {
+        tmp <- tempfile(tmpdir = ".")
+        system2("sort", paste0("'/", paste(unwanted_chromosomes,
+                                collapse = "/d;/"),
+                                "/d' ", out_bed_sorted, " > ", tmp))
+        system2("bedtools", paste0("genomecov -i ",
+                                tmp, " -g ", genome, " -bg > ",out_bedGraph))
+        system2("rm", tmp)
+    } else {
+        system2("bedtools",paste0("genomecov -i ",out_bed_sorted, " -g ",genome,
+                                " -bg > ", out_bedGraph))
+    }
+    system2("rm", out_bed_sorted)
 }

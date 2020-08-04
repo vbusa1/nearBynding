@@ -9,8 +9,8 @@ where Stereogene, CapR, or bedtools are not available.}
 get_outfiles(dir = ".")
 }
 \arguments{
-  \item{dir}{Directory into which files ought to be stored. Default current
-  work directory.}
+    \item{dir}{Directory into which files ought to be stored. Default current
+    work directory.}
 }
 \value{
 deposits six *.dist StereoGene output files into the selected directory

@@ -10,20 +10,20 @@ write_fasta(sequences,
             file.out)
 }
 \arguments{
-  \item{sequences}{A vector of sequences to be written into a FASTA file}
-  \item{names}{A vector of names corresponding to the sequences}
-  \item{file.out}{Name of output FASTA file}
+    \item{sequences}{A vector of sequences to be written into a FASTA file}
+    \item{names}{A vector of names corresponding to the sequences}
+    \item{file.out}{Name of output FASTA file}
 }
 \value{
 writes FASTA file into directory
 }
 \examples{
 sequences<-c(paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
-                    collapse = ""),
-             paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
-                    collapse = ""),
-             paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
-                    collapse = ""))
+                collapse = ""),
+            paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
+                collapse = ""),
+            paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
+                collapse = ""))
 write_fasta(sequences,
             c("one", "two", "three"),
             "test.fa")
