@@ -25,13 +25,13 @@ via CapR or input their own annotations in BED/bedGraph format. It accomodates
 protein binding information from CLIP-seq experiments as either aligned 
 CLIP-seq reads or peak-called intervals. This vignette will walk you through:
 
-    - The external software necessary to support this pipeline
-    - Creating a concatenated transcriptome
-    - Extracting and folding RNA from the transcriptome via CapR
-    - Mapping protein-binding and RNA structure information onto a transcriptome
-    - Running StereoGene to identify RNA structure proximal to protein binding
-    - Visualizing binding results
-    - Determining the distance between binding contexts
+    * The external software necessary to support this pipeline
+    * Creating a concatenated transcriptome
+    * Extracting and folding RNA from the transcriptome via CapR
+    * Mapping protein-binding and RNA structure information onto a transcriptome
+    * Running StereoGene to identify RNA structure proximal to protein binding
+    * Visualizing binding results
+    * Determining the distance between binding contexts
 
 Before running any of these examples, it is highly recommended that the user 
 establishes a new empty directory and uses `setwd()` to make certain that all 
@@ -40,9 +40,11 @@ files.
 
 ## Installation
 
-`if(!requireNamespace("BiocManager", quietly = TRUE))`
-`    install.packages("BiocManager")`
-`BiocManager::install("nearBynding")`
+```{r, eval = FALSE}
+if(!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("nearBynding")
+```
 
 ## External Software Dependencies
 
