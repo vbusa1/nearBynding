@@ -13,7 +13,7 @@ proteins across multiple formats.
 The most up-to-date version can be loaded to R via
 
 ```
-devtools::install_git("vbusa1/nearBynding"")
+devtools::install_github("vbusa1/nearBynding")
 library(nearBynding)
 ```
 
