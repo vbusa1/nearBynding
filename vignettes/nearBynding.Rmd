@@ -10,6 +10,9 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
+\tableofcontents
+\newpage
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
     collapse = TRUE,
@@ -18,6 +21,8 @@ knitr::opts_chunk$set(
 library(nearBynding)
 library(Rsamtools)
 ```
+
+## Introduction
 
 nearBynding is a package designed to discern annotated RNA structures proximal
 to protein binding. nearBynding allows users to annotate RNA structure contexts
@@ -50,14 +55,14 @@ BiocManager::install("nearBynding")
 
 Add all dependency directories to your PATH after installation.
 
-#### bedtools
+### bedtools
 
 bedtools is available for installation 
 [here.](https://bedtools.readthedocs.io/en/latest/content/installation.html)
 
 Installation instructions will vary by operating system.
 
-#### CapR
+### CapR
 
 Download the zip file from the
 [github repository](https://github.com/fukunagatsu/CapR), 
@@ -76,7 +81,7 @@ If installation is successful, the final line will output
 
 `Error: The number of argument is invalid.`
 
-#### StereoGene
+### StereoGene
 
 Download the zip file from the 
 [github repository](https://github.com/favorov/stereogene), 
@@ -95,7 +100,7 @@ make
 If installation is successful, the final line will output a menu of argument 
 options.
 
-## Concatenate the Transcriptome
+## 1. Concatenate the Transcriptome
 
 Although nearBynding is designed to support whole-genome analyses, we will 
 exclusively be evaluating protein-coding genes of chromosomes 4 and 5 through
@@ -134,7 +139,7 @@ getChainChrSize(chain = "test.chain",
                 out_chr = "chr4and5_3UTR.size")
 ```
 
-## Fold RNA via CapR
+## 2. Fold RNA via CapR
 
 In order to fold the 3'UTRs, the sequences must first be extracted. This is 
 achieved with the following code:
@@ -167,7 +172,7 @@ Warning: This step can take hours or even days depending on how many
 transcripts are submitted, how long the RNA fragments are, and the maximum 
 distance between base-paired nucleotides submitted to the CapR algorithm.
 
-## Map to Transcriptome
+## 3. Map to Transcriptome
 
 The nearBynding pipeline can accomodate either a BAM file of aligned CLIP-seq 
 reads or a BED file of peak intervals. BAM files must be sorted and 
@@ -228,7 +233,7 @@ than using CapR. The information should be in BED file format and can be input
 into `liftOverToExomicBG()` to map the RNA structure data to the same 
 transcriptome as the protein binding data.
 
-## Run StereoGene
+## 4. Calculate Cross-correlation via StereoGene
 
 This is the process that directly answers the question, "What does RNA 
 structure look like around where the protein is binding?" StereoGene is used to 
@@ -267,7 +272,7 @@ runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph",
 *files to your local directory if you are struggling with any of the upstream *
 *steps but still wish to visualize the results.*
 
-## Visualize Results
+## 5. Visualize Results
 
 The cross-correlation output of StereoGene can be visualized as either a 
 heatmap or a line plot. Examples of both are below.
@@ -318,7 +323,7 @@ Although this specific, limited example does not provide a particularly
 visually stimulating image, larger data sets (which provide many more 
 StereoGene windows) result in narrower peaks and less noise.
 
-## Calculate Distance
+## 6. Calculate Distance
 
 In order to determine the similarity of two binding contexts, we can calculate 
 the Wasserstein distance between curves. A small value suggests two binding 
