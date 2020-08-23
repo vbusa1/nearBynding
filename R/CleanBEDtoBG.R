@@ -5,7 +5,7 @@
 #' @param in_bed Name of sorted BAM file to be converted to a bedGraph file.
 #' Required.
 #' @param out_bedGraph Name of bedGraph output file, including full directory
-#' path. Default in_bam prefix.
+#' path; a string. Default in_bam prefix.
 #' @param unwanted_chromosomes A vector of unwanted chromosomes that are present
 #' in the BAM file.
 #' @param alignment The human genome alignment used, either "hg19" or "hg38".
@@ -16,7 +16,7 @@
 #' @examples
 #' bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 #' out_bed <- "bamto.bed"
-#' \dontrun{
+#' \donttest{
 #'     system2("bedtools", paste0("bamtobed -i ", bam, " > ", out_bed))
 #'
 #'     CleanBEDtoBG(in_bed = out_bed,

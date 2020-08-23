@@ -12,14 +12,14 @@ in the format of c(forward_reads, reverse_reads) for strand-separated
 alignments. Files must be BED or bedGraph format. Required}
 
 \item{chain}{The name of the chain file to be used for liftOver. Format
-should be like chain files derived from GRangesMappingToChainFile function.
+should be like chain files derived from getChainChrSize function.
 Required}
 
-\item{chrom_size}{Name of chromosome size file in two-column format without
-a header where first column is chromosome name and second column is
-chromosome length, as from liftOverToExomicBG Required}
+\item{chrom_size}{Name of chromosome size file. File must be in two-column
+format without a header where first column is chromosome name and second
+column is chromosome length, as from liftOverToExomicBG. Required.}
 
-\item{output_bg}{The name of the lifted-over output bedGraph file. Required}
+\item{output_bg}{The name of the lifted-over output bedGraph file. Required.}
 
 \item{format}{File type of input file(s). Recommended "BED" or "bedGraph".
 Default "bedGraph"}

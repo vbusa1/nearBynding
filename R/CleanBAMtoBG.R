@@ -15,7 +15,7 @@
 #' bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 #' #sort BAM first
 #' sorted_bam<-Rsamtools::sortBam(bam, "chr4and5_sorted")
-#' \dontrun{
+#' \donttest{
 #'     CleanBAMtoBG(in_bam = sorted_bam)
 #'
 #'     ## If BAM has unwanted chromosome "EBV"

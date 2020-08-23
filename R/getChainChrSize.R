@@ -4,8 +4,9 @@
 #' chain file.
 #'
 #' @param chain The name of the chain file for which chromosome sizes should be
-#' determined and output. Required.
-#' @param out_chr Name of the chromosome names and lengths table file. Required
+#' determined and output; a string. Required.
+#' @param out_chr Name of the chromosome names and lengths table file; a string.
+#' Required.
 #'
 #' @return writes a two-column tab-delineated file without a header containing
 #' chromosome names and lengths for a given chain file

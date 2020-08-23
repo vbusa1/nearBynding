@@ -5,7 +5,7 @@
 #'
 #' @param dir_stereogene_output Directory of Stereogene output for first
 #' protein. Default current directory.
-#' @param RNA_context Name of the RNA context file input to Stereogene.File
+#' @param RNA_context Name of the RNA context file input to Stereogene. File
 #' names must exclude extensions such as ".bedGraph". Requred
 #' @param protein_file A vector of at least one protein file name to be
 #' averaged for calculation of distance. File names must exclude extensions
@@ -26,10 +26,11 @@
 #' @param protein_file_input_2 Similar to protein_file_input. A second protein
 #' file name of background input to be subtracted from protein_file_2 signal.
 #' File name must exclude extension. Only one input file is permitted. Optional.
-#' @param range The range upstream and downstream of the center of protein
-#' binding to consider in the comparison. Ranges that are too small miss the
-#' holistic binding context, while large ranges amplify distal noise in the
-#' binding data. Cannot exceed wSize/2 from write_config. Default c(-200, 200)
+#' @param range A vector of two integers denoting the range upstream and
+#' downstream of the center of protein binding to consider in the comparison.
+#' Ranges that are too small miss the holistic binding context, while large
+#' ranges amplify distal noise in the binding data. Cannot exceed wSize/2 from
+#' write_config. Default c(-200, 200)
 #'
 #' @return Wasserstein distance between the two protein file sets provided for
 #' the RNA structure context specified, minus the input binding signal if

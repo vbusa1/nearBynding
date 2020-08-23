@@ -21,11 +21,14 @@
 #'
 #' @return writes a chain file into directory
 #'
-#' @importFrom S4Vectors elementMetadata Rle
+#' @import S4Vectors
 #' @importFrom GenomeInfoDb seqnames seqlengths
 #' @importFrom methods as
 #' @importFrom magrittr '%>%'
 #' @importFrom utils write.table
+#' @import TxDb.Hsapiens.UCSC.hg19.knownGene
+#' @import TxDb.Hsapiens.UCSC.hg38.knownGene
+#' @import rtracklayer
 #'
 #' @examples
 #' ## load transcript list
@@ -39,11 +42,6 @@
 #'                         RNA_fragment = "three_prime_utr",
 #'                         transcript_list = transcript_list,
 #'                         alignment = "hg38")
-#'
-#' @import TxDb.Hsapiens.UCSC.hg19.knownGene
-#' @import TxDb.Hsapiens.UCSC.hg38.knownGene
-#' @import rtracklayer
-#' @import BiocGenerics
 #'
 #' @export
 

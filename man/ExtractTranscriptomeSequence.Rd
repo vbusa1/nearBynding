@@ -13,22 +13,24 @@ ExtractTranscriptomeSequence(
 )
 }
 \arguments{
-\item{transcript_list}{a vector of transcript names that represent the most
+\item{transcript_list}{A vector of transcript names that represent the most
 expressed isoform of their respective genes and correspond to GTF annotation
 names. Required}
 
 \item{ref_genome}{The name of the reference genome FASTA from which exome
-sequences will be derived. Required}
+sequences will be derived; a string. Required}
 
 \item{genome_gtf}{The name of the GTF/GFF file that contains all exome
-annotations. Coordinates must match the file input for the ref_genome
-parameter. Required}
+annotations; a string. Coordinates must match the file input for the
+ref_genome parameter. Required}
 
-\item{RNA_fragment}{RNA component of interest. Options depend on the gtf
-file but often include "gene", "transcript", "exon", "CDS", "five_prime_utr",
-and/or "three_prime_utr". Default "exon" for the whole exome.}
+\item{RNA_fragment}{A string of RNA component of interest. Options depend on
+the gtf file but often include "gene", "transcript", "exon", "CDS",
+"five_prime_utr", and/or "three_prime_utr". Default "exon" for the whole
+exome.}
 
-\item{exome_prefix}{The prefix for all output files. Default "exome"}
+\item{exome_prefix}{A string to add to the prefix for all output files.
+Default "exome"}
 }
 \value{
 writes FASTA file of transcriptome sequences into directory
@@ -42,12 +44,12 @@ transcript_list, genome_gtf, and RNA_fragment arguments should be the
 same as GenomeMappingToChainFile function arguments
 }
 \examples{
-\dontrun{
+\donttest{
 ExtractTranscriptomeSequence(transcript_list = transcript_list,
-                            ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
-                            genome_gtf = gtf,
-                            RNA_fragment = "three_prime_utr",
-                            exome_prefix = "chr4and5_3UTR")
+             ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
+             genome_gtf = gtf,
+             RNA_fragment = "three_prime_utr",
+             exome_prefix = "chr4and5_3UTR")
 }
 
 }

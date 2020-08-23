@@ -4,7 +4,7 @@
 #'
 #' @param sequences A vector of sequences
 #' @param names A vector of names corresponding to the sequences
-#' @param file.out Name of output FASTA file
+#' @param file.out Name of output FASTA file; a string
 #'
 #' @return writes FASTA file into directory
 #'

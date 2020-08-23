@@ -16,11 +16,12 @@ processCapRout(
 \arguments{
 \item{CapR_outfile}{Name of CapR output file. Required}
 
-\item{output_prefix}{Prefix to be appended to all output files. Required}
+\item{output_prefix}{Prefix string to be appended to all output files.
+Required.}
 
-\item{chrom_size}{Name of chromosome size file in two-column format without
-a header where first column is chromosome name and second column is
-chromosome length, as from liftOverToExomicBG Required}
+\item{chrom_size}{Name of chromosome size file. File must be in two-column
+format without a header where first column is chromosome name and second
+column is chromosome length, as from getChainChrSize. Required.}
 
 \item{genome_gtf}{The name of the GTF/GFF file that contains all exome
 annotations. Required}

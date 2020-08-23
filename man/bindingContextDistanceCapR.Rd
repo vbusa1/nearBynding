@@ -22,12 +22,12 @@ bindingContextDistanceCapR(
 protein. Default current directory.}
 
 \item{CapR_prefix}{The prefix common to CapR output files of protein_file, if
-applicable.Equivalent to output_prefix from runStereogeneOnCapR. Default ""}
+applicable. Equivalent to output_prefix from runStereogeneOnCapR. Default ""}
 
-\item{protein_file}{A vector of at least one protein file name to be averaged
-for calculation of distance. File names must exclude extensions such as
-".bedGraph". All files in the list should be experimental/biological
-replicates. Required.}
+\item{protein_file}{A vector of strings with at least one protein file name
+to be averaged for calculation of distance. File names must exclude
+extensions such as ".bedGraph". All files in the list should be
+experimental/biological replicates. Required.}
 
 \item{protein_file_input}{A protein file name of background input to be
 subtracted from protein_file signal. File name must exclude extension. Only
@@ -54,10 +54,11 @@ file sets. Acceptable contexts include "all", which sums the distance of all
 six contexts, or any of the contexts individually ("bulge", "hairpin",
 "stem", "exterior", "multibranch", or "internal"). Default "all"}
 
-\item{range}{The range upstream and downstream of the center of protein
-binding to consider in the comparison. Ranges that are too small miss the
-holistic binding context, while large ranges amplify distal noise in the
-binding data. Cannot exceed wSize/2 from write_config. Default c(-200, 200)}
+\item{range}{A vector of two integers denoting the range upstream and
+downstream of the center of protein binding to consider in the comparison.
+Ranges that are too small miss the holistic binding context, while large
+ranges amplify distal noise in the binding data. Cannot exceed wSize/2 from
+write_config. Default c(-200, 200)}
 }
 \value{
 Wasserstein distance between the two protein file sets provided for

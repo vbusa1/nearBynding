@@ -10,13 +10,14 @@ runStereogene(track_files, name_config, pcorProfile = NULL, confounder = NULL)
 \item{track_files}{Vector of at least two track or interval file names to be
 pairwise-correlated by StereoGene. Required.}
 
-\item{name_config}{Name of corresponding configuration file. Required}
+\item{name_config}{Name of corresponding configuration file; a string.
+Required}
 
-\item{pcorProfile}{Track for partial correlation. More information for this
+\item{pcorProfile}{Name of track file name for partial correlation; a string.
+More information for this can be found in the StereoGene README. Optional}
+
+\item{confounder}{Confounder file name; a string. More information for this
 can be found in the StereoGene README. Optional}
-
-\item{confounder}{Confounder filename. More information for this can be found
-in the StereoGene README. Optional}
 }
 \value{
 generates StereoGene output files in directory
@@ -25,7 +26,7 @@ generates StereoGene output files in directory
 Writes a StereoGene script in the working directory
 }
 \examples{
-\dontrun{
+\donttest{
 runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph",
                              "chr4and5_liftOver.bedGraph"),
              name_config = "chr4and5_3UTR.cfg")

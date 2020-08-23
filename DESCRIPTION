@@ -36,7 +36,8 @@ Imports: R.utils,
         TxDb.Hsapiens.UCSC.hg38.knownGene, 
         ggplot2, 
         gplots, 
-        BiocGenerics
+        BiocGenerics,
+        rlang
 Suggests: knitr
 SystemRequirements: bedtools (>= 2.28.0), Stereogene (>= v2.20), CapR (>= 1.1.1)
 VignetteBuilder: knitr

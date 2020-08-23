@@ -15,27 +15,25 @@ runStereogeneOnCapR(
 )
 }
 \arguments{
-\item{dir_CapR_bg}{Location of lifted-over CapR bedGraph files. Default
+\item{dir_CapR_bg}{Directory of lifted-over CapR bedGraph files. Default
 current directory}
 
-\item{input_prefix}{Prefix appended to input files; same as input_prefix
-argument in processCapRout. Required}
+\item{input_prefix}{Prefix string appended to input files; same as
+input_prefix argument in processCapRout. Required}
 
 \item{protein_file}{Name of protein file in bedGraph format. Required}
 
-\item{output_prefix}{Prefix to be appended to all output files. Default to
-be same as input_prefix}
+\item{output_prefix}{Prefix string to be appended to all output files.
+Default to be same as input_prefix}
 
 \item{name_config}{Name of output config file. Default config.cfg}
 
-\item{chrom_size}{Name of chromosome size file in two-column format without
-a header where first column is chromosome name and second column is
-chromosome length, as from liftOverToExomicBG. Required}
+\item{chrom_size}{Name of chromosome size file. File must be in two-column
+format without a header where first column is chromosome name and second
+column is chromosome length, as from getChainChrSize. Required}
 
 \item{...}{includes all other parameters acceptable to write_config and
 write_stereogene}
-
-\item{Name}{of output config file. Default "config.cfg"}
 }
 \value{
 generates StereoGene output files, including *.dist files

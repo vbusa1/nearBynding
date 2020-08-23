@@ -8,9 +8,10 @@ getChainChrSize(chain, out_chr)
 }
 \arguments{
 \item{chain}{The name of the chain file for which chromosome sizes should be
-determined and output. Required.}
+determined and output; a string. Required.}
 
-\item{out_chr}{Name of the chromosome names and lengths table file. Required}
+\item{out_chr}{Name of the chromosome names and lengths table file; a string.
+Required.}
 }
 \value{
 writes a two-column tab-delineated file without a header containing

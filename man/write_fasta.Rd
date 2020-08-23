@@ -11,7 +11,7 @@ write_fasta(sequences, names, file.out)
 
 \item{names}{A vector of names corresponding to the sequences}
 
-\item{file.out}{Name of output FASTA file}
+\item{file.out}{Name of output FASTA file; a string}
 }
 \value{
 writes FASTA file into directory

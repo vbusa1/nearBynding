@@ -3,18 +3,20 @@
 #' @description Writes a FASTA file of transcript sequences from a list of
 #' transcripts.
 #'
-#' @param transcript_list a vector of transcript names that represent the most
+#' @param transcript_list A vector of transcript names that represent the most
 #' expressed isoform of their respective genes and correspond to GTF annotation
 #' names. Required
 #' @param ref_genome The name of the reference genome FASTA from which exome
-#' sequences will be derived. Required
+#' sequences will be derived; a string. Required
 #' @param genome_gtf The name of the GTF/GFF file that contains all exome
-#' annotations. Coordinates must match the file input for the ref_genome
-#' parameter. Required
-#' @param RNA_fragment RNA component of interest. Options depend on the gtf
-#' file but often include "gene", "transcript", "exon", "CDS", "five_prime_utr",
-#' and/or "three_prime_utr". Default "exon" for the whole exome.
-#' @param exome_prefix The prefix for all output files. Default "exome"
+#' annotations; a string. Coordinates must match the file input for the
+#' ref_genome parameter. Required
+#' @param RNA_fragment A string of RNA component of interest. Options depend on
+#' the gtf file but often include "gene", "transcript", "exon", "CDS",
+#' "five_prime_utr", and/or "three_prime_utr". Default "exon" for the whole
+#' exome.
+#' @param exome_prefix A string to add to the prefix for all output files.
+#' Default "exome"
 #'
 #' @return writes FASTA file of transcriptome sequences into directory
 #'
@@ -22,12 +24,12 @@
 #' same as GenomeMappingToChainFile function arguments
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'ExtractTranscriptomeSequence(transcript_list = transcript_list,
-#'                             ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
-#'                             genome_gtf = gtf,
-#'                             RNA_fragment = "three_prime_utr",
-#'                             exome_prefix = "chr4and5_3UTR")
+#'              ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
+#'              genome_gtf = gtf,
+#'              RNA_fragment = "three_prime_utr",
+#'              exome_prefix = "chr4and5_3UTR")
 #'}
 #'
 #' @importFrom S4Vectors elementMetadata
@@ -35,6 +37,7 @@
 #' @importFrom plyranges filter
 #' @importFrom utils write.table read.table
 #' @importFrom dplyr filter
+#' @importFrom rlang .data
 #'
 #' @export
 
@@ -76,7 +79,7 @@ ExtractTranscriptomeSequence <- function(transcript_list,
     hold_matrix <- matrix(NA, ncol = 2, nrow = length(unique(edit_tbl$V1)))
     hold_matrix[, 1] <- unique(edit_tbl$V1)
     for (txpt in unique(edit_tbl$V1)) {
-        txpt_tbl <- filter(edit_tbl, .data$V1 == txpt)
+        txpt_tbl <- dplyr::filter(edit_tbl, .data$V1 == txpt)
         if (unique(txpt_tbl$strand) == "-") {
             # write - strand seqs in reverse
             seq <- paste(rev(txpt_tbl$V2), collapse = "", sep = "")
