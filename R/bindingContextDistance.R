@@ -31,11 +31,34 @@
 #' holistic binding context, while large ranges amplify distal noise in the
 #' binding data. Cannot exceed wSize/2 from write_config. Default c(-200, 200)
 #'
+#' @return Wasserstein distance between the two protein file sets provided for
+#' the RNA structure context specified, minus the input binding signal if
+#' applicable
+#'
 #' @note Either RNA_context_2 or protein_file_2 must be input. Otherwise, the
 #' distance would be calculated between the same file and equal 0.
 #' @note Wasserstein distance calculations are reciprocal, so it does not matter
 #' which protein is first or second so long as replicates and input files
 #' correspond to one another.
+#'
+#' @examples
+#' ## pull example files
+#' get_outfiles()
+#' ## distance between stem and hairpin contexts
+#' bindingContextDistance(RNA_context = "chr4and5_3UTR_stem_liftOver",
+#'                        protein_file = "chr4and5_liftOver",
+#'                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+#'
+#' ## distance between internal and hairpin contexts
+#' bindingContextDistance(RNA_context = "chr4and5_3UTR_internal_liftOver",
+#'                        protein_file = "chr4and5_liftOver",
+#'                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+#'
+#' @importFrom utils read.table
+#' @importFrom matrixStats rowSds
+#' @importFrom magrittr '%>%'
+#' @importFrom dplyr filter
+#' @importFrom transport wasserstein1d
 #'
 #' @export
 

@@ -10,12 +10,24 @@
 #' @param protein_file Name of protein file in bedGraph format. Required
 #' @param output_prefix Prefix to be appended to all output files. Default to
 #' be same as input_prefix
-#' @param Name of output config file. Default "config.cfg"
 #' @param chrom_size Name of chromosome size file in two-column format without
 #' a header where first column is chromosome name and second column is
 #' chromosome length, as from liftOverToExomicBG. Required
+#' @param name_config Name of output config file. Default config.cfg
 #' @param ... includes all other parameters acceptable to write_config and
 #' write_stereogene
+#'
+#' @return generates StereoGene output files, including *.dist files
+#'
+#' @examples
+#' \donttest{
+#'runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
+#'                    chrom_size = "chr4and5_3UTR.size",
+#'                    name_config = "chr4and5_3UTR.cfg",
+#'                    input_prefix = "chr4and5_3UTR")
+#'}
+#'
+#' @importFrom R.utils doCall
 #'
 #' @export
 

@@ -25,6 +25,30 @@
 #' @param heatmap Whether the output graph should be in the form of a heatmap
 #' (TRUE) or of a line graph (FALSE). Default FALSE
 #'
+#' @return heatmap (JPEG) or line graph (PDF) image file
+#'
+#' @examples
+#' ## pull example files
+#'get_outfiles()
+#'## heatmap
+#'visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
+#'                        protein_file = "chr4and5_liftOver",
+#'                        heatmap = TRUE,
+#'                        out_file = "all_contexts_heatmap",
+#'                        x_lim = c(-500, 500))
+#'## line graph
+#'visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
+#'                        protein_file = "chr4and5_liftOver",
+#'                        x_lim = c(-500, 500),
+#'                        out_file = "all_contexts_line",
+#'                        y_lim = c(-18, 22))
+#'
+#' @importFrom utils read.table
+#' @importFrom matrixStats rowSds
+#' @importFrom graphics abline arrows lines par plot
+#' @importFrom grDevices dev.off jpeg pdf rgb
+#' @importFrom gplots heatmap.2 redblue
+#'
 #' @export
 
 visualizeCapRStereogene <- function(dir_stereogene_output = ".",

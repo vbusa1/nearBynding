@@ -10,6 +10,20 @@
 #' Recommeded between 50 and 100, with higher values yielding potentially more
 #' accurate results but dramatically increasing run time. Default 100.
 #'
+#'@return generates CapR outfile
+#'
+#'@examples
+#'
+#'## make dummy file
+#'write_fasta(paste0(sample(c("A", "T", "G", "C"), 50, replace = TRUE),
+#'                   collapse = ""),
+#'            "test",
+#'            "test.fa")
+#'## run CapR
+#'\dontrun{
+#'    runCapR("test.fa")
+#'}
+#'
 #' @export
 
 runCapR <- function(in_file,

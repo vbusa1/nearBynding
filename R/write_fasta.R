@@ -6,8 +6,20 @@
 #' @param names A vector of names corresponding to the sequences
 #' @param file.out Name of output FASTA file
 #'
+#' @return writes FASTA file into directory
+#'
+#' @examples
+#'sequences<-c(paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
+#'                    collapse = ""),
+#'             paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
+#'                    collapse = ""),
+#'             paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
+#'                    collapse = ""))
+#'write_fasta(sequences,
+#'            c("one", "two", "three"),
+#'            "test.fa")
+#'
 #' @export
-
 write_fasta <- function(sequences,
                         names,
                         file.out) {

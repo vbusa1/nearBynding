@@ -19,6 +19,32 @@
 #' @param check_overwrite Check for file wth the same out_chain_name
 #' before writing new file. Default FALSE.
 #'
+#' @return writes a chain file into directory
+#'
+#' @importFrom S4Vectors elementMetadata Rle
+#' @importFrom GenomeInfoDb seqnames seqlengths
+#' @importFrom methods as
+#' @importFrom magrittr '%>%'
+#' @importFrom utils write.table
+#'
+#' @examples
+#' ## load transcript list
+#'load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#'## get GTF file
+#' gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+#'                 package="nearBynding")
+#'
+#' GenomeMappingToChainFile(genome_gtf = gtf,
+#'                         out_chain_name = "test.chain",
+#'                         RNA_fragment = "three_prime_utr",
+#'                         transcript_list = transcript_list,
+#'                         alignment = "hg38")
+#'
+#' @import TxDb.Hsapiens.UCSC.hg19.knownGene
+#' @import TxDb.Hsapiens.UCSC.hg38.knownGene
+#' @import rtracklayer
+#' @import BiocGenerics
+#'
 #' @export
 
 GenomeMappingToChainFile <- function(genome_gtf,
@@ -64,7 +90,7 @@ GenomeMappingToChainFile <- function(genome_gtf,
     }
     gtf <- import(genome_gtf)
     gtf <- with(gtf, plyranges::filter(gtf, type == RNA_fragment))
-    gtf_transcripts <- gtf[(elementMetadata(gtf)[, "transcript_id"] %in%
+    gtf_transcripts <- gtf[(elementMetadata(gtf)[,"transcript_id"] %in%
         transcript_list)]
     if (verbose == TRUE) {
         print("annotation data finished loading")

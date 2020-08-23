@@ -7,6 +7,26 @@
 #' determined and output. Required.
 #' @param out_chr Name of the chromosome names and lengths table file. Required
 #'
+#' @return writes a two-column tab-delineated file without a header containing
+#' chromosome names and lengths for a given chain file
+#'
+#' @examples
+#' ## first, make the chain file
+#'load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#'gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+#'                 package="nearBynding")
+#'GenomeMappingToChainFile(genome_gtf = gtf,
+#'                         out_chain_name = "test.chain",
+#'                         RNA_fragment = "three_prime_utr",
+#'                         transcript_list = transcript_list,
+#'                         alignment = "hg38")
+#'
+#'getChainChrSize(chain = "test.chain",
+#'                out_chr = "chr4and5_3UTR.size")
+#'
+#' @importFrom magrittr '%>%'
+#' @importFrom utils write.table
+#'
 #' @export
 
 getChainChrSize <- function(chain,

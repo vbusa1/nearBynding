@@ -35,9 +35,30 @@
 #' holistic binding context, while large ranges amplify distal noise in the
 #' binding data. Cannot exceed wSize/2 from write_config. Default c(-200, 200)
 #'
+#' @return Wasserstein distance between the two protein file sets provided for
+#' the RNA structure context specified, minus the input binding signal if
+#' applicable
+#'
 #' @note Wasserstein distance calculations are reciprocal, so it does not matter
 #' which protein is first or second so long as replicates and input files
 #' correspond to one another.
+#'
+#' @examples
+#' ## load example StereoGene output
+#' get_outfiles()
+#'
+#' ## This boring example compares a protein's binding with itself for all contexts
+#' ## therefore the distance is 0
+#' bindingContextDistanceCapR(CapR_prefix = "chr4and5_3UTR",
+#'                            protein_file = "chr4and5_liftOver",
+#'                            CapR_prefix_2 = "chr4and5_3UTR",
+#'                            protein_file_2 = "chr4and5_liftOver")
+#'
+#' @importFrom utils read.table
+#' @importFrom matrixStats rowSds
+#' @importFrom magrittr '%>%'
+#' @importFrom dplyr filter
+#' @importFrom transport wasserstein1d
 #'
 #' @export
 

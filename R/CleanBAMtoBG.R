@@ -9,6 +9,25 @@
 #' @param unwanted_chromosomes A vector of unwanted chromosomes that are present
 #' in the BAM file.
 #'
+#' @return deposits bedGraph from BAM in same directory
+#'
+#' @examples
+#' bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
+#' #sort BAM first
+#' sorted_bam<-Rsamtools::sortBam(bam, "chr4and5_sorted")
+#' \dontrun{
+#'     CleanBAMtoBG(in_bam = sorted_bam)
+#'
+#'     ## If BAM has unwanted chromosome "EBV"
+#'     CleanBAMtoBG(in_bam = "ENCFF288LEG.bam",
+#'                  unwanted_chromosomes = "EBV")
+#' }
+#'
+#' @importFrom Rsamtools indexBam idxstatsBam filterBam ScanBamParam
+#' @importFrom magrittr '%>%'
+#' @importFrom S4Vectors FilterRules
+#'
+#'
 #' @export
 
 CleanBAMtoBG <- function(in_bam, out_bedGraph = NA,

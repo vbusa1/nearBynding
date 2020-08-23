@@ -18,6 +18,29 @@
 #' @param ctrl_iterations The number of iterations to test for the control
 #' distribution. Default 10000.
 #'
+#' @return \item{output = "KS.pvalue"}{the p-value of the Kolmogorov-Smirnov test
+#' comparing test and control distributions}
+#' \item{output = "plot"}{a ggplot object plotting the test and control
+#'     distributions}
+#' \item{output = "measurements"}{a list or test and control measurement
+#' distances}
+#'
+#' @importFrom magrittr '%>%'
+#' @importFrom dplyr group_by filter summarize
+#' @importFrom stats ks.test
+#' @importFrom ggplot2 ggplot aes stat_ecdf theme_classic theme ylab xlab
+#'
+#' @examples
+#' ## create random distance data frame
+#' dist<-expand.grid(letters, letters)
+#' dist$distance<-rnorm(nrow(dist))
+#' annot<-data.frame(sample<-letters, category<- rep(1:13, 2))
+#' ## get KS p-value
+#' assessGrouping(dist, annot)
+#' ## get plot of test vs control distributions
+#' assessGrouping(dist, annot,
+#'                output = "plot")
+#'
 #' @export
 
 assessGrouping <- function(distances,

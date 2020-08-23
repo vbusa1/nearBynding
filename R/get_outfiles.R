@@ -6,6 +6,13 @@
 #' @param dir Directory into which files ought to be stored. Default current
 #' work directory.
 #'
+#' @return deposits six *.dist StereoGene output files into the selected
+#' directory
+#'
+#' @examples
+#' ## pull example StereoGene output files
+#' get_outfiles()
+#'
 #' @export
 
 get_outfiles <- function(dir = ".") {
