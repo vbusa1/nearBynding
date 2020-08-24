@@ -1,4 +1,6 @@
-nearByndng discerns RNA structure at and proximal to sites of protein binding.
-The most recent version is available on GitHub
-(https://github.com/vbusa1/nearBynding). If you have any questions or comments,
-please contact Veronica Busa <vbusa1@jhmi.edu>.
+CHANGES VERSION 0.99.7 (08-24-2020)
+
+    * re-generate NAMESPACE via Roxygen
+    * clarify man pages
+    * incorporate runnable examples in man pages and vignette with catch if
+      program is unavailable

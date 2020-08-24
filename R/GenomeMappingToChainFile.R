@@ -19,6 +19,30 @@
 #' @param check_overwrite Check for file wth the same out_chain_name
 #' before writing new file. Default FALSE.
 #'
+#' @return writes a chain file into directory
+#'
+#' @import S4Vectors
+#' @importFrom GenomeInfoDb seqnames seqlengths
+#' @importFrom methods as
+#' @importFrom magrittr '%>%'
+#' @importFrom utils write.table
+#' @import TxDb.Hsapiens.UCSC.hg19.knownGene
+#' @import TxDb.Hsapiens.UCSC.hg38.knownGene
+#' @import rtracklayer
+#'
+#' @examples
+#' ## load transcript list
+#' load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#' ## get GTF file
+#' gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+#'                 package="nearBynding")
+#'
+#' GenomeMappingToChainFile(genome_gtf = gtf,
+#'                         out_chain_name = "test.chain",
+#'                         RNA_fragment = "three_prime_utr",
+#'                         transcript_list = transcript_list,
+#'                         alignment = "hg38")
+#'
 #' @export
 
 GenomeMappingToChainFile <- function(genome_gtf,
@@ -46,13 +70,13 @@ GenomeMappingToChainFile <- function(genome_gtf,
                 "file ", out_chain_name,
                 " already exists. Do you want to replace it? y/n :"))
             if (input == "y" | input == "Y" | input == "yes") {
-                system2("rm", out_chain_name)
+                unlink(out_chain_name)
             } else if (input == "n" | input == "N" | input == "no") {
                 stop("Input a different out_chain_name to proceed.")
             } else {
                 print("Please enter y or n")
                 if (input == "y" | input == "Y" | input == "yes") {
-                    system2("rm", out_chain_name)
+                    unlink(out_chain_name)
                 } else if (input == "n" | input == "N" | input == "no") {
                     stop("Input a different out_chain_name to proceed.")
                 } else {
@@ -64,7 +88,7 @@ GenomeMappingToChainFile <- function(genome_gtf,
     }
     gtf <- import(genome_gtf)
     gtf <- with(gtf, plyranges::filter(gtf, type == RNA_fragment))
-    gtf_transcripts <- gtf[(elementMetadata(gtf)[, "transcript_id"] %in%
+    gtf_transcripts <- gtf[(elementMetadata(gtf)[,"transcript_id"] %in%
         transcript_list)]
     if (verbose == TRUE) {
         print("annotation data finished loading")

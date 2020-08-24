@@ -7,14 +7,47 @@
 #' in the format of c(forward_reads, reverse_reads) for strand-separated
 #' alignments. Files must be BED or bedGraph format. Required
 #' @param chain The name of the chain file to be used for liftOver. Format
-#' should be like chain files derived from GRangesMappingToChainFile function.
+#' should be like chain files derived from getChainChrSize function.
 #' Required
-#' @param chrom_size Name of chromosome size file in two-column format without
-#' a header where first column is chromosome name and second column is
-#' chromosome length, as from liftOverToExomicBG Required
-#' @param output_bg The name of the lifted-over output bedGraph file. Required
+#' @param chrom_size Name of chromosome size file. File must be in two-column
+#' format without a header where first column is chromosome name and second
+#' column is chromosome length, as from liftOverToExomicBG. Required.
+#' @param output_bg The name of the lifted-over output bedGraph file. Required.
 #' @param format File type of input file(s). Recommended "BED" or "bedGraph".
 #' Default "bedGraph"
+#'
+#' @return writes lifted-over bedGraph file
+#'
+#' @examples
+#' ## first, get chain file
+#' load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#' gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+#'                 package="nearBynding")
+#' GenomeMappingToChainFile(genome_gtf = gtf,
+#'                         out_chain_name = "test.chain",
+#'                         RNA_fragment = "three_prime_utr",
+#'                         transcript_list = transcript_list,
+#'                         alignment = "hg38")
+#' ## and chain file chromosome sizes
+#' getChainChrSize(chain = "test.chain",
+#'                out_chr = "chr4and5_3UTR.size")
+#'
+#' ## get bedGraph file
+#' chr4and5_sorted.bedGraph<-system.file("extdata/chr4and5_sorted.bedGraph",
+#'                                      package="nearBynding")
+#'
+#' liftOverToExomicBG(input = chr4and5_sorted.bedGraph,
+#'                   chain = "test.chain",
+#'                   chrom_size = "chr4and5_3UTR.size",
+#'                   output_bg = "chr4and5_liftOver.bedGraph")
+#'
+#' @importFrom magrittr '%>%'
+#' @importFrom S4Vectors elementNROWS
+#' @importFrom plyranges bind_ranges
+#' @importFrom GenomicRanges countOverlaps
+#' @importFrom utils read.delim
+#' @importFrom rtracklayer import
+#'
 #'
 #' @export
 
@@ -50,12 +83,10 @@ liftOverToExomicBG <- function(input,
     liftOver_minus <- liftOver(minus, chain_object)
     liftOver_minus<-liftOver_minus[(elementNROWS(range(liftOver_minus))==1L)]%>%
         unlist()
-    liftOver_plus <- liftOver_plus[lapply(
-        as.character(liftOver_plus@seqnames),
-        function(x) {grepl("plus", x) == TRUE}) %>% unlist()]
-    liftOver_minus <- liftOver_minus[lapply(
-        as.character(liftOver_minus@seqnames),
-        function(x) {grepl("minus", x) == TRUE}) %>% unlist()]
+    liftOver_plus <- liftOver_plus[grepl("plus",
+                                    as.character(liftOver_plus@seqnames))]
+    liftOver_minus <- liftOver_minus[grepl("minus",
+                                    as.character(liftOver_minus@seqnames))]
     liftOver <- bind_ranges(liftOver_minus, liftOver_plus)
     # must re-introduce chromosome lengths into seqinfo
     seq_info <- read.delim(chrom_size, header = FALSE)

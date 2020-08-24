@@ -5,7 +5,7 @@
 #'
 #' @param dir_stereogene_output Directory of Stereogene output for first
 #' protein. Default current directory.
-#' @param RNA_context Name of the RNA context file input to Stereogene.File
+#' @param RNA_context Name of the RNA context file input to Stereogene. File
 #' names must exclude extensions such as ".bedGraph". Requred
 #' @param protein_file A vector of at least one protein file name to be
 #' averaged for calculation of distance. File names must exclude extensions
@@ -26,16 +26,40 @@
 #' @param protein_file_input_2 Similar to protein_file_input. A second protein
 #' file name of background input to be subtracted from protein_file_2 signal.
 #' File name must exclude extension. Only one input file is permitted. Optional.
-#' @param range The range upstream and downstream of the center of protein
-#' binding to consider in the comparison. Ranges that are too small miss the
-#' holistic binding context, while large ranges amplify distal noise in the
-#' binding data. Cannot exceed wSize/2 from write_config. Default c(-200, 200)
+#' @param range A vector of two integers denoting the range upstream and
+#' downstream of the center of protein binding to consider in the comparison.
+#' Ranges that are too small miss the holistic binding context, while large
+#' ranges amplify distal noise in the binding data. Cannot exceed wSize/2 from
+#' write_config. Default c(-200, 200)
+#'
+#' @return Wasserstein distance between the two protein file sets provided for
+#' the RNA structure context specified, minus the input binding signal if
+#' applicable
 #'
 #' @note Either RNA_context_2 or protein_file_2 must be input. Otherwise, the
 #' distance would be calculated between the same file and equal 0.
 #' @note Wasserstein distance calculations are reciprocal, so it does not matter
 #' which protein is first or second so long as replicates and input files
 #' correspond to one another.
+#'
+#' @examples
+#' ## pull example files
+#' get_outfiles()
+#' ## distance between stem and hairpin contexts
+#' bindingContextDistance(RNA_context = "chr4and5_3UTR_stem_liftOver",
+#'                        protein_file = "chr4and5_liftOver",
+#'                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+#'
+#' ## distance between internal and hairpin contexts
+#' bindingContextDistance(RNA_context = "chr4and5_3UTR_internal_liftOver",
+#'                        protein_file = "chr4and5_liftOver",
+#'                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+#'
+#' @importFrom utils read.table
+#' @importFrom matrixStats rowSds
+#' @importFrom magrittr '%>%'
+#' @importFrom dplyr filter
+#' @importFrom transport wasserstein1d
 #'
 #' @export
 
