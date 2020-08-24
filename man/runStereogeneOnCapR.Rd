@@ -43,11 +43,9 @@ Writes a configuration file and Stereogene script and runs
 Stereogene for all CapR tracks
 }
 \examples{
-\donttest{
 runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
                    chrom_size = "chr4and5_3UTR.size",
                    name_config = "chr4and5_3UTR.cfg",
                    input_prefix = "chr4and5_3UTR")
-}
 
 }

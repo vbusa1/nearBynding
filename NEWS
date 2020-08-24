@@ -8,5 +8,6 @@ please contact Veronica Busa <vbusa1@jhmi.edu>.
 ### edits for Bioconductor review
 
 * re-generate NAMESPACE via Roxygen
-* replace /dontrun with /donttest in vignette
-* add data types to man pages
+* clarify man pages
+* incorporate runnable examples in man pages and vignette with catch if program
+is unavailable

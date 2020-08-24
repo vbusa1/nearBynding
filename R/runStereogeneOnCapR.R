@@ -20,12 +20,10 @@
 #' @return generates StereoGene output files, including *.dist files
 #'
 #' @examples
-#' \donttest{
-#'runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
+#' runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
 #'                    chrom_size = "chr4and5_3UTR.size",
 #'                    name_config = "chr4and5_3UTR.cfg",
 #'                    input_prefix = "chr4and5_3UTR")
-#'}
 #'
 #' @importFrom R.utils doCall
 #'

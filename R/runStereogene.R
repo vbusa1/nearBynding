@@ -14,11 +14,9 @@
 #' @return generates StereoGene output files in directory
 #'
 #' @examples
-#' \donttest{
-#'runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph",
+#' runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph",
 #'                              "chr4and5_liftOver.bedGraph"),
 #'              name_config = "chr4and5_3UTR.cfg")
-#'}
 #'
 #' @export
 
@@ -45,6 +43,7 @@ runStereogene <- function(track_files,
     if (length(confounder) == 1) {
         confound <- paste0("-confounder ", confounder, " ")
     }
-    system2("StereoGene", paste0(config, partial_corr, confound, tracks)
-    )
+    if(.is_StereoGene_installed()){
+        .StereoGene_run(paste0(config, partial_corr, confound, tracks))
+    }else{return("Please install Stereogene and place in working PATH")}
 }

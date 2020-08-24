@@ -24,13 +24,11 @@
 #' same as GenomeMappingToChainFile function arguments
 #'
 #' @examples
-#' \donttest{
-#'ExtractTranscriptomeSequence(transcript_list = transcript_list,
+#' ExtractTranscriptomeSequence(transcript_list = transcript_list,
 #'              ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
 #'              genome_gtf = gtf,
 #'              RNA_fragment = "three_prime_utr",
 #'              exome_prefix = "chr4and5_3UTR")
-#'}
 #'
 #' @importFrom S4Vectors elementMetadata
 #' @importFrom GenomeInfoDb seqnames
@@ -66,13 +64,15 @@ ExtractTranscriptomeSequence <- function(transcript_list,
                     row.names = FALSE, col.names = FALSE)
     }
     # call bedtools on local system, get FASTA sequences
-    system2("bedtools", paste0("getfasta -s -fi ", ref_genome, " -bed ",
+    if(.is_bedtools_installed()){
+        .bedtools_run(paste0("getfasta -s -fi ", ref_genome, " -bed ",
                         input_bed, " -name -tab -fo ", exome_prefix, ".tmp"))
+    } else{return("Please install bedtools and place in working PATH")}
     # FASTA sequences are fragmented; must compile sequences into whole
     # transcripts to input into CapR folding algorithm
     edit_tbl <- read.table(paste0(exome_prefix, ".tmp"),
                             stringsAsFactors = FALSE)
-    system2("rm", paste0(exome_prefix, ".tmp"))
+    unlink(paste0(exome_prefix, ".tmp"))
     edit_tbl$V1 <- substr(edit_tbl$V1, 1, nchar(edit_tbl$V1) - 2)
     edit_tbl$strand <- df$strand[match(df$names, edit_tbl$V1)] # get strand info
     # make matrix for name and sequences to be written into FASTA

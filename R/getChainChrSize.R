@@ -13,16 +13,16 @@
 #'
 #' @examples
 #' ## first, make the chain file
-#'load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
-#'gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+#' load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#' gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
 #'                 package="nearBynding")
-#'GenomeMappingToChainFile(genome_gtf = gtf,
+#' GenomeMappingToChainFile(genome_gtf = gtf,
 #'                         out_chain_name = "test.chain",
 #'                         RNA_fragment = "three_prime_utr",
 #'                         transcript_list = transcript_list,
 #'                         alignment = "hg38")
 #'
-#'getChainChrSize(chain = "test.chain",
+#' getChainChrSize(chain = "test.chain",
 #'                out_chr = "chr4and5_3UTR.size")
 #'
 #' @importFrom magrittr '%>%'

@@ -22,19 +22,19 @@
 #'
 #' @examples
 #' ## make chain file
-#'load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
-#'gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+#' load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#' gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
 #'                 package="nearBynding")
-#'GenomeMappingToChainFile(genome_gtf = gtf,
+#' GenomeMappingToChainFile(genome_gtf = gtf,
 #'                         out_chain_name = "test.chain",
 #'                         RNA_fragment = "three_prime_utr",
 #'                         transcript_list = transcript_list,
 #'                         alignment = "hg38")
-#'## get chromosome size file
-#'getChainChrSize(chain = "test.chain",
+#' ## get chromosome size file
+#' getChainChrSize(chain = "test.chain",
 #'                out_chr = "chr4and5_3UTR.size")
 #'
-#'processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out",
+#' processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out",
 #'                                          package="nearBynding"),
 #'               chain = "test.chain",
 #'               output_prefix = "chr4and5_3UTR",

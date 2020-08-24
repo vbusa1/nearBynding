@@ -29,15 +29,15 @@
 #'
 #' @examples
 #' ## pull example files
-#'get_outfiles()
-#'## heatmap
-#'visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
+#' get_outfiles()
+#' ## heatmap
+#' visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
 #'                        protein_file = "chr4and5_liftOver",
 #'                        heatmap = TRUE,
 #'                        out_file = "all_contexts_heatmap",
 #'                        x_lim = c(-500, 500))
-#'## line graph
-#'visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
+#' ## line graph
+#' visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
 #'                        protein_file = "chr4and5_liftOver",
 #'                        x_lim = c(-500, 500),
 #'                        out_file = "all_contexts_line",

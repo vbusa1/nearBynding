@@ -9,13 +9,13 @@
 #' @return writes FASTA file into directory
 #'
 #' @examples
-#'sequences<-c(paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
+#' sequences<-c(paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
 #'                    collapse = ""),
 #'             paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
 #'                    collapse = ""),
 #'             paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
 #'                    collapse = ""))
-#'write_fasta(sequences,
+#' write_fasta(sequences,
 #'            c("one", "two", "three"),
 #'            "test.fa")
 #'

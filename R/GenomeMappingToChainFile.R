@@ -32,8 +32,8 @@
 #'
 #' @examples
 #' ## load transcript list
-#'load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
-#'## get GTF file
+#' load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#' ## get GTF file
 #' gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
 #'                 package="nearBynding")
 #'
@@ -70,13 +70,13 @@ GenomeMappingToChainFile <- function(genome_gtf,
                 "file ", out_chain_name,
                 " already exists. Do you want to replace it? y/n :"))
             if (input == "y" | input == "Y" | input == "yes") {
-                system2("rm", out_chain_name)
+                unlink(out_chain_name)
             } else if (input == "n" | input == "N" | input == "no") {
                 stop("Input a different out_chain_name to proceed.")
             } else {
                 print("Please enter y or n")
                 if (input == "y" | input == "Y" | input == "yes") {
-                    system2("rm", out_chain_name)
+                    unlink(out_chain_name)
                 } else if (input == "n" | input == "N" | input == "no") {
                     stop("Input a different out_chain_name to proceed.")
                 } else {

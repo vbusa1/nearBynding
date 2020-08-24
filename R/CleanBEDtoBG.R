@@ -16,12 +16,12 @@
 #' @examples
 #' bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 #' out_bed <- "bamto.bed"
-#' \donttest{
-#'     system2("bedtools", paste0("bamtobed -i ", bam, " > ", out_bed))
-#'
-#'     CleanBEDtoBG(in_bed = out_bed,
-#'                  alignment = "hg38")
+#' if(.is_bedtools_installed()){
+#'     .bedtools_run(paste0("bamtobed -i ", bam, " > ", out_bed))
 #' }
+#' CleanBEDtoBG(in_bed = out_bed,
+#'     alignment = "hg38")
+#'
 #'
 #' @export
 
@@ -39,21 +39,27 @@ CleanBEDtoBG <- function(in_bed, out_bedGraph = NA,
     }
     # sort bed
     out_bed_sorted <- paste0(substr(in_bed, 0, nchar(in_bed) - 4),"_sorted.bed")
-    system2("sort", paste0("-k 1,1 -k2,2n ", in_bed, " > ", out_bed_sorted))
+    if(.is_sort_installed()){
+        .sort_run(paste0("-k 1,1 -k2,2n ", in_bed, " > ", out_bed_sorted))
+    } else{return("Please install sort and place in working PATH")}
     if (is.na(out_bedGraph)) {
         out_bedGraph <- paste0(substr(in_bed, 0, nchar(in_bed) - 3), "bedGraph")
     }
     if (length(unwanted_chromosomes) > 0) {
         tmp <- tempfile(tmpdir = ".")
-        system2("sort", paste0("'/", paste(unwanted_chromosomes,
+        .sort_run(paste0("'/", paste(unwanted_chromosomes,
                                 collapse = "/d;/"),
                                 "/d' ", out_bed_sorted, " > ", tmp))
-        system2("bedtools", paste0("genomecov -i ",
-                                tmp, " -g ", genome, " -bg > ",out_bedGraph))
-        system2("rm", tmp)
+        if(.is_bedtools_installed()){
+            .bedtools_run(paste0("genomecov -i ",
+                                 tmp, " -g ", genome, " -bg > ",out_bedGraph))
+        } else{return("Please install bedtools and place in working PATH")}
+        unlink(tmp)
     } else {
-        system2("bedtools",paste0("genomecov -i ",out_bed_sorted, " -g ",genome,
-                                " -bg > ", out_bedGraph))
+        if(.is_bedtools_installed()){
+            .bedtools_run(paste0("genomecov -i ",out_bed_sorted, " -g ",genome,
+                                 " -bg > ", out_bedGraph))
+        } else{return("Please install bedtools and place in working PATH")}
     }
-    system2("rm", out_bed_sorted)
+    unlink(out_bed_sorted)
 }

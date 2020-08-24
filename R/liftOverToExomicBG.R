@@ -20,23 +20,23 @@
 #'
 #' @examples
 #' ## first, get chain file
-#'load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
-#'gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+#' load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#' gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
 #'                 package="nearBynding")
-#'GenomeMappingToChainFile(genome_gtf = gtf,
+#' GenomeMappingToChainFile(genome_gtf = gtf,
 #'                         out_chain_name = "test.chain",
 #'                         RNA_fragment = "three_prime_utr",
 #'                         transcript_list = transcript_list,
 #'                         alignment = "hg38")
-#'## and chain file chromosome sizes
-#'getChainChrSize(chain = "test.chain",
+#' ## and chain file chromosome sizes
+#' getChainChrSize(chain = "test.chain",
 #'                out_chr = "chr4and5_3UTR.size")
 #'
-#'## get bedGraph file
-#'chr4and5_sorted.bedGraph<-system.file("extdata/chr4and5_sorted.bedGraph",
+#' ## get bedGraph file
+#' chr4and5_sorted.bedGraph<-system.file("extdata/chr4and5_sorted.bedGraph",
 #'                                      package="nearBynding")
 #'
-#'liftOverToExomicBG(input = chr4and5_sorted.bedGraph,
+#' liftOverToExomicBG(input = chr4and5_sorted.bedGraph,
 #'                   chain = "test.chain",
 #'                   chrom_size = "chr4and5_3UTR.size",
 #'                   output_bg = "chr4and5_liftOver.bedGraph")

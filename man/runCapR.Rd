@@ -32,8 +32,6 @@ write_fasta(paste0(sample(c("A", "T", "G", "C"), 50, replace = TRUE),
            "test",
            "test.fa")
 ## run CapR
-\donttest{
-   runCapR("test.fa")
-}
+runCapR("test.fa")
 
 }

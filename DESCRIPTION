@@ -59,4 +59,5 @@ Collate: 'assessGrouping.R'
         'write_config.R'
         'write_fasta.R'
         'getChainChrSize.R'
+        'utilities.R'
 RoxygenNote: 7.1.1

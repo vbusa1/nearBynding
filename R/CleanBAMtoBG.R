@@ -15,10 +15,11 @@
 #' bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 #' #sort BAM first
 #' sorted_bam<-Rsamtools::sortBam(bam, "chr4and5_sorted")
-#' \donttest{
-#'     CleanBAMtoBG(in_bam = sorted_bam)
+#' CleanBAMtoBG(in_bam = sorted_bam)
 #'
+#' \dontrun{
 #'     ## If BAM has unwanted chromosome "EBV"
+#'     ## this file is from ENCODE database
 #'     CleanBAMtoBG(in_bam = "ENCFF288LEG.bam",
 #'                  unwanted_chromosomes = "EBV")
 #' }
@@ -46,12 +47,16 @@ CleanBAMtoBG <- function(in_bam, out_bedGraph = NA,
                                     matches))
         filterBam(in_bam, tmp, param = ScanBamParam(what = "rname"),
                                     filter = filter)
-        system2("bedtools", paste0("genomecov -ibam ",
-                                    tmp, " -bg > ", out_bedGraph))
-        system2("rm", tmp)
-        system2("rm", paste0(tmp, ".bai"))
+        if(.is_bedtools_installed()){
+            .bedtools_run(paste0("genomecov -ibam ",
+                                 tmp, " -bg > ", out_bedGraph))
+        } else{return("Please install bedtools and place in working PATH")}
+        unlink(tmp)
+        unlink(paste0(tmp, ".bai"))
     } else {
-        system2("bedtools", paste0("genomecov -ibam ",
-                                    in_bam, " -bg > ", out_bedGraph))
+        if(.is_bedtools_installed()){
+            .bedtools_run(paste0("genomecov -ibam ",
+                                 in_bam, " -bg > ", out_bedGraph))
+        } else{return("Please install bedtools and place in working PATH")}
     }
 }
