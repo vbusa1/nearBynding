@@ -165,27 +165,16 @@ The reference genome can be found through
 for users who do not want to download that 3.2GB file for the sake of this 
 vignette, the FASTA output of the above code is available via:
 
-```{r, eval = FALSE}
+```{r}
 chr4and5_3UTR.fa <- system.file("extdata/chr4and5_3UTR.fa", 
                                 package="nearBynding")
 ```
 
 These sequences can then be submitted to CapR for folding.
 
-`r if(!CapR) {"\\begin{comment}"}`
-
-*NOTE: this computer does not have CapR installed in the local PATH. CapR is*
-*required for nearBynding to create sequence-based structure predictions.*
-
-```{r, eval = FALSE}
+```{r, eval = CapR}
 runCapR(in_file = chr4and5_3UTR.fa)
 ```
-`r if(!CapR) {"\\end{comment}"}`
-`r if(CapR) {"\\begin{comment}"}`
-```{r}
-runCapR(in_file = chr4and5_3UTR.fa)
-```
-`r if(CapR) {"\\end{comment}"}`
 
 Warning: This step can take hours or even days depending on how many 
 transcripts are submitted, how long the RNA fragments are, and the maximum 
@@ -198,27 +187,13 @@ reads or a BED file of peak intervals. BAM files must be sorted and
 converted to a bedGraph file first, whereas BED files can be read-in directly.
 
 #### BAM file input
-`r if(!bedtools) {"\\begin{comment}"}`
 
-*NOTE: this computer does not have bedtools installed in the local PATH.* 
-*bedtools is required for nearBynding to process genomic data.*
-
-```{r, eval = FALSE}
+```{r, eval = bedtools}
 bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 sorted_bam<-sortBam(bam, "chr4and5_sorted")
 
 CleanBAMtoBG(in_bam = sorted_bam)
 ```
-`r if(!bedtools) {"\\end{comment}"}`
-`r if(bedtools) {"\\begin{comment}"}`
-
-```{r}
-bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
-sorted_bam<-sortBam(bam, "chr4and5_sorted")
-
-CleanBAMtoBG(in_bam = sorted_bam)
-```
-`r if(bedtools) {"\\end{comment}"}`
 
 #### Map Protein Binding and RNA Structure to the Transcriptome
 
@@ -243,8 +218,6 @@ and *bulge*. `processCapRout()` parses the CapR output, converts it into six
 separate bedGraph files, and then performs `liftOverToExomic()` for all the 
 files.
 
-`r if(!CapR) {"\\begin{comment}"}`
-
 For this sake of this vignette, the CapR outfile is available:
 
 ```{r}
@@ -256,17 +229,6 @@ processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out",
                 genome_gtf = gtf,
                 RNA_fragment = "three_prime_utr")
 ```
-`r if(!CapR) {"\\end{comment}"}`
-`r if(CapR) {"\\begin{comment}"}`
-```{r}
-processCapRout(CapR_outfile = "chr4and5_3UTR.out",
-                chain = "test.chain",
-                output_prefix = "chr4and5_3UTR",
-                chrom_size = "chr4and5_3UTR.size",
-                genome_gtf = gtf,
-                RNA_fragment = "three_prime_utr")
-```
-`r if(CapR) {"\\end{comment}"}`
 
 It is possible for users to input their own RNA structure information rather 
 than using CapR. The information should be in BED file format and can be input 
@@ -284,33 +246,19 @@ If CapR is used to determine RNA structure, `runStereogeneOnCapR()` initiates
 StereoGene for a given protein against all CapR-generated RNA structure 
 contexts.
 
-`r if(!stereogene) {"\\begin{comment}"}`
-*NOTE: this computer does not have StereoGene installed in the local PATH.* 
-*StereoGene is required for nearBynding to perform the cross-correlation*
-*calculation to determine local RNA structure relative to RBP binding.*
+For the sake of this vignette, use `outfiles()` to pull the StereoGene output
+files to your local directory if you do not want to run StereoGene.
 
-```{r, eval = FALSE}
+```{r, eval = stereogene}
 runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
                     chrom_size = "chr4and5_3UTR.size",
                     name_config = "chr4and5_3UTR.cfg",
                     input_prefix = "chr4and5_3UTR")
 ```
 
-For the sake of this vignette, use `outfiles()` to pull the StereoGene output
-files to your local directory.
-
-```{r, echo = FALSE, results='hide'}
+```{r, echo = !stereogene, results='hide'}
 get_outfiles()
 ```
-`r if(!stereogene) {"\\end{comment}"}`
-`r if(stereogene) {"\\begin{comment}"}`
-```{r}
-runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
-                    chrom_size = "chr4and5_3UTR.size",
-                    name_config = "chr4and5_3UTR.cfg",
-                    input_prefix = "chr4and5_3UTR")
-```
-`r if(stereogene) {"\\end{comment}"}`
 
 If external RNA structure data is being tested, `runStereogene()` initiates 
 analysis for a given protein and a single RNA structure context.
@@ -336,8 +284,7 @@ heatmap or a line plot. Examples of both are below.
 
 For CapR-derived RNA structure, all six contexts can be viewed simultaneously.
 
-`r if(!stereogene) {"\\begin{comment}"}`
-```{r, eval = FALSE}
+```{r, eval = stereogene}
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
                         protein_file = "chr4and5_liftOver",
                         heatmap = TRUE,
@@ -353,39 +300,12 @@ visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
 knitr::include_graphics("all_contexts_heatmap.jpeg")
 knitr::include_graphics("all_contexts_line.pdf")
 ```
-`r if(!stereogene) {"\\end{comment}"}`
-`r if(stereogene) {"\\begin{comment}"}`
-```{r}
-visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
-                        protein_file = "chr4and5_liftOver",
-                        heatmap = TRUE,
-                        out_file = "all_contexts_heatmap",
-                        x_lim = c(-500, 500))
-visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
-                        protein_file = "chr4and5_liftOver",
-                        x_lim = c(-500, 500),
-                        out_file = "all_contexts_line",
-                        y_lim = c(-18, 22))
-```
-`r if(stereogene) {"\\end{comment}"}`
+
+Warning: This step may take up to an hour for a full transcriptome.
 
 Alternatively, a single context can be viewed at a time.
 
-`r if(stereogene) {"\\begin{comment}"}`
-```{r}
-visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
-                    protein_file = "chr4and5_liftOver",
-                    out_file = "stem_line",
-                    x_lim = c(-500, 500))
-visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
-                    protein_file = "chr4and5_liftOver",
-                    heatmap = TRUE,
-                    out_file = "stem_heatmap",
-                    x_lim = c(-500, 500))
-```
-`r if(stereogene) {"\\end{comment}"}`
-`r if(!stereogene) {"\\end{comment}"}`
-```{r, eval = FALSE}
+```{r, eval = stereogene}
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     protein_file = "chr4and5_liftOver",
                     out_file = "stem_line",
@@ -400,7 +320,6 @@ visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
 knitr::include_graphics("stem_heatmap.jpeg")
 knitr::include_graphics("stem_line.pdf")
 ```
-`r if(!stereogene) {"\\end{comment}"}`
 
 Although this specific, limited example does not provide a particularly 
 visually stimulating image, larger data sets (which provide many more 
