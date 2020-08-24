@@ -5,13 +5,13 @@
 \title{runStereogeneOnCapR}
 \usage{
 runStereogeneOnCapR(
-  dir_CapR_bg = ".",
-  input_prefix,
-  protein_file,
-  output_prefix = input_prefix,
-  name_config = "config.cfg",
-  chrom_size,
-  ...
+    dir_CapR_bg = ".",
+    input_prefix,
+    protein_file,
+    output_prefix = input_prefix,
+    name_config = "config.cfg",
+    chrom_size,
+    ...
 )
 }
 \arguments{
@@ -44,8 +44,8 @@ Stereogene for all CapR tracks
 }
 \examples{
 runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
-                   chrom_size = "chr4and5_3UTR.size",
-                   name_config = "chr4and5_3UTR.cfg",
-                   input_prefix = "chr4and5_3UTR")
+                    chrom_size = "chr4and5_3UTR.size",
+                    name_config = "chr4and5_3UTR.cfg",
+                    input_prefix = "chr4and5_3UTR")
 
 }

@@ -32,7 +32,7 @@ CleanBAMtoBG(in_bam = sorted_bam)
     ## If BAM has unwanted chromosome "EBV"
     ## this file is from ENCODE database
     CleanBAMtoBG(in_bam = "ENCFF288LEG.bam",
-                 unwanted_chromosomes = "EBV")
+                    unwanted_chromosomes = "EBV")
 }
 
 }

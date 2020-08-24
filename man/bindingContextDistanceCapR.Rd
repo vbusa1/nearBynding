@@ -5,16 +5,16 @@
 \title{bindingContextDistanceCapR}
 \usage{
 bindingContextDistanceCapR(
-  dir_stereogene_output = ".",
-  CapR_prefix = "",
-  protein_file,
-  protein_file_input = NULL,
-  dir_stereogene_output_2 = NULL,
-  CapR_prefix_2 = "",
-  protein_file_2,
-  protein_file_input_2 = NULL,
-  context = "all",
-  range = c(-200, 200)
+    dir_stereogene_output = ".",
+    CapR_prefix = "",
+    protein_file,
+    protein_file_input = NULL,
+    dir_stereogene_output_2 = NULL,
+    CapR_prefix_2 = "",
+    protein_file_2,
+    protein_file_input_2 = NULL,
+    context = "all",
+    range = c(-200, 200)
 )
 }
 \arguments{
@@ -81,8 +81,8 @@ get_outfiles()
 ## This boring example compares a protein's binding with itself for all contexts
 ## therefore the distance is 0
 bindingContextDistanceCapR(CapR_prefix = "chr4and5_3UTR",
-                           protein_file = "chr4and5_liftOver",
-                           CapR_prefix_2 = "chr4and5_3UTR",
-                           protein_file_2 = "chr4and5_liftOver")
+                            protein_file = "chr4and5_liftOver",
+                            CapR_prefix_2 = "chr4and5_3UTR",
+                            protein_file_2 = "chr4and5_liftOver")
 
 }

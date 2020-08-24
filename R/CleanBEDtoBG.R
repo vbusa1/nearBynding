@@ -54,13 +54,13 @@ CleanBEDtoBG <- function(in_bed, out_bedGraph = NA,
                                 "/d' ", out_bed_sorted, " > ", tmp))
         if(.is_bedtools_installed()){
             .bedtools_run(paste0("genomecov -i ",
-                                 tmp, " -g ", genome, " -bg > ",out_bedGraph))
+                                tmp, " -g ", genome, " -bg > ",out_bedGraph))
         } else{return("Please install bedtools and place in working PATH")}
         unlink(tmp)
     } else {
         if(.is_bedtools_installed()){
             .bedtools_run(paste0("genomecov -i ",out_bed_sorted, " -g ",genome,
-                                 " -bg > ", out_bedGraph))
+                                " -bg > ", out_bedGraph))
         } else{return("Please install bedtools and place in working PATH")}
     }
     unlink(out_bed_sorted)

@@ -48,8 +48,8 @@
 #' ## load example StereoGene output
 #' get_outfiles()
 #'
-#' ## This boring example compares a protein's binding with itself for all contexts
-#' ## therefore the distance is 0
+#' ## This boring example compares a protein's binding with itself for all
+#' ## contexts, therefore the distance is 0
 #' bindingContextDistanceCapR(CapR_prefix = "chr4and5_3UTR",
 #'                            protein_file = "chr4and5_liftOver",
 #'                            CapR_prefix_2 = "chr4and5_3UTR",

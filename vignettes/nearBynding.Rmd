@@ -21,10 +21,10 @@ library(Rsamtools)
 ```{r, echo=FALSE}
 ## test whether the local computer can run the required programs
 bedtools<-suppressWarnings(system2("bedtools", "--version", 
-                                     stdout = NULL, stderr = NULL)) == 0
+                                    stdout = NULL, stderr = NULL)) == 0
 CapR<-suppressWarnings(system2("CapR", stdout = NULL, stderr = NULL)) == 0
 stereogene<-suppressWarnings(system2("Stereogene", "-h", 
-                                     stdout = NULL, stderr = NULL)) == 0
+                                    stdout = NULL, stderr = NULL)) == 0
 ```
 
 nearBynding is a package designed to discern annotated RNA structures proximal
@@ -333,7 +333,7 @@ For CapR-derived RNA structure, all six contexts can be viewed simultaneously.
 ```{r, eval = FALSE}
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
                         protein_file = "chr4and5_liftOver",
-                        heatmap = T,
+                        heatmap = TRUE,
                         out_file = "all_contexts_heatmap",
                         x_lim = c(-500, 500))
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
@@ -342,7 +342,7 @@ visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
                         out_file = "all_contexts_line",
                         y_lim = c(-18, 22))
 ```
-```{r, fig.show='hold', echo = F, out.width = '50%'}
+```{r, fig.show='hold', echo = FALSE, out.width = '50%'}
 knitr::include_graphics("all_contexts_heatmap.jpeg")
 knitr::include_graphics("all_contexts_line.pdf")
 ```
@@ -351,7 +351,7 @@ knitr::include_graphics("all_contexts_line.pdf")
 ```{r}
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
                         protein_file = "chr4and5_liftOver",
-                        heatmap = T,
+                        heatmap = TRUE,
                         out_file = "all_contexts_heatmap",
                         x_lim = c(-500, 500))
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
@@ -372,7 +372,7 @@ visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     x_lim = c(-500, 500))
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     protein_file = "chr4and5_liftOver",
-                    heatmap = T,
+                    heatmap = TRUE,
                     out_file = "stem_heatmap",
                     x_lim = c(-500, 500))
 ```
@@ -385,11 +385,11 @@ visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     x_lim = c(-500, 500))
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
                     protein_file = "chr4and5_liftOver",
-                    heatmap = T,
+                    heatmap = TRUE,
                     out_file = "stem_heatmap",
                     x_lim = c(-500, 500))
 ```
-```{r, fig.show='hold', echo = F, out.width = '50%'}
+```{r, fig.show='hold', echo = FALSE, out.width = '50%'}
 knitr::include_graphics("stem_heatmap.jpeg")
 knitr::include_graphics("stem_line.pdf")
 ```

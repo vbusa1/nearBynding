@@ -5,11 +5,11 @@
 \title{assessGrouping}
 \usage{
 assessGrouping(
-  distances,
-  annotations,
-  measurement = "mean",
-  output = "KS.pvalue",
-  ctrl_iterations = 10000
+    distances,
+    annotations,
+    measurement = "mean",
+    output = "KS.pvalue",
+    ctrl_iterations = 10000
 )
 }
 \arguments{
@@ -55,6 +55,6 @@ annot<-data.frame(sample<-letters, category<- rep(1:13, 2))
 assessGrouping(dist, annot)
 ## get plot of test vs control distributions
 assessGrouping(dist, annot,
-               output = "plot")
+                output = "plot")
 
 }

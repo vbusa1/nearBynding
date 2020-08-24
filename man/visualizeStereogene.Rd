@@ -5,15 +5,15 @@
 \title{visualizeStereogene}
 \usage{
 visualizeStereogene(
-  dir_stereogene_output = ".",
-  context_file,
-  protein_file,
-  protein_file_input = NULL,
-  x_lim = c(-100, 100),
-  y_lim = NULL,
-  out_file = "out_file",
-  legend = TRUE,
-  heatmap = FALSE
+    dir_stereogene_output = ".",
+    context_file,
+    protein_file,
+    protein_file_input = NULL,
+    x_lim = c(-100, 100),
+    y_lim = NULL,
+    out_file = "out_file",
+    legend = TRUE,
+    heatmap = FALSE
 )
 }
 \arguments{
@@ -60,14 +60,14 @@ relative to protein binding.
 get_outfiles()
 ## heatmap
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
-                   protein_file = "chr4and5_liftOver",
-                   out_file = "stem_heatmap",
-                   x_lim = c(-500, 500))
+                    protein_file = "chr4and5_liftOver",
+                    out_file = "stem_heatmap",
+                    x_lim = c(-500, 500))
 ## line graph
 visualizeStereogene(context_file = "chr4and5_3UTR_stem_liftOver",
-                   protein_file = "chr4and5_liftOver",
-                   heatmap = TRUE,
-                   out_file = "stem_line",
-                   x_lim = c(-500, 500))
+                    protein_file = "chr4and5_liftOver",
+                    heatmap = TRUE,
+                    out_file = "stem_line",
+                    x_lim = c(-500, 500))
 
 }

@@ -5,12 +5,12 @@
 \title{processCapRout}
 \usage{
 processCapRout(
-  CapR_outfile,
-  output_prefix,
-  chrom_size,
-  genome_gtf,
-  RNA_fragment,
-  chain
+    CapR_outfile,
+    output_prefix,
+    chrom_size,
+    genome_gtf,
+    RNA_fragment,
+    chain
 )
 }
 \arguments{
@@ -45,7 +45,7 @@ genome and transcriptome alignments.
 ## make chain file
 load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
 gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
-                package="nearBynding")
+                    package="nearBynding")
 GenomeMappingToChainFile(genome_gtf = gtf,
                         out_chain_name = "test.chain",
                         RNA_fragment = "three_prime_utr",
@@ -53,14 +53,14 @@ GenomeMappingToChainFile(genome_gtf = gtf,
                         alignment = "hg38")
 ## get chromosome size file
 getChainChrSize(chain = "test.chain",
-               out_chr = "chr4and5_3UTR.size")
+                out_chr = "chr4and5_3UTR.size")
 
 processCapRout(CapR_outfile = system.file("extdata/chr4and5_3UTR.out",
-                                         package="nearBynding"),
-              chain = "test.chain",
-              output_prefix = "chr4and5_3UTR",
-              chrom_size = "chr4and5_3UTR.size",
-              genome_gtf = gtf,
-              RNA_fragment = "three_prime_utr")
+                                            package="nearBynding"),
+                chain = "test.chain",
+                output_prefix = "chr4and5_3UTR",
+                chrom_size = "chr4and5_3UTR.size",
+                genome_gtf = gtf,
+                RNA_fragment = "three_prime_utr")
 
 }

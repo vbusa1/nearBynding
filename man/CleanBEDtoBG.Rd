@@ -5,10 +5,10 @@
 \title{CleanBEDtoBG}
 \usage{
 CleanBEDtoBG(
-  in_bed,
-  out_bedGraph = NA,
-  unwanted_chromosomes = NULL,
-  alignment = "hg19"
+    in_bed,
+    out_bedGraph = NA,
+    unwanted_chromosomes = NULL,
+    alignment = "hg19"
 )
 }
 \arguments{

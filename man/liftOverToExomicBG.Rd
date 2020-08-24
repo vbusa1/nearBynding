@@ -35,7 +35,7 @@ annotations from genome to transcriptome.
 ## first, get chain file
 load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
 gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
-                package="nearBynding")
+                    package="nearBynding")
 GenomeMappingToChainFile(genome_gtf = gtf,
                         out_chain_name = "test.chain",
                         RNA_fragment = "three_prime_utr",
@@ -43,15 +43,15 @@ GenomeMappingToChainFile(genome_gtf = gtf,
                         alignment = "hg38")
 ## and chain file chromosome sizes
 getChainChrSize(chain = "test.chain",
-               out_chr = "chr4and5_3UTR.size")
+                out_chr = "chr4and5_3UTR.size")
 
 ## get bedGraph file
 chr4and5_sorted.bedGraph<-system.file("extdata/chr4and5_sorted.bedGraph",
-                                     package="nearBynding")
+                                        package="nearBynding")
 
 liftOverToExomicBG(input = chr4and5_sorted.bedGraph,
-                  chain = "test.chain",
-                  chrom_size = "chr4and5_3UTR.size",
-                  output_bg = "chr4and5_liftOver.bedGraph")
+                    chain = "test.chain",
+                    chrom_size = "chr4and5_3UTR.size",
+                    output_bg = "chr4and5_liftOver.bedGraph")
 
 }

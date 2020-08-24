@@ -5,15 +5,15 @@
 \title{bindingContextDistance}
 \usage{
 bindingContextDistance(
-  dir_stereogene_output = ".",
-  RNA_context,
-  protein_file,
-  protein_file_input = NULL,
-  dir_stereogene_output_2 = NULL,
-  RNA_context_2 = NULL,
-  protein_file_2 = NULL,
-  protein_file_input_2 = NULL,
-  range = c(-200, 200)
+    dir_stereogene_output = ".",
+    RNA_context,
+    protein_file,
+    protein_file_input = NULL,
+    dir_stereogene_output_2 = NULL,
+    RNA_context_2 = NULL,
+    protein_file_2 = NULL,
+    protein_file_input_2 = NULL,
+    range = c(-200, 200)
 )
 }
 \arguments{
@@ -76,12 +76,12 @@ correspond to one another.
 get_outfiles()
 ## distance between stem and hairpin contexts
 bindingContextDistance(RNA_context = "chr4and5_3UTR_stem_liftOver",
-                       protein_file = "chr4and5_liftOver",
-                       RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+                        protein_file = "chr4and5_liftOver",
+                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
 
 ## distance between internal and hairpin contexts
 bindingContextDistance(RNA_context = "chr4and5_3UTR_internal_liftOver",
-                       protein_file = "chr4and5_liftOver",
-                       RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
+                        protein_file = "chr4and5_liftOver",
+                        RNA_context_2 = "chr4and5_3UTR_hairpin_liftOver")
 
 }
