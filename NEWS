@@ -3,11 +3,9 @@ The most recent version is available on GitHub
 (https://github.com/vbusa1/nearBynding). If you have any questions or comments,
 please contact Veronica Busa <vbusa1@jhmi.edu>.
 
-## nearBynding 0.99.7 (08-23-2020)
+CHANGES VERSION 0.99.7 (08-24-2020)
 
-### edits for Bioconductor review
-
-* re-generate NAMESPACE via Roxygen
-* clarify man pages
-* incorporate runnable examples in man pages and vignette with catch if program
-is unavailable
+    * re-generate NAMESPACE via Roxygen
+    * clarify man pages
+    * incorporate runnable examples in man pages and vignette with catch if
+      program is unavailable

@@ -24,11 +24,18 @@
 #' same as GenomeMappingToChainFile function arguments
 #'
 #' @examples
+#' \donttest{
+#' ## load transcript list
+#' load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
+#' ##get GTF file
+#' gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
+#'                  package="nearBynding")
 #' ExtractTranscriptomeSequence(transcript_list = transcript_list,
 #'              ref_genome = "Homo_sapiens.GRCh38.dna.primary_assembly.fa",
 #'              genome_gtf = gtf,
 #'              RNA_fragment = "three_prime_utr",
 #'              exome_prefix = "chr4and5_3UTR")
+#'}
 #'
 #' @importFrom S4Vectors elementMetadata
 #' @importFrom GenomeInfoDb seqnames
