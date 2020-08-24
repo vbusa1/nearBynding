@@ -46,6 +46,7 @@
 #' @importFrom plyranges bind_ranges
 #' @importFrom GenomicRanges countOverlaps
 #' @importFrom utils read.delim
+#' @importFrom rtracklayer import
 #'
 #'
 #' @export
@@ -82,12 +83,10 @@ liftOverToExomicBG <- function(input,
     liftOver_minus <- liftOver(minus, chain_object)
     liftOver_minus<-liftOver_minus[(elementNROWS(range(liftOver_minus))==1L)]%>%
         unlist()
-    liftOver_plus <- liftOver_plus[lapply(
-        as.character(liftOver_plus@seqnames),
-        function(x) {grepl("plus", x) == TRUE}) %>% unlist()]
-    liftOver_minus <- liftOver_minus[lapply(
-        as.character(liftOver_minus@seqnames),
-        function(x) {grepl("minus", x) == TRUE}) %>% unlist()]
+    liftOver_plus <- liftOver_plus[grepl("plus",
+                                    as.character(liftOver_plus@seqnames))]
+    liftOver_minus <- liftOver_minus[grepl("minus",
+                                    as.character(liftOver_minus@seqnames))]
     liftOver <- bind_ranges(liftOver_minus, liftOver_plus)
     # must re-introduce chromosome lengths into seqinfo
     seq_info <- read.delim(chrom_size, header = FALSE)
