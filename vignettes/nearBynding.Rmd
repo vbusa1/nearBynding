@@ -256,7 +256,7 @@ runStereogeneOnCapR(protein_file = "chr4and5_liftOver.bedGraph",
                     input_prefix = "chr4and5_3UTR")
 ```
 
-```{r, echo = !stereogene, results='hide'}
+```{r, echo = FALSE, eval = !stereogene, results='hide'}
 get_outfiles()
 ```
 
@@ -277,7 +277,7 @@ runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph",
                 name_config = "chr4and5_3UTR.cfg")
 ```
 
-## Visualize Results
+## 5. Visualize Results
 
 The cross-correlation output of StereoGene can be visualized as either a 
 heatmap or a line plot. Examples of both are below.
