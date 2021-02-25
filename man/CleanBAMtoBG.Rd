@@ -28,11 +28,11 @@ bam <- system.file("extdata/chr4and5.bam", package="nearBynding")
 sorted_bam<-Rsamtools::sortBam(bam, "chr4and5_sorted")
 CleanBAMtoBG(in_bam = sorted_bam)
 
-\dontrun{
+\donttest{
     ## If BAM has unwanted chromosome "EBV"
     ## this file is from ENCODE database
     CleanBAMtoBG(in_bam = "ENCFF288LEG.bam",
-                    unwanted_chromosomes = "EBV")
+                 unwanted_chromosomes = "EBV")
 }
 
 }

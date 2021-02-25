@@ -19,6 +19,8 @@
 #' limits. Cannot exceed wSize/2 from write_config. Default (-100, 100)
 #' @param y_lim A vector of two numbers denoting the lower and upper y axis
 #' limits. Optional.
+#' @param error A numeric value that determines the number of standard
+#' deviations to show in the error bar. Default 3
 #' @param out_file Name of output file, excluding extension. ".pdf" or ".jpeg"
 #' will be added as relevant to the output file name. Default "out_file"
 #' @param legend Whether a legend should be included with the output graph.
@@ -57,6 +59,7 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
                                 protein_file_input = NULL,
                                 x_lim = c(-100, 100),
                                 y_lim = NULL,
+                                error = 3,
                                 out_file = "out_file",
                                 legend = TRUE,
                                 heatmap = FALSE) {
@@ -126,15 +129,15 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
         }
         plot(dist$x, dist$Bkg, type = "l", col = "black",
                 xlim = x_lim, ylim = y_lim, main = NULL,
-                xlab = "Distance", ylab = "Density x 100",
+                xlab = "Nucleotide", ylab = "Density x 100",
                 cex.axis = 0.8, cex.lab = 1, cex.main = 1.2, lwd = 2)
-        arrows(dist$x, dist$Bkg - dist$Bkg_se, dist$x,
-                dist$Bkg + dist$Bkg_se, length = 0, angle = 90,
+        arrows(dist$x, dist$Bkg - (error * dist$Bkg_se), dist$x,
+                dist$Bkg + (error * dist$Bkg_se), length = 0, angle = 90,
                 code = 3, col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
         abline(v = 0, col = "grey", lty = 2)
         lines(dist$x, dist$Fg, col = "blue", lwd = 2)
-        arrows(dist$x, dist$Fg - dist$Fg_se, dist$x,
-                dist$Fg + dist$Fg_se, length = 0, angle = 90,
+        arrows(dist$x, dist$Fg - (error * dist$Fg_se), dist$x,
+                dist$Fg + (error * dist$Fg_se), length = 0, angle = 90,
                 code = 3, col = rgb(blue = 1, red = 0, green = 0, alpha = 0.5))
         if (legend == TRUE) {
             legend("bottomright", legend = c("Background", "Signal"),

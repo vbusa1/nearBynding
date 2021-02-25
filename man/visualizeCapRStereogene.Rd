@@ -5,15 +5,16 @@
 \title{visualizeCapRStereogene}
 \usage{
 visualizeCapRStereogene(
-    dir_stereogene_output = ".",
-    CapR_prefix,
-    protein_file,
-    protein_file_input = NULL,
-    x_lim = c(-100, 100),
-    y_lim = NULL,
-    out_file = "out_file",
-    legend = TRUE,
-    heatmap = FALSE
+  dir_stereogene_output = ".",
+  CapR_prefix,
+  protein_file,
+  protein_file_input = NULL,
+  x_lim = c(-100, 100),
+  y_lim = NULL,
+  error = 3,
+  out_file = "out_file",
+  legend = TRUE,
+  heatmap = FALSE
 )
 }
 \arguments{
@@ -38,6 +39,9 @@ limits. Cannot exceed wSize/2 from write_config. Default (-100, 100)}
 \item{y_lim}{A vector of two numbers denoting the lower and upper y axis
 limits. Optional}
 
+\item{error}{A numeric value that determines the number of standard
+deviations to show in the error bar. Default 3}
+
 \item{out_file}{Name of output file, excluding extension. ".pdf" or ".jpeg"
 will be added as relevant to the output file name. Default "out_file"}
 
@@ -59,15 +63,15 @@ relative to protein binding.
 get_outfiles()
 ## heatmap
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
-                        protein_file = "chr4and5_liftOver",
-                        heatmap = TRUE,
-                        out_file = "all_contexts_heatmap",
-                        x_lim = c(-500, 500))
+                       protein_file = "chr4and5_liftOver",
+                       heatmap = TRUE,
+                       out_file = "all_contexts_heatmap",
+                       x_lim = c(-500, 500))
 ## line graph
 visualizeCapRStereogene(CapR_prefix = "chr4and5_3UTR",
-                        protein_file = "chr4and5_liftOver",
-                        x_lim = c(-500, 500),
-                        out_file = "all_contexts_line",
-                        y_lim = c(-18, 22))
+                       protein_file = "chr4and5_liftOver",
+                       x_lim = c(-500, 500),
+                       out_file = "all_contexts_line",
+                       y_lim = c(-18, 22))
 
 }

@@ -33,6 +33,6 @@ GenomeMappingToChainFile(genome_gtf = gtf,
                         alignment = "hg38")
 
 getChainChrSize(chain = "test.chain",
-                out_chr = "chr4and5_3UTR.size")
+               out_chr = "chr4and5_3UTR.size")
 
 }

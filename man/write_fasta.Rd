@@ -21,13 +21,13 @@ Writes a FASTA file from a vector of sequences
 }
 \examples{
 sequences<-c(paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
-                    collapse = ""),
+                   collapse = ""),
             paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
-                    collapse = ""),
+                   collapse = ""),
             paste0(sample(c("A", "T", "G", "C"), 20, replace = TRUE),
-                    collapse = ""))
+                   collapse = ""))
 write_fasta(sequences,
-            c("one", "two", "three"),
-            "test.fa")
+           c("one", "two", "three"),
+           "test.fa")
 
 }

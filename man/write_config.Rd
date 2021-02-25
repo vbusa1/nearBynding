@@ -5,19 +5,19 @@
 \title{write_config}
 \usage{
 write_config(
-    name_config = "config.cfg",
-    chrom_size,
-    Rscript = TRUE,
-    verbose = FALSE,
-    na_noise = FALSE,
-    bin = 1,
-    threshold = 0,
-    cross_width = 200,
-    wSize = 10000,
-    kernel_width = 1000,
-    outLC = FALSE,
-    LCScale = "LOG",
-    LC_FDR = 0.5
+  name_config = "config.cfg",
+  chrom_size,
+  Rscript = TRUE,
+  verbose = FALSE,
+  na_noise = FALSE,
+  bin = 1,
+  threshold = 0,
+  cross_width = 200,
+  wSize = 10000,
+  kernel_width = 1000,
+  outLC = FALSE,
+  LCScale = "LOG",
+  LC_FDR = 0.5
 )
 }
 \arguments{
@@ -75,6 +75,6 @@ parameters are desired.
 \examples{
 ## Write a config file named "test.cfg" with chromosome size file "test.size"
 write_config(name_config = "test.cfg",
-                chrom_size = "test.size")
+            chrom_size = "test.size")
 
 }

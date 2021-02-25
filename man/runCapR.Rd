@@ -28,9 +28,9 @@ Runs CapR
 
 ## make dummy file
 write_fasta(paste0(sample(c("A", "T", "G", "C"), 50, replace = TRUE),
-                    collapse = ""),
-            "test",
-            "test.fa")
+                  collapse = ""),
+           "test",
+           "test.fa")
 ## run CapR
 runCapR("test.fa")
 

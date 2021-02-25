@@ -102,8 +102,8 @@ bindingContextDistance <- function(dir_stereogene_output = ".",
     second_dist_1 <- NULL
     for (n in seq(length(protein_file))) {
         assign(paste0("dist_", n), read.table(paste0(dir_stereogene_output,
-            "/", RNA_context, "~", protein_file[n], ".dist"), header = TRUE))%>%
-        dplyr::filter(range[1] <= .data$x, .data$x <= range[2])
+            "/", RNA_context, "~", protein_file[n], ".dist"), header = TRUE) %>%
+        dplyr::filter(range[1] <= .data$x, .data$x <= range[2]))
     }
     if (!is.null(protein_file_input)) {
         dist_input <- read.table(paste0(dir_stereogene_output,
@@ -143,8 +143,8 @@ bindingContextDistance <- function(dir_stereogene_output = ".",
     for (n in seq(length(protein_file_2))) {
         assign(paste0("second_dist_", n), read.table(paste0(
             dir_stereogene_output_2, "/", RNA_context_2, "~", protein_file_2[n],
-            ".dist"), header = TRUE)) %>%
-        dplyr::filter(range[1] <= .data$x, .data$x <= range[2])
+            ".dist"), header = TRUE) %>%
+        dplyr::filter(range[1] <= .data$x, .data$x <= range[2]))
     }
     if (!is.null(protein_file_input_2)) {
         second_dist_input <- read.table(paste0(dir_stereogene_output_2,

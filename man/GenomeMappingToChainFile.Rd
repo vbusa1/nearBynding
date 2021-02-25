@@ -5,14 +5,14 @@
 \title{GenomeMappingToChainFile}
 \usage{
 GenomeMappingToChainFile(
-    genome_gtf,
-    out_chain_name,
-    RNA_fragment = "exon",
-    transcript_list,
-    chrom_suffix = "exome",
-    verbose = FALSE,
-    alignment = "hg19",
-    check_overwrite = FALSE
+  genome_gtf,
+  out_chain_name,
+  RNA_fragment = "exon",
+  transcript_list,
+  chrom_suffix = "exome",
+  verbose = FALSE,
+  alignment = "hg19",
+  check_overwrite = FALSE
 )
 }
 \arguments{
@@ -51,7 +51,7 @@ Writes a chain file mapped from a genome annotation file.
 load(system.file("extdata/transcript_list.Rda", package="nearBynding"))
 ## get GTF file
 gtf<-system.file("extdata/Homo_sapiens.GRCh38.chr4&5.gtf",
-                    package="nearBynding")
+                package="nearBynding")
 
 GenomeMappingToChainFile(genome_gtf = gtf,
                         out_chain_name = "test.chain",

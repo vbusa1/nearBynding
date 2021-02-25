@@ -1,7 +1,7 @@
 Package: nearBynding
 Type: Package
 Title: Discern RNA structure proximal to protein binding
-Version: 0.99.12
+Version: 0.99.13
 Authors@R: person("Veronica", "Busa", email="vbusa1@jhmi.edu", role=c("cre"))
 Description: Provides a pipeline to discern RNA structure at and proximal to 
         the site of protein binding within regions of the transcriptome defined 

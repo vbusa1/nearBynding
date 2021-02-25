@@ -27,7 +27,7 @@ Writes a StereoGene script in the working directory
 }
 \examples{
 runStereogene(track_files = c("chr4and5_3UTR_stem_liftOver.bedGraph",
-                                "chr4and5_liftOver.bedGraph"),
-                name_config = "chr4and5_3UTR.cfg")
+                             "chr4and5_liftOver.bedGraph"),
+             name_config = "chr4and5_3UTR.cfg")
 
 }

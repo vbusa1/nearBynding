@@ -17,8 +17,8 @@ as either aligned CLIP-seq reads or peak-called intervals.
 Package: \tab nearBynding\cr
 Type: \tab Package\cr
 Title: \tab nearBynding package \cr
-Version: \tab 0.99.12\cr
-Date: \tab July 21, 2020`\cr
+Version: \tab 0.99.13\cr
+Date: \tab February 25, 2021`\cr
 License: \tab Artistic-2.0\cr
 LazyLoad: \tab yes\cr
 URL: \tab http://github.com/vbusa1/nearBynding\cr

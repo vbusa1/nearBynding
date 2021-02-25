@@ -107,8 +107,8 @@ bindingContextDistanceCapR <- function(dir_stereogene_output = ".",
         for (n in seq(length(protein_file))) {
             assign(paste0("dist_", n), read.table(paste0(dir_stereogene_output,
                                 "/", CapR_prefix, "_", context, "_liftOver~",
-                                protein_file[n], ".dist"), header = TRUE)) %>%
-            dplyr::filter(range[1] <= .data$x, .data$x <= range[2])
+                                protein_file[n], ".dist"), header = TRUE) %>%
+            dplyr::filter(range[1] <= .data$x, .data$x <= range[2]))
         }
         if (!is.null(protein_file_input)) {
             dist_input <- read.table(paste0(dir_stereogene_output,
@@ -150,8 +150,8 @@ bindingContextDistanceCapR <- function(dir_stereogene_output = ".",
         assign(paste0("second_dist_",n),read.table(paste0(
                                 dir_stereogene_output_2,
                                 "/", CapR_prefix_2, "_", context, "_liftOver~",
-                                protein_file_2[n], ".dist"), header = TRUE)) %>%
-            dplyr::filter(range[1] <= .data$x, .data$x <= range[2])
+                                protein_file_2[n], ".dist"), header = TRUE) %>%
+            dplyr::filter(range[1] <= .data$x, .data$x <= range[2]))
         }
         if (!is.null(protein_file_input_2)) {
         second_dist_input <- read.table(paste0(dir_stereogene_output_2,

@@ -18,6 +18,8 @@
 #' limits. Cannot exceed wSize/2 from write_config. Default (-100, 100)
 #' @param y_lim A vector of two numbers denoting the lower and upper y axis
 #' limits. Optional
+#' @param error A numeric value that determines the number of standard
+#' deviations to show in the error bar. Default 3
 #' @param out_file Name of output file, excluding extension. ".pdf" or ".jpeg"
 #' will be added as relevant to the output file name. Default "out_file"
 #' @param legend Whether a legend should be included with the output graph.
@@ -57,6 +59,7 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
                                     protein_file_input = NULL,
                                     x_lim = c(-100, 100),
                                     y_lim = NULL,
+                                    error = 3,
                                     out_file = "out_file",
                                     legend = TRUE,
                                     heatmap = FALSE) {
@@ -302,38 +305,38 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
         }
         plot(dist_bulge$x, dist_bulge$Bkg, type = "l",
             col = "black", xlim = x_lim, ylim = y_lim,
-            main = NULL, xlab = "Distance", ylab = "Density x 100",
+            main = NULL, xlab = "Nucleotide", ylab = "Density x 100",
             cex.axis = 0.8, cex.lab = 1, cex.main = 1.2, lwd = 2)
         lines(dist_multibranch$x, dist_multibranch$Bkg, col = "black", lwd = 2)
         lines(dist_stem$x, dist_stem$Bkg, col = "black", lwd = 2)
         lines(dist_hairpin$x, dist_hairpin$Bkg, col = "black", lwd = 2)
         lines(dist_internal$x, dist_internal$Bkg, col = "black", lwd = 2)
         lines(dist_exterior$x, dist_exterior$Bkg, col = "black", lwd = 2)
-        arrows(dist_bulge$x, dist_bulge$Bkg - dist_bulge$Bkg_se,
-                dist_bulge$x, dist_bulge$Bkg + dist_bulge$Bkg_se,
+        arrows(dist_bulge$x, dist_bulge$Bkg - (error * dist_bulge$Bkg_se),
+                dist_bulge$x, dist_bulge$Bkg + (error * dist_bulge$Bkg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
         arrows(dist_multibranch$x, dist_multibranch$Bkg -
-                dist_multibranch$Bkg_se, dist_multibranch$x,
-                dist_multibranch$Bkg + dist_multibranch$Bkg_se,
+                   (error * dist_multibranch$Bkg_se), dist_multibranch$x,
+                dist_multibranch$Bkg + (error * dist_multibranch$Bkg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
-        arrows(dist_stem$x, dist_stem$Bkg - dist_stem$Bkg_se,
-                dist_stem$x, dist_stem$Bkg + dist_stem$Bkg_se,
+        arrows(dist_stem$x, dist_stem$Bkg - (error * dist_stem$Bkg_se),
+                dist_stem$x, dist_stem$Bkg + (error * dist_stem$Bkg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
-        arrows(dist_hairpin$x, dist_hairpin$Bkg - dist_hairpin$Bkg_se,
-                dist_hairpin$x, dist_hairpin$Bkg + dist_hairpin$Bkg_se,
+        arrows(dist_hairpin$x, dist_hairpin$Bkg - (error * dist_hairpin$Bkg_se),
+                dist_hairpin$x, dist_hairpin$Bkg + (error* dist_hairpin$Bkg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
         arrows(dist_internal$x, dist_internal$Bkg -
-                dist_internal$Bkg_se, dist_internal$x,
-                dist_internal$Bkg + dist_internal$Bkg_se,
+                   (error * dist_internal$Bkg_se), dist_internal$x,
+                dist_internal$Bkg + (error * dist_internal$Bkg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
         arrows(dist_exterior$x, dist_exterior$Bkg -
-                dist_exterior$Bkg_se, dist_exterior$x,
-                dist_exterior$Bkg + dist_exterior$Bkg_se,
+                   (error * dist_exterior$Bkg_se), dist_exterior$x,
+                dist_exterior$Bkg + (error * dist_exterior$Bkg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
         abline(v = 0, col = "grey", lty = 2)
@@ -343,30 +346,31 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
         lines(dist_hairpin$x, dist_hairpin$Fg, col = "purple", lwd = 2)
         lines(dist_internal$x, dist_internal$Fg, col = "orange", lwd = 2)
         lines(dist_exterior$x, dist_exterior$Fg, col = "cyan", lwd = 2)
-        arrows(dist_bulge$x, dist_bulge$Fg - dist_bulge$Fg_se,
-                dist_bulge$x, dist_bulge$Fg + dist_bulge$Fg_se,
+        arrows(dist_bulge$x, dist_bulge$Fg - (error * dist_bulge$Fg_se),
+                dist_bulge$x, dist_bulge$Fg + (error * dist_bulge$Fg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 1, red = 0, green = 0, alpha = 0.5))
         arrows(dist_multibranch$x, dist_multibranch$Fg -
-                dist_multibranch$Fg_se, dist_multibranch$x,
-                dist_multibranch$Fg + dist_multibranch$Fg_se,
+                   (error * dist_multibranch$Fg_se), dist_multibranch$x,
+                dist_multibranch$Fg + (error * dist_multibranch$Fg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 1, green = 0, alpha = 0.5))
-        arrows(dist_stem$x, dist_stem$Fg - dist_stem$Fg_se,
-                dist_stem$x, dist_stem$Fg + dist_stem$Fg_se,
+        arrows(dist_stem$x, dist_stem$Fg - (error * dist_stem$Fg_se),
+                dist_stem$x, dist_stem$Fg + (error * dist_stem$Fg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 0, green = 1, alpha = 0.5))
-        arrows(dist_hairpin$x, dist_hairpin$Fg - dist_hairpin$Fg_se,
-                dist_hairpin$x, dist_hairpin$Fg + dist_hairpin$Fg_se,
+        arrows(dist_hairpin$x, dist_hairpin$Fg - (error * dist_hairpin$Fg_se),
+                dist_hairpin$x, dist_hairpin$Fg + (error * dist_hairpin$Fg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 1, red = 1, green = 0, alpha = 0.5))
         arrows(dist_internal$x, dist_internal$Fg -
-                dist_internal$Fg_se, dist_internal$x, dist_internal$Fg +
-                dist_internal$Fg_se, length = 0, angle = 90,
+                (error*dist_internal$Fg_se), dist_internal$x, dist_internal$Fg +
+                (error * dist_internal$Fg_se), length = 0, angle = 90,
                 code = 3, col = rgb(blue = 0, red = 1, green = 1, alpha = 0.5))
         arrows(dist_exterior$x, dist_exterior$Fg -
-                dist_exterior$Fg_se, dist_exterior$x, dist_exterior$Fg +
-                dist_exterior$Fg_se, length = 0, angle = 90,
+                   (error * dist_exterior$Fg_se), dist_exterior$x,
+               dist_exterior$Fg +
+                   (error * dist_exterior$Fg_se), length = 0, angle = 90,
                 code = 3, col = rgb(blue = 1, red = 0, green = 1, alpha = 0.5))
         if (legend == TRUE) {
             legend("bottomright",
