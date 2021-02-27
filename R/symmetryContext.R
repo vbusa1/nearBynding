@@ -71,7 +71,7 @@ symmetryContext <- function(dir_stereogene_output = ".",
         dist_input<- input%>%
             dplyr::filter(range[1] <= .data$x, .data$x <= 0)
         second_dist_input <- input %>%
-            dplyr::filter(0 <= .data$x, .data$x <= range[1])
+            dplyr::filter(0 <= .data$x, .data$x <= range[2])
     }
     dist <- as.data.frame(matrix(NA, ncol = (2 *
                                                  length(protein_file)) + 1, nrow = nrow(dist_1)))
