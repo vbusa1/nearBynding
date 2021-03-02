@@ -151,7 +151,12 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
         heatmap_plot <- data.frame(Signal = dist$Fg[coords_1:coords_2],
                                     Background = dist$Bkg[coords_1:coords_2])
         heatmap_plot <- as.matrix(t(heatmap_plot))
-        zero <- (ncol(heatmap_plot) + 1)/2
+        zero <- which(dist$x == 0) - coords_1
+        if(zero < 0){
+            colsep <- 0
+        } else{
+            colsep <- c(zero - 1, zero)
+        }
         if (is.null(y_lim)) {
             max_y <- max(c(max(dist$Bkg), max(dist$Fg))) + 0.1
             min_y <- min(c(min(dist$Bkg), min(dist$Fg))) - 0.1
@@ -165,7 +170,7 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
         heatmap.2(heatmap_plot, Rowv = NA, Colv = NA,
                 col = redblue(256), dendrogram = "none",
                 labCol = FALSE, trace = "none", density.info = "none",
-                symkey = FALSE, key = key, colsep = c(zero - 1, zero),
+                symkey = FALSE, key = key, colsep = colsep,
                 sepcolor = "grey", margins = c(1, 20),
                 breaks = seq(y_lim[1], y_lim[2], length.out = 257))
         dev.off()

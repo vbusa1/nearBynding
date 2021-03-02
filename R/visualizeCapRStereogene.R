@@ -391,7 +391,12 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
                         multibranch = dist_multibranch$Fg[coords_1:coords_2],
                         exterior = dist_exterior$Fg[coords_1:coords_2])
         heatmap_plot <- as.matrix(t(heatmap_plot))
-        zero <- (ncol(heatmap_plot) + 1)/2
+        zero <- which(dist_stem$x == 0) - coords_1
+        if(zero < 0){
+            colsep <- 0
+        } else{
+            colsep <- c(zero - 1, zero)
+        }
         if (is.null(y_lim)) {
             max_y <- max(c(max(dist_exterior$Fg), max(dist_internal$Fg),
                             max(dist_stem$Fg), max(dist_hairpin$Fg),
@@ -409,7 +414,7 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
         heatmap.2(heatmap_plot, Rowv = NA, Colv = NA,
                     col = redblue(256), dendrogram = "none",
                     labCol = FALSE, trace = "none", density.info = "none",
-                    symkey = FALSE, key = key, colsep = c(zero - 1, zero),
+                    symkey = FALSE, key = key, colsep = colsep,
                     sepcolor = "grey", margins = c(1, 8),
                     breaks = seq(y_lim[1], y_lim[2], length.out = 257))
         dev.off()
