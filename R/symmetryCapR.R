@@ -88,62 +88,40 @@ symmetryCapR <- function(dir_stereogene_output = ".",
             second_dist_input <- input %>%
                 dplyr::filter(0 <= .data$x, .data$x <= range[2])
         }
-        dist <- as.data.frame(matrix(NA, ncol = (2 *
-                                                     length(protein_file)) + 1, nrow = nrow(dist_1)))
-        colnames(dist) <- c("x", paste0("Fg", seq(length(protein_file))),
-                            paste0("Bkg", seq(length(protein_file))))
+        dist <- as.data.frame(matrix(NA,
+                                     ncol = (length(protein_file)) + 1,
+                                     nrow = nrow(dist_1)))
+        colnames(dist) <- c("x", paste0("Fg", seq(length(protein_file))))
         dist$x <- dist_1$x
         second_dist <- as.data.frame(matrix(NA,
-                                            ncol = (2 * length(protein_file)) + 1,
+                                            ncol = (length(protein_file)) + 1,
                                             nrow = nrow(second_dist_1)))
         colnames(second_dist) <- c("x", paste0("Fg",
-                                               seq(length(protein_file))),
-                                   paste0("Bkg", seq(length(protein_file))))
+                                               seq(length(protein_file))))
         second_dist$x <- second_dist_1$x
         for (n in seq(length(protein_file))) {
             dist[, 1 + n] <- eval(parse(text = paste0("dist_", n)))$Fg
-            dist[, 1 + n + length(protein_file)] <-
-                eval(parse(text = paste0("dist_", n)))$Bkg
             second_dist[, 1 + n] <- eval(parse(text = paste0("second_dist_", n)))$Fg
-            second_dist[, 1 + n + length(protein_file)] <-
-                eval(parse(text = paste0("second_dist_", n)))$Bkg
         }
         if (!is.null(protein_file_input)) {
             dist[, 2:(length(protein_file) + 1)] <- dist[,
                                                          2:(length(protein_file) + 1)] - dist_input$Fg
-            dist[, (length(protein_file) + 1):ncol(dist)] <- dist[,
-                                                                  (length(protein_file) + 1):ncol(dist)] - dist_input$Bkg
             second_dist[, 2:(length(protein_file) + 1)] <- second_dist[,
                                                          2:(length(protein_file) + 1)] - second_dist_input$Fg
-            second_dist[, (length(protein_file) + 1):ncol(second_dist)] <- second_dist[,
-                                                                  (length(protein_file) + 1):ncol(second_dist)] - second_dist_input$Bkg
         }
         if (length(protein_file) > 1) {
             dist$Fg <- rowMeans(dist[, 2:(length(protein_file) + 1)])
-            dist$Fg_se <- rowSds(as.matrix(dist[, 2:(length(protein_file) +
-                                                         1)]))/sqrt(length(protein_file))
-            dist$Bkg <- rowMeans(dist[, (length(protein_file) +1):(ncol(dist) - 2)])
-            dist$Bkg_se <- rowSds(as.matrix(dist[,
-                                                 (length(protein_file) + 1):(ncol(dist) - 3)]))/
-                sqrt(length(protein_file))
             second_dist$Fg <- rowMeans(second_dist[, 2:(length(protein_file) + 1)])
-            second_dist$Fg_se <- rowSds(as.matrix(second_dist[, 2:(length(protein_file) +
-                                                         1)]))/sqrt(length(protein_file))
-            second_dist$Bkg <- rowMeans(second_dist[, (length(protein_file) +1):(ncol(second_dist) - 2)])
-            second_dist$Bkg_se <- rowSds(as.matrix(second_dist[,
-                                                 (length(protein_file) + 1):(ncol(second_dist) - 3)]))/
-                sqrt(length(protein_file))
         } else {
             dist$Fg <- dist[, 2]
-            dist$Fg_se <- 0
-            dist$Bkg <- dist[, 3]
-            dist$Bkg_se <- 0
-            second_dist$Fg <- second_dist[, 2]
-            second_dist$Fg_se <- 0
-            second_dist$Bkg <- second_dist[, 3]
-            second_dist$Bkg_se <- 0
         }
         second_dist$x<- -second_dist$x
+
+        # scale tracks
+        max<-max(abs(dist$Fg), abs(second_dist$Fg))
+        dist$Fg<-dist$Fg/max
+        second_dist$Fg<-second_dist$Fg/max
+
         wasserstein_distance <- suppressWarnings(wasserstein1d(dist$Fg,
                                                                second_dist$Fg) %>% as.numeric())
         return(wasserstein_distance)
