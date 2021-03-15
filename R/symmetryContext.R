@@ -4,7 +4,7 @@
 #'
 #' @param dir_stereogene_output Directory of Stereogene output for protein.
 #' Default current directory.
-#' @param RNA_context Name of the RNA context file input to Stereogene. File
+#' @param context_file Name of the context file input to Stereogene. File
 #' names must exclude extensions such as ".bedGraph". Requred
 #' @param protein_file A vector of at least one protein file name to be
 #' averaged for calculation of distance. File names must exclude extensions
@@ -41,9 +41,10 @@
 #' @export
 
 symmetryContext <- function(dir_stereogene_output = ".",
-                                       RNA_context, protein_file,
-                                       protein_file_input = NULL,
-                                       range = c(-200, 200)) {
+                            context_file,
+                            protein_file,
+                            protein_file_input = NULL,
+                            range = c(-200, 200)) {
     if (length(protein_file) < 1) {
         stop("Requires at least one protein file prefix to calculate distance")
     }
@@ -57,20 +58,21 @@ symmetryContext <- function(dir_stereogene_output = ".",
     dist_1 <- NULL
     second_dist_1 <- NULL
     for (n in seq(length(protein_file))) {
-        assign(paste0("dist_", n), read.table(paste0(dir_stereogene_output,
-                                                     "/", CapR_prefix, "_", context, "_liftOver~",
-                                                     protein_file[n], ".dist"), header = TRUE) %>%
+        assign(paste0("dist_", n), read.table(paste0(dir_stereogene_output, "/",
+                                             context_file, "~", protein_file[n],
+                                             ".dist"), header = TRUE) %>%
                    dplyr::filter(range[1] <= .data$x, .data$x <= 0))
-        assign(paste0("second_dist_", n), read.table(paste0(dir_stereogene_output,
-                                                            "/", CapR_prefix, "_", context, "_liftOver~",
-                                                            protein_file[n], ".dist"), header = TRUE) %>%
+        assign(paste0("second_dist_",n),read.table(paste0(dir_stereogene_output, "/",
+                                              context_file, "~", protein_file[n],
+                                              ".dist"), header = TRUE) %>%
                    dplyr::filter(0 <= .data$x, .data$x <= range[2]))
     }
     if (!is.null(protein_file_input)) {
-        input <- read.table(paste0(dir_stereogene_output,
-                                   "/", CapR_prefix, "_", context, "_liftOver~",
-                                   protein_file_input, ".dist"), header = TRUE)
-        dist_input<- input%>%
+        input <- read.table(paste0(dir_stereogene_output, "/",
+                                   context_file,
+                                   "~", protein_file_input,
+                                   ".dist"), header = TRUE)
+        dist_input<- input %>%
             dplyr::filter(range[1] <= .data$x, .data$x <= 0)
         second_dist_input <- input %>%
             dplyr::filter(0 <= .data$x, .data$x <= range[2])
@@ -92,9 +94,9 @@ symmetryContext <- function(dir_stereogene_output = ".",
     }
     if (!is.null(protein_file_input)) {
         dist[, 2:(length(protein_file) + 1)] <- dist[,
-                                                     2:(length(protein_file) + 1)] - dist_input$Fg
+                                 2:(length(protein_file) + 1)] - dist_input$Fg
         second_dist[, 2:(length(protein_file) + 1)] <- second_dist[,
-                                                                   2:(length(protein_file) + 1)] - second_dist_input$Fg
+                           2:(length(protein_file) + 1)] - second_dist_input$Fg
     }
     if (length(protein_file) > 1) {
         dist$Fg <- rowMeans(dist[, 2:(length(protein_file) + 1)])
@@ -110,6 +112,6 @@ symmetryContext <- function(dir_stereogene_output = ".",
     second_dist$Fg<-second_dist$Fg/max
 
     wasserstein_distance <- suppressWarnings(wasserstein1d(dist$Fg,
-                                                           second_dist$Fg) %>% as.numeric())
+                                               second_dist$Fg) %>% as.numeric())
     return(wasserstein_distance)
 }

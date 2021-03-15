@@ -16,7 +16,7 @@ symmetryContext(
 \item{dir_stereogene_output}{Directory of Stereogene output for protein.
 Default current directory.}
 
-\item{RNA_context}{Name of the RNA context file input to Stereogene. File
+\item{context_file}{Name of the RNA context file input to Stereogene. File
 names must exclude extensions such as ".bedGraph". Requred}
 
 \item{protein_file}{A vector of at least one protein file name to be

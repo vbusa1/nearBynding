@@ -45,11 +45,11 @@
 #' @export
 
 symmetryCapR <- function(dir_stereogene_output = ".",
-                                       CapR_prefix = "",
-                                       protein_file,
-                                       protein_file_input = NULL,
-                                       context = "all",
-                                       range = c(-200, 200)) {
+                           CapR_prefix = "",
+                           protein_file,
+                           protein_file_input = NULL,
+                           context = "all",
+                           range = c(-200, 200)) {
     if (length(protein_file) < 1) {
         stop("Requires at least one protein file prefix to calculate distance")
     }
