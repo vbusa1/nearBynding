@@ -8,7 +8,7 @@ Changes:
 * incorporate runnable examples in man pages and vignette
 * add catches to functions if software is unavailable
 
-VERSION 0.99.13 (02-25-2020)
+VERSION 0.99.13 (02-25-2021)
 ____________________________
 
 Changes:
@@ -17,3 +17,11 @@ Changes:
 * edit bindingContextDistance to properly accommodate range limitations in calculations
 * add symmetryCapR and symmetryContext functions to determine binding context symmetry about the site of protein binding
 * edit visualizeStereogene and visualizeCapRStereogene so that the x axis says 'Nucleotide' rather than 'Distance' and so that the user may manipulate the number of standard deviations are illustrated by the error bars
+
+VERSION 1.1.4 (03-23-2021)
+____________________________
+
+Changes:
+
+* remove variable assignment bugs from symmetryContext
+

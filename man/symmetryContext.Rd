@@ -6,7 +6,7 @@
 \usage{
 symmetryContext(
   dir_stereogene_output = ".",
-  RNA_context,
+  context_file,
   protein_file,
   protein_file_input = NULL,
   range = c(-200, 200)
@@ -47,7 +47,7 @@ get_outfiles()
 
 ## This boring example compares a protein's binding with itself for all
 ## contexts, therefore the distance is 0
-symmetryContext(RNA_context = "chr4and5_3UTR_stem_liftOver",
+symmetryContext(context_file = "chr4and5_3UTR_stem_liftOver",
                        protein_file = "chr4and5_liftOver")
 
 }
