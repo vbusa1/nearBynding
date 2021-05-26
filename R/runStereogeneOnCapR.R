@@ -14,6 +14,7 @@
 #' format without a header where first column is chromosome name and second
 #' column is chromosome length, as from getChainChrSize. Required
 #' @param name_config Name of output config file. Default config.cfg
+#' @param nShuffle Number of permutations used to estimate error. Default 5000.
 #' @param ... includes all other parameters acceptable to write_config and
 #' write_stereogene
 #'
@@ -35,6 +36,7 @@ runStereogeneOnCapR <- function(dir_CapR_bg = ".",
                                 output_prefix = input_prefix,
                                 name_config = "config.cfg",
                                 chrom_size,
+                                nShuffle = 5000,
                                 ...) {
     if (missing(chrom_size)){stop("please provide a chrom_size file")}
     doCall(write_config, args = list(

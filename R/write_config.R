@@ -8,9 +8,9 @@
 #' format without a header where first column is chromosome name and second
 #' column is chromosome length, as from getChainChrSize. Required
 #' @param Rscript Write R script for the result presentation. Equivalent to -r
-#' argument in StereoGene. Default TRUE
-#' @param verbose Provides a verbose output when Stereogene is run. Equivalent
-#' to -v or -verbose argument in StereoGene.Default FALSE
+#' argument in StereoGene. Default FALSE
+#' @param silent Provides an output when Stereogene is run. Equivalent
+#' to -s or -silent argument in StereoGene.Default TRUUE
 #' @param na_noise Use NA values as unknown and fill them with noise. Equivalent
 #' to -NA argument in StereoGene. Default FALSE
 #' @param bin Bin size for input averaging; an integer. Default 1
@@ -23,12 +23,6 @@
 #' too few windows for robust statistical assessment. Default 10000
 #' @param kernel_width Kernel span in nucleotides; an integer. Equivalent to
 #' KernelSigma invStereoGene. Default 1000
-#' @param outLC Write local kerneled correlations into a bedgraph file.
-#' Default FALSE.
-#' @param LCScale Local correlation scale: logarithmic ("LOG") or linear ("LIN")
-#' scaling. Default "LOG".
-#' @param LC_FDR Threshold for local kernel correlation FDR to be written into
-#' the local correlation file. Default 0.5
 #'
 #' @return writes a configuration file into directory
 #'
@@ -45,20 +39,17 @@
 
 write_config <- function(name_config = "config.cfg",
                             chrom_size,
-                            Rscript = TRUE,
-                            verbose = FALSE,
+                            Rscript = FALSE,
+                            silent = TRUE,
                             na_noise = FALSE,
                             bin = 1,
                             threshold = 0,
                             cross_width = 200,
                             wSize = 10000,
-                            kernel_width = 1000,
-                            outLC = FALSE,
-                            LCScale = "LOG",
-                            LC_FDR = .5) {
+                            kernel_width = 1000) {
     if (missing(chrom_size)) {stop("please provide a chrom_size file")}
     if (Rscript == TRUE) {R <- 1} else {R <- 0}
-    if (verbose == TRUE) {V <- 1} else {V <- 0}
+    if (silent == TRUE) {S <- 1} else {S <- 0}
     if (na_noise == TRUE) {N <- 1} else {N <- 0}
     if (outLC == TRUE) {L <- 1} else {L <- 0}
     conf <- paste("#!bash/bin", "",
@@ -67,23 +58,20 @@ write_config <- function(name_config = "config.cfg",
         "resPath=./",
         paste0("chrom=", chrom_size),
         paste0("Rscript=", R),
-        paste0("verbose=", V),
+        paste0("silent=", S),
         paste0("NA=", N),
         "outRes=TAB",
         "writeDistr=NONE",
-        "Distances=0",
+        "Distances=DETAIL",
         paste0("bin=", bin),
         paste0("threshold=", threshold),
         paste0("wSize=", format(wSize, scientific = F)),
         "maxZero=100",
         "maxNA=100",
-        "nShuffle=100000",
-        paste0("outLC=", L),
-        paste0("LCScale=", LCScale),
+        "nShuffle=1",
+        "outLC=0",
         paste0("crossWidth=", cross_width),
         paste0("KernelSigma=", kernel_width),
-        paste0("L_FDR =", LC_FDR),
-        paste0("R_FDR =", LC_FDR),
         sep = "\n"
     )
     writeLines(conf, name_config)

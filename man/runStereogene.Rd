@@ -4,7 +4,11 @@
 \alias{runStereogene}
 \title{runStereogene}
 \usage{
-runStereogene(track_files, name_config, pcorProfile = NULL, confounder = NULL)
+runStereogene(track_files,
+        name_config,
+        pcorProfile = NULL,
+        confounder = NULL,
+        nShuffle = 5000)
 }
 \arguments{
 \item{track_files}{Vector of at least two track or interval file names to be
@@ -18,6 +22,8 @@ More information for this can be found in the StereoGene README. Optional}
 
 \item{confounder}{Confounder file name; a string. More information for this
 can be found in the StereoGene README. Optional}
+
+\item{nShuffle}{Permutations used to estimate error. Default 5000.}
 }
 \value{
 generates StereoGene output files in directory

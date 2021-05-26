@@ -7,17 +7,14 @@
 write_config(
   name_config = "config.cfg",
   chrom_size,
-  Rscript = TRUE,
-  verbose = FALSE,
+  Rscript = FALSE,
+  silent = TRUE,
   na_noise = FALSE,
   bin = 1,
   threshold = 0,
   cross_width = 200,
   wSize = 10000,
   kernel_width = 1000,
-  outLC = FALSE,
-  LCScale = "LOG",
-  LC_FDR = 0.5
 )
 }
 \arguments{
@@ -28,10 +25,10 @@ format without a header where first column is chromosome name and second
 column is chromosome length, as from getChainChrSize. Required}
 
 \item{Rscript}{Write R script for the result presentation. Equivalent to -r
-argument in StereoGene. Default TRUE}
+argument in StereoGene. Default FALSE}
 
-\item{verbose}{Provides a verbose output when Stereogene is run. Equivalent
-to -v or -verbose argument in StereoGene.Default FALSE}
+\item{silent}{Provides an output when Stereogene is run. Equivalent
+to -s or -silent argument in StereoGene. Default TRUE}
 
 \item{na_noise}{Use NA values as unknown and fill them with noise. Equivalent
 to -NA argument in StereoGene. Default FALSE}
@@ -50,15 +47,6 @@ too few windows for robust statistical assessment. Default 10000}
 
 \item{kernel_width}{Kernel span in nucleotides; an integer. Equivalent to
 KernelSigma invStereoGene. Default 1000}
-
-\item{outLC}{Write local kerneled correlations into a bedgraph file.
-Default FALSE.}
-
-\item{LCScale}{Local correlation scale: logarithmic ("LOG") or linear ("LIN")
-scaling. Default "LOG".}
-
-\item{LC_FDR}{Threshold for local kernel correlation FDR to be written into
-the local correlation file. Default 0.5}
 }
 \value{
 writes a configuration file into directory

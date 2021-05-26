@@ -10,6 +10,7 @@
 #' More information for this can be found in the StereoGene README. Optional
 #' @param confounder Confounder file name; a string. More information for this
 #' can be found in the StereoGene README. Optional
+#' @param nShuffle Permutations used to estimate error. Default 5000.
 #'
 #' @return generates StereoGene output files in directory
 #'
@@ -23,7 +24,8 @@
 runStereogene <- function(track_files,
                             name_config,
                             pcorProfile = NULL,
-                            confounder = NULL) {
+                            confounder = NULL,
+                            nShuffle = 5000) {
     if (length(track_files) < 2) {
         stop("Must have at least two track or interval files for correlation.")
     }
