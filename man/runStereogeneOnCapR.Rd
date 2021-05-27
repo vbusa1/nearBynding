@@ -12,6 +12,7 @@ runStereogeneOnCapR(
   name_config = "config.cfg",
   chrom_size,
   nShuffle,
+  get_error,
   ...
 )
 }
@@ -36,7 +37,10 @@ column is chromosome length, as from getChainChrSize. Required}
 \item{...}{includes all other parameters acceptable to write_config and
 write_stereogene}
 
-\item{nShuffle}{Permutations used to estimate error. Default 5000.}
+\item{nShuffle}{Permutations used to estimate error. Default 100.}
+
+\item{get_error}{Whether to calculate the standard error of background
+permutations from nShuffle. FALSE will save calculation time. Default TRUE}
 }
 \value{
 generates StereoGene output files, including *.dist files
