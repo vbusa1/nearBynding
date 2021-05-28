@@ -15,6 +15,7 @@ write_config(
   cross_width = 200,
   wSize = 10000,
   kernel_width = 1000,
+  resPath = "."
 )
 }
 \arguments{
@@ -47,6 +48,8 @@ too few windows for robust statistical assessment. Default 10000}
 
 \item{kernel_width}{Kernel span in nucleotides; an integer. Equivalent to
 KernelSigma invStereoGene. Default 1000}
+
+\item{resPath}{Folder to store results. Default is current directory.}
 }
 \value{
 writes a configuration file into directory

@@ -23,6 +23,7 @@
 #' too few windows for robust statistical assessment. Default 10000
 #' @param kernel_width Kernel span in nucleotides; an integer. Equivalent to
 #' KernelSigma invStereoGene. Default 1000
+#' @param resPath Folder to store results. Default is current directory.
 #'
 #' @return writes a configuration file into directory
 #'
@@ -46,16 +47,16 @@ write_config <- function(name_config = "config.cfg",
                             threshold = 0,
                             cross_width = 200,
                             wSize = 10000,
-                            kernel_width = 1000) {
+                            kernel_width = 1000,
+                            resPath = ".") {
     if (missing(chrom_size)) {stop("please provide a chrom_size file")}
     if (Rscript == TRUE) {R <- 1} else {R <- 0}
     if (silent == TRUE) {S <- 1} else {S <- 0}
     if (na_noise == TRUE) {N <- 1} else {N <- 0}
-    if (outLC == TRUE) {L <- 1} else {L <- 0}
     conf <- paste("#!bash/bin", "",
         "profPath =./",
         "trackPath=./",
-        "resPath=./",
+        paste0("resPath=", resPath, "/"),
         paste0("chrom=", chrom_size),
         paste0("Rscript=", R),
         paste0("silent=", S),

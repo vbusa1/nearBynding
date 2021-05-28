@@ -103,6 +103,6 @@ runStereogene <- function(track_files,
         }
         write.table(dist, file = paste0(gsub("\\..*", "", track_files[1]), "~",
                                   gsub("\\..*", "", track_files[2]),
-                                  ".dist"), quote = F)
+                                  ".dist"), quote = F, row.names = FALSE)
     }else{return("Please install Stereogene and place in working PATH")}
 }

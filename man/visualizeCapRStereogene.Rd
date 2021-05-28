@@ -12,6 +12,7 @@ visualizeCapRStereogene(
   x_lim = c(-100, 100),
   y_lim = NULL,
   error = 3,
+  nShuffle = 100,
   out_file = "out_file",
   legend = TRUE,
   heatmap = FALSE
@@ -41,6 +42,10 @@ limits. Optional}
 
 \item{error}{A numeric value that determines the number of standard
 deviations to show in the error bar. Default 3}
+
+\item{nShuffle}{Relevant if multiple protein files are input and background
+error has been calculated. It is the number of iterations used to derive
+background signal error. Should be same for all protein files. Default 100.}
 
 \item{out_file}{Name of output file, excluding extension. ".pdf" or ".jpeg"
 will be added as relevant to the output file name. Default "out_file"}

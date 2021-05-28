@@ -21,6 +21,9 @@
 #' limits. Optional.
 #' @param error A numeric value that determines the number of standard
 #' deviations to show in the error bar. Default 3
+#' @param nShuffle Relevant if multiple protein files are input and background
+#' error has been calculated. It is the number of iterations used to derive
+#' background signal error. Should be same for all protein files. Default 1000.
 #' @param out_file Name of output file, excluding extension. ".pdf" or ".jpeg"
 #' will be added as relevant to the output file name. Default "out_file"
 #' @param legend Whether a legend should be included with the output graph.
@@ -60,6 +63,7 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
                                 x_lim = c(-100, 100),
                                 y_lim = NULL,
                                 error = 3,
+                                nShuffle = 1000,
                                 out_file = "out_file",
                                 legend = TRUE,
                                 heatmap = FALSE) {
@@ -84,15 +88,18 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
                                         "~", protein_file_input,
                                         ".dist"), header = TRUE)
     }
-    dist <- as.data.frame(matrix(NA, ncol = (2 * length(protein_file)) +
+    dist <- as.data.frame(matrix(NA, ncol = (3 * length(protein_file)) +
                                                     1, nrow = nrow(dist_1)))
     colnames(dist) <- c("x", paste0("Fg", seq(length(protein_file))),
-                        paste0("Bkg", seq(length(protein_file))))
+                        paste0("Bkg", seq(length(protein_file))),
+                        paste0("Bkg_se", seq(length(protein_file))))
     dist$x <- dist_1$x
     for (n in seq(length(protein_file))) {
         dist[, 1 + n] <- eval(parse(text = paste0("dist_", n)))$Fg
         dist[, 1 + n + length(protein_file)] <-
             eval(parse(text = paste0("dist_", n)))$Bkg
+        dist[, 1 + n + 2*length(protein_file)] <-
+            eval(parse(text = paste0("dist_", n)))$Bkg_se
     }
     if (!is.null(protein_file_input)) {
         dist[, 2:(length(protein_file) + 1)] <- dist[,
@@ -102,17 +109,22 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
     }
     if (length(protein_file) == 1) {
         dist$Fg <- dist$Fg1
-        dist$Fg_se <- dist$Bkg_se <- 0
+        dist$Fg_se <- 0
         dist$Bkg <- dist$Bkg1
+        dist$Bkg_se <- dist$Bkg_se1
     } else {
         dist$Fg <- rowMeans(dist[, 2:(length(protein_file) + 1)])
         dist$Fg_se <- rowSds(as.matrix(dist[, 2:(length(protein_file) +
                                         1)]))/sqrt(length(protein_file))
         dist$Bkg <- rowMeans(dist[, (length(protein_file) +
                                         2):((length(protein_file) * 2) + 1)])
-        dist$Bkg_se <- rowSds(as.matrix(dist[, (length(protein_file) +
-                                        2):((length(protein_file) * 2) + 1)]))/
-            sqrt(length(protein_file))
+        dist$Bkg_se <- apply(as.matrix(dist[, ((length(protein_file) * 2) +
+                                   2):((length(protein_file) * 3) + 1)]),
+                             1,
+                             function(x){
+                                 x<-x*sqrt(nShuffle)
+                                 return(sqrt(sum(x*x)/nShuffle))
+                             })
     }
     if (heatmap == FALSE) {
         # create line plot
