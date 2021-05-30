@@ -104,8 +104,9 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
     if (!is.null(protein_file_input)) {
         dist[, 2:(length(protein_file) + 1)] <- dist[,
                         2:(length(protein_file) + 1)] - dist_input$Fg
-        dist[, (length(protein_file) + 2):ncol(dist)] <- dist[,
-                        (length(protein_file) + 2):ncol(dist)] - dist_input$Bkg
+        dist[, (length(protein_file) + 2):(2*length(protein_file) + 1)] <-
+            dist[,(length(protein_file) + 2):(2*length(protein_file) + 1)] -
+            dist_input$Bkg
     }
     if (length(protein_file) == 1) {
         dist$Fg <- dist$Fg1
@@ -120,11 +121,12 @@ visualizeStereogene <- function(dir_stereogene_output = ".",
                                         2):((length(protein_file) * 2) + 1)])
         dist$Bkg_se <- apply(as.matrix(dist[, ((length(protein_file) * 2) +
                                    2):((length(protein_file) * 3) + 1)]),
-                             1,
-                             function(x){
+                             1, function(x){
                                  x<-x*sqrt(nShuffle)
-                                 return(sqrt(sum(x*x)/nShuffle))
-                             })
+                                 return(sqrt(sum(x*x)/nShuffle))}) +
+            rowSds(as.matrix(dist[, (length(protein_file) +
+                   2):((length(protein_file) * 2) + 1)]))/
+            sqrt(length(protein_file))
     }
     if (heatmap == FALSE) {
         # create line plot

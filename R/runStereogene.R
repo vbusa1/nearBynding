@@ -52,22 +52,16 @@ runStereogene <- function(track_files,
         if(get_error == TRUE){
         Bkg<-matrix(nrow = window, ncol = nShuffle)
         for(n in 1:nShuffle){
-            .StereoGene_run(paste0("-nShuffle 1 ", config, partial_corr,
-                                   confound, tracks))
+            .StereoGene_run(paste0("-randseed ", n, " -nShuffle 1 ",
+                                   config, partial_corr, confound, tracks))
             Bkg[,n]<-read.table(paste0(gsub("\\..*", "", track_files[1]), "~",
                                        gsub("\\..*", "", track_files[2]),
                                        ".dist"), header = TRUE)$Bkg
-            if(n > 1){
-                if(Bkg[1,n] == Bkg[1,(n-1)]){ # sometimes get repeats
-                .StereoGene_run(paste0("-nShuffle 1 ", config, partial_corr,
-                                       confound, tracks))
-                Bkg[,n]<-read.table(paste0(gsub("\\..*", "",
-                                                track_files[1]), "~",
-                                           gsub("\\..*", "",
-                                                track_files[2]),
-                                           ".dist"), header = TRUE)$Bkg
-                }
-                }
+            .StereoGene_run(paste0("-randseed -1 -nShuffle 1 ", config,
+                                   partial_corr, confound, tracks))
+            Bkg[,n]<-read.table(paste0(gsub("\\..*", "", track_files[1]), "~",
+                                       gsub("\\..*", "", track_files[2]),
+                                       ".dist"), header = TRUE)$Bkg
         }
         dist<-data.frame(x = read.table(paste0(gsub("\\..*", "",
                                                     track_files[1]), "~",
