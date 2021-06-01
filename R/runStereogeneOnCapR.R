@@ -16,7 +16,7 @@
 #' @param name_config Name of output config file. Default config.cfg
 #' @param nShuffle Number of permutations used to estimate error. Default 100.
 #' @param get_error Whether to calculate the standard error of background
-#' permutations from nShuffle. FALSE will save calculation time. Default TRUE
+#' permutations from nShuffle. FALSE will save calculation time. Default FALSE
 #' @param ... includes all other parameters acceptable to write_config and
 #' write_stereogene
 #'
@@ -39,7 +39,7 @@ runStereogeneOnCapR <- function(dir_CapR_bg = ".",
                                 name_config = "config.cfg",
                                 chrom_size,
                                 nShuffle = 100,
-                                get_error = TRUE,
+                                get_error = FALSE,
                                 ...) {
     if (missing(chrom_size)){stop("please provide a chrom_size file")}
     doCall(write_config, args = list(...,

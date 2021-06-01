@@ -11,7 +11,7 @@ visualizeCapRStereogene(
   protein_file_input = NULL,
   x_lim = c(-100, 100),
   y_lim = NULL,
-  error = 3,
+  error = 1,
   nShuffle = 100,
   out_file = "out_file",
   legend = TRUE,
@@ -41,7 +41,7 @@ limits. Cannot exceed wSize/2 from write_config. Default (-100, 100)}
 limits. Optional}
 
 \item{error}{A numeric value that determines the number of standard
-deviations to show in the error bar. Default 3}
+deviations to show in the error bar. Default 1}
 
 \item{nShuffle}{Relevant if multiple protein files are input and background
 error has been calculated. It is the number of iterations used to derive

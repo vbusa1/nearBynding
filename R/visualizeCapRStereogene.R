@@ -62,7 +62,7 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
                                     protein_file_input = NULL,
                                     x_lim = c(-100, 100),
                                     y_lim = NULL,
-                                    error = 3,
+                                    error = 1,
                                     nShuffle = 100,
                                     out_file = "out_file",
                                     legend = TRUE,
@@ -124,35 +124,41 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
                                     protein_file_input, ".dist"), header = TRUE)
     }
     dist_bulge <- as.data.frame(matrix(NA,
-                                    ncol = (2 * length(protein_file)) + 1,
+                                    ncol = (3 * length(protein_file)) + 1,
                                     nrow = nrow(dist_bulge_1)))
     dist_stem <- as.data.frame(matrix(NA,
-                                    ncol = (2 * length(protein_file)) + 1,
+                                    ncol = (3 * length(protein_file)) + 1,
                                     nrow = nrow(dist_bulge_1)))
     dist_multibranch <- as.data.frame(matrix(NA,
-                                    ncol = (2 * length(protein_file)) +1,
+                                    ncol = (3 * length(protein_file)) +1,
                                     nrow = nrow(dist_bulge_1)))
     dist_hairpin <- as.data.frame(matrix(NA,
-                                    ncol = (2 * length(protein_file)) + 1,
+                                    ncol = (3 * length(protein_file)) + 1,
                                     nrow = nrow(dist_bulge_1)))
     dist_exterior <- as.data.frame(matrix(NA,
-                                    ncol = (2 * length(protein_file)) + 1,
+                                    ncol = (3 * length(protein_file)) + 1,
                                     nrow = nrow(dist_bulge_1)))
     dist_internal <- as.data.frame(matrix(NA,
-                                    ncol = (2 * length(protein_file)) + 1,
+                                    ncol = (3 * length(protein_file)) + 1,
                                     nrow = nrow(dist_bulge_1)))
     colnames(dist_bulge) <- c("x", paste0("Fg", seq(length(protein_file))),
-                                paste0("Bkg", seq(length(protein_file))))
+                                paste0("Bkg", seq(length(protein_file))),
+                                paste0("Bkg_se", seq(length(protein_file))))
     colnames(dist_stem) <- c("x", paste0("Fg", seq(length(protein_file))),
-                                paste0("Bkg", seq(length(protein_file))))
+                                paste0("Bkg", seq(length(protein_file))),
+                                paste0("Bkg_se", seq(length(protein_file))))
     colnames(dist_internal) <- c("x", paste0("Fg", seq(length(protein_file))),
-                                paste0("Bkg", seq(length(protein_file))))
+                                paste0("Bkg", seq(length(protein_file))),
+                                paste0("Bkg_se", seq(length(protein_file))))
     colnames(dist_multibranch) <- c("x", paste0("Fg",seq(length(protein_file))),
-                                paste0("Bkg", seq(length(protein_file))))
+                                paste0("Bkg", seq(length(protein_file))),
+                                paste0("Bkg_se", seq(length(protein_file))))
     colnames(dist_exterior) <- c("x", paste0("Fg", seq(length(protein_file))),
-                                paste0("Bkg", seq(length(protein_file))))
+                                paste0("Bkg", seq(length(protein_file))),
+                                paste0("Bkg_se", seq(length(protein_file))))
     colnames(dist_hairpin) <- c("x", paste0("Fg", seq(length(protein_file))),
-                                paste0("Bkg", seq(length(protein_file))))
+                                paste0("Bkg", seq(length(protein_file))),
+                                paste0("Bkg_se", seq(length(protein_file))))
     dist_hairpin$x <-dist_exterior$x <-dist_multibranch$x <-dist_internal$x <-
         dist_stem$x <-dist_bulge$x <-dist_bulge_1$x
     for (n in seq(length(protein_file))) {
@@ -180,116 +186,195 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
             eval(parse(text = paste0("dist_exterior_", n)))$Bkg
         dist_internal[, 1 + n + length(protein_file)] <-
             eval(parse(text = paste0("dist_internal_", n)))$Bkg
+        dist_bulge[, 1 + n + 2*length(protein_file)] <-
+            eval(parse(text = paste0("dist_bulge_", n)))$Bkg_se
+        dist_stem[, 1 + n + 2*length(protein_file)] <-
+            eval(parse(text = paste0("dist_stem_", n)))$Bkg_se
+        dist_hairpin[, 1 + n + 2*length(protein_file)] <-
+            eval(parse(text = paste0("dist_hairpin_", n)))$Bkg_se
+        dist_multibranch[, 1 + n + 2*length(protein_file)] <-
+            eval(parse(text = paste0("dist_multibranch_", n)))$Bkg_se
+        dist_exterior[, 1 + n + 2*length(protein_file)] <-
+            eval(parse(text = paste0("dist_exterior_", n)))$Bkg_se
+        dist_internal[, 1 + n + 2*length(protein_file)] <-
+            eval(parse(text = paste0("dist_internal_", n)))$Bkg_se
     }
     if (!is.null(protein_file_input)) {
         dist_bulge[, 2:(length(protein_file) + 1)] <-
-            dist_bulge[, 2:(length(protein_file) + 1)] - dist_bulge_input$Fg
-        dist_bulge[, (length(protein_file) + 2):ncol(dist_bulge)] <-
-            dist_bulge[, (length(protein_file) + 2):ncol(dist_bulge)] -
+            dist_bulge[, 2:(length(protein_file) + 1)] -
+            dist_bulge_input$Fg
+        dist_bulge[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] <-
+            dist_bulge[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] -
             dist_bulge_input$Bkg
-        dist_stem[, 2:(length(protein_file) + 1)] <-
-            dist_stem[, 2:(length(protein_file) + 1)] - dist_stem_input$Fg
-        dist_stem[, (length(protein_file) + 2):ncol(dist_stem)] <-
-            dist_stem[, (length(protein_file) + 2):ncol(dist_stem)] -
+        dist_stem[,2:(length(protein_file) + 1)] <-
+            dist_stem[, 2:(length(protein_file) + 1)] -
+            dist_stem_input$Fg
+        dist_stem[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] <-
+            dist_stem[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] -
             dist_stem_input$Bkg
         dist_hairpin[, 2:(length(protein_file) + 1)] <-
             dist_hairpin[, 2:(length(protein_file) + 1)] -
             dist_hairpin_input$Fg
-        dist_hairpin[, (length(protein_file) + 2):ncol(dist_hairpin)] <-
-            dist_hairpin[, (length(protein_file) + 2):ncol(dist_hairpin)] -
+        dist_hairpin[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] <-
+            dist_hairpin[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] -
             dist_hairpin_input$Bkg
         dist_multibranch[, 2:(length(protein_file) +  1)] <-
             dist_multibranch[,2:(length(protein_file) +  1)] -
             dist_multibranch_input$Fg
-        dist_multibranch[, (length(protein_file) + 2):ncol(dist_multibranch)] <-
-            dist_multibranch[,(length(protein_file)+2):ncol(dist_multibranch)] -
+        dist_multibranch[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] <-
+            dist_multibranch[,
+            (length(protein_file)+2):((length(protein_file) * 2) + 1)] -
             dist_multibranch_input$Bkg
         dist_internal[, 2:(length(protein_file) + 1)] <-
             dist_internal[, 2:(length(protein_file) + 1)] -
             dist_internal_input$Fg
-        dist_internal[, (length(protein_file) + 2):ncol(dist_internal)] <-
-            dist_internal[, (length(protein_file) + 2):ncol(dist_internal)] -
+        dist_internal[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] <-
+            dist_internal[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] -
             dist_internal_input$Bkg
         dist_exterior[, 2:(length(protein_file) + 1)] <-
             dist_exterior[, 2:(length(protein_file) + 1)] -
             dist_exterior_input$Fg
-        dist_exterior[, (length(protein_file) + 2):ncol(dist_exterior)] <-
-            dist_exterior[, (length(protein_file) + 2):ncol(dist_exterior)] -
+        dist_exterior[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] <-
+            dist_exterior[,
+            (length(protein_file) + 2):((length(protein_file) * 2) + 1)] -
             dist_exterior_input$Bkg
     }
     if (length(protein_file) == 1) {
         dist_bulge$Fg <- dist_bulge$Fg1
-        dist_bulge$Fg_se <- dist_bulge$Bkg_se <- 0
+        dist_bulge$Fg_se <- 0
         dist_bulge$Bkg <- dist_bulge$Bkg1
+        dist_bulge$Bkg_se <- dist_bulge$Bkg_se1
         dist_hairpin$Fg <- dist_hairpin$Fg1
-        dist_hairpin$Fg_se <- dist_hairpin$Bkg_se <- 0
+        dist_hairpin$Fg_se <- 0
         dist_hairpin$Bkg <- dist_hairpin$Bkg1
+        dist_hairpin$Bkg_se <- dist_hairpin$Bkg_se1
         dist_internal$Fg <- dist_internal$Fg1
-        dist_internal$Fg_se <- dist_internal$Bkg_se <- 0
+        dist_internal$Fg_se <- 0
         dist_internal$Bkg <- dist_internal$Bkg1
+        dist_internal$Bkg_se <- dist_internal$Bkg_se1
         dist_exterior$Fg <- dist_exterior$Fg1
-        dist_exterior$Fg_se <- dist_exterior$Bkg_se <- 0
+        dist_exterior$Fg_se <- 0
         dist_exterior$Bkg <- dist_exterior$Bkg1
+        dist_exterior$Bkg_se <- dist_exterior$Bkg_se1
         dist_stem$Fg <- dist_stem$Fg1
-        dist_stem$Fg_se <- dist_stem$Bkg_se <- 0
+        dist_stem$Fg_se <- 0
         dist_stem$Bkg <- dist_stem$Bkg1
+        dist_stem$Bkg_se <- dist_stem$Bkg_se1
         dist_multibranch$Fg <- dist_multibranch$Fg1
-        dist_multibranch$Fg_se <- dist_multibranch$Bkg_se <- 0
+        dist_multibranch$Fg_se <- 0
         dist_multibranch$Bkg <- dist_multibranch$Bkg1
+        dist_multibranch$Bkg_se <- dist_multibranch$Bkg_se1
     } else {
         dist_bulge$Fg <- rowMeans(dist_bulge[, 2:(length(protein_file) + 1)])
         dist_bulge$Fg_se <- rowSds(as.matrix(dist_bulge[,
                 2:(length(protein_file) + 1)]))/sqrt(length(protein_file))
         dist_bulge$Bkg <- rowMeans(dist_bulge[,
                 (length(protein_file) + 2):((length(protein_file) * 2) + 1)])
-        dist_bulge$Bkg_se <- rowSds(as.matrix(dist_bulge[,
-                (length(protein_file) + 2):((length(protein_file) *
-                2) + 1)]))/sqrt(length(protein_file))
-        dist_hairpin$Fg <- rowMeans(dist_hairpin[, 2:(length(protein_file) +
-                                                                            1)])
+        dist_bulge$Bkg_se <- apply(as.matrix(dist_bulge[,
+            ((length(protein_file) * 2) + 2):((length(protein_file) * 3) + 1)]),
+                                   1, function(x){
+                                       x<-x*sqrt(nShuffle)
+                                       return(sqrt(sum(x*x)/nShuffle))}) +
+            rowSds(as.matrix(dist_bulge[,
+                (length(protein_file) + 2):((length(protein_file) * 2) + 1)]))/
+            sqrt(length(protein_file))
+
+        dist_hairpin$Fg <- rowMeans(dist_hairpin[,
+                                    2:(length(protein_file) + 1)])
         dist_hairpin$Fg_se <- rowSds(as.matrix(dist_hairpin[,
                 2:(length(protein_file) + 1)]))/sqrt(length(protein_file))
         dist_hairpin$Bkg <- rowMeans(dist_hairpin[,
                 (length(protein_file) + 2):((length(protein_file) * 2) + 1)])
-        dist_hairpin$Bkg_se <- rowSds(as.matrix(dist_hairpin[,
-                (length(protein_file) + 2):((length(protein_file) *
-                2) + 1)]))/sqrt(length(protein_file))
+        dist_hairpin$Bkg_se <- apply(as.matrix(dist_hairpin[,
+            ((length(protein_file) * 2) + 2):((length(protein_file) * 3) + 1)]),
+                                     1, function(x){
+                                         x<-x*sqrt(nShuffle)
+                                         return(sqrt(sum(x*x)/nShuffle))}) +
+            rowSds(as.matrix(dist_hairpin[,
+                (length(protein_file) + 2):((length(protein_file) * 2) + 1)]))/
+            sqrt(length(protein_file))
+
         dist_stem$Fg <- rowMeans(dist_stem[, 2:(length(protein_file) + 1)])
         dist_stem$Fg_se <- rowSds(as.matrix(dist_stem[,
                 2:(length(protein_file) + 1)]))/sqrt(length(protein_file))
         dist_stem$Bkg <- rowMeans(dist_stem[,
                 (length(protein_file) + 2):((length(protein_file) * 2) + 1)])
-        dist_stem$Bkg_se <- rowSds(as.matrix(dist_stem[,
-                (length(protein_file) + 2):((length(protein_file) *
-                2) + 1)]))/sqrt(length(protein_file))
-        dist_multibranch$Fg<-rowMeans(dist_multibranch[,2:(length(protein_file)+
-                                                                            1)])
+        dist_stem$Bkg_se <- apply(as.matrix(dist_stem[,
+            ((length(protein_file) * 2) + 2):((length(protein_file) * 3) + 1)]),
+                                  1, function(x){
+                                      x<-x*sqrt(nShuffle)
+                                      return(sqrt(sum(x*x)/nShuffle))}) +
+            rowSds(as.matrix(dist_stem[,
+                (length(protein_file) + 2):((length(protein_file) * 2) + 1)]))/
+            sqrt(length(protein_file))
+
+        dist_multibranch$Fg<-rowMeans(dist_multibranch[,
+                                        2:(length(protein_file)+ 1)])
         dist_multibranch$Fg_se <- rowSds(as.matrix(dist_multibranch[,
                 2:(length(protein_file) + 1)]))/sqrt(length(protein_file))
         dist_multibranch$Bkg <- rowMeans(dist_multibranch[,
                 (length(protein_file) + 2):((length(protein_file) * 2) + 1)])
-        dist_multibranch$Bkg_se <- rowSds(as.matrix(dist_multibranch[,
-                (length(protein_file) + 2):((length(protein_file) *
-                2) + 1)]))/sqrt(length(protein_file))
-        dist_internal$Fg <- rowMeans(dist_internal[, 2:(length(protein_file) +
-                                                                            1)])
+        dist_multibranch$Bkg_se <- apply(as.matrix(dist_multibranch[,
+            ((length(protein_file) * 2) + 2):((length(protein_file) * 3) + 1)]),
+                                         1, function(x){
+                                             x<-x*sqrt(nShuffle)
+                                             return(sqrt(sum(x*x)/nShuffle))}) +
+            rowSds(as.matrix(dist_multibranch[,
+                (length(protein_file) + 2):((length(protein_file) * 2) + 1)]))/
+            sqrt(length(protein_file))
+
+        dist_internal$Fg <- rowMeans(dist_internal[,
+                                        2:(length(protein_file) + 1)])
         dist_internal$Fg_se <- rowSds(as.matrix(dist_internal[,
                 2:(length(protein_file) + 1)]))/sqrt(length(protein_file))
         dist_internal$Bkg <- rowMeans(dist_internal[,
                 (length(protein_file) + 2):((length(protein_file) * 2) + 1)])
-        dist_internal$Bkg_se <- rowSds(as.matrix(dist_internal[,
-                (length(protein_file) + 2):((length(protein_file) *
-                2) + 1)]))/sqrt(length(protein_file))
-        dist_exterior$Fg <- rowMeans(dist_exterior[, 2:(length(protein_file) +
-                                                                            1)])
+        dist_internal$Bkg_se <- apply(as.matrix(dist_internal[,
+            ((length(protein_file) * 2) + 2):((length(protein_file) * 3) + 1)]),
+                                      1, function(x){
+                                          x<-x*sqrt(nShuffle)
+                                          return(sqrt(sum(x*x)/nShuffle))}) +
+            rowSds(as.matrix(dist_internal[,
+                (length(protein_file) + 2):((length(protein_file) * 2) + 1)]))/
+            sqrt(length(protein_file))
+
+        dist_exterior$Fg <- rowMeans(dist_exterior[,
+                                        2:(length(protein_file) + 1)])
         dist_exterior$Fg_se <- rowSds(as.matrix(dist_exterior[,
                 2:(length(protein_file) + 1)]))/sqrt(length(protein_file))
         dist_exterior$Bkg <- rowMeans(dist_exterior[,
                 (length(protein_file) + 2):((length(protein_file) * 2) + 1)])
-        dist_exterior$Bkg_se <- rowSds(as.matrix(dist_exterior[,
-                (length(protein_file) + 2):((length(protein_file) *
-                2) + 1)]))/sqrt(length(protein_file))
+        dist_exterior$Bkg_se <- apply(as.matrix(dist_exterior[,
+            ((length(protein_file) * 2) + 2):((length(protein_file) * 3) + 1)]),
+                                      1, function(x){
+                                          x<-x*sqrt(nShuffle)
+                                          return(sqrt(sum(x*x)/nShuffle))}) +
+            rowSds(as.matrix(dist_exterior[,
+                (length(protein_file) + 2):((length(protein_file) * 2) + 1)]))/
+            sqrt(length(protein_file))
     }
+    Bkg<-data.frame(Bkg =  rowMeans(cbind(dist_multibranch$Bkg,
+                                dist_stem$Bkg,
+                                dist_bulge$Bkg,
+                                dist_hairpin$Bkg,
+                                dist_exterior$Bkg,
+                                dist_internal$Bkg)),
+                    Bkg_se = pmax(dist_multibranch$Bkg_se,
+                                 dist_stem$Bkg_se,
+                                 dist_bulge$Bkg_se,
+                                 dist_hairpin$Bkg_se,
+                                 dist_exterior$Bkg_se,
+                                 dist_internal$Bkg_se))
     if (heatmap == FALSE) {
         # create line plot
         out_file <- paste0(out_file, ".pdf")
@@ -307,40 +392,12 @@ visualizeCapRStereogene <- function(dir_stereogene_output = ".",
                             min(dist_multibranch$Fg), min(dist_bulge$Fg))) - 0.1
             y_lim <- c(min_y, max_y)
         }
-        plot(dist_bulge$x, dist_bulge$Bkg, type = "l",
+        plot(dist_bulge$x, Bkg$Bkg, type = "l",
             col = "black", xlim = x_lim, ylim = y_lim,
             main = NULL, xlab = "Nucleotide", ylab = "Density x 100",
             cex.axis = 0.8, cex.lab = 1, cex.main = 1.2, lwd = 2)
-        lines(dist_multibranch$x, dist_multibranch$Bkg, col = "black", lwd = 2)
-        lines(dist_stem$x, dist_stem$Bkg, col = "black", lwd = 2)
-        lines(dist_hairpin$x, dist_hairpin$Bkg, col = "black", lwd = 2)
-        lines(dist_internal$x, dist_internal$Bkg, col = "black", lwd = 2)
-        lines(dist_exterior$x, dist_exterior$Bkg, col = "black", lwd = 2)
-        arrows(dist_bulge$x, dist_bulge$Bkg - (error * dist_bulge$Bkg_se),
-                dist_bulge$x, dist_bulge$Bkg + (error * dist_bulge$Bkg_se),
-                length = 0, angle = 90, code = 3,
-                col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
-        arrows(dist_multibranch$x, dist_multibranch$Bkg -
-                   (error * dist_multibranch$Bkg_se), dist_multibranch$x,
-                dist_multibranch$Bkg + (error * dist_multibranch$Bkg_se),
-                length = 0, angle = 90, code = 3,
-                col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
-        arrows(dist_stem$x, dist_stem$Bkg - (error * dist_stem$Bkg_se),
-                dist_stem$x, dist_stem$Bkg + (error * dist_stem$Bkg_se),
-                length = 0, angle = 90, code = 3,
-                col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
-        arrows(dist_hairpin$x, dist_hairpin$Bkg - (error * dist_hairpin$Bkg_se),
-                dist_hairpin$x, dist_hairpin$Bkg + (error* dist_hairpin$Bkg_se),
-                length = 0, angle = 90, code = 3,
-                col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
-        arrows(dist_internal$x, dist_internal$Bkg -
-                   (error * dist_internal$Bkg_se), dist_internal$x,
-                dist_internal$Bkg + (error * dist_internal$Bkg_se),
-                length = 0, angle = 90, code = 3,
-                col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
-        arrows(dist_exterior$x, dist_exterior$Bkg -
-                   (error * dist_exterior$Bkg_se), dist_exterior$x,
-                dist_exterior$Bkg + (error * dist_exterior$Bkg_se),
+        arrows(dist_bulge$x, Bkg$Bkg - (error * Bkg$Bkg_se),
+                dist_bulge$x, Bkg$Bkg + (error * Bkg$Bkg_se),
                 length = 0, angle = 90, code = 3,
                 col = rgb(blue = 0, red = 0, green = 0, alpha = 0.5))
         abline(v = 0, col = "grey", lty = 2)

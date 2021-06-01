@@ -12,7 +12,7 @@
 #' can be found in the StereoGene README. Optional
 #' @param nShuffle Permutations used to estimate error. Default 1000.
 #' @param get_error Whether to calculate the standard error of background
-#' permutations from nShuffle. FALSE will save calculation time. Default TRUE
+#' permutations from nShuffle. FALSE will save calculation time. Default FALSE
 #'
 #' @return generates StereoGene output files in directory
 #'
@@ -28,7 +28,7 @@ runStereogene <- function(track_files,
                             pcorProfile = NULL,
                             confounder = NULL,
                             nShuffle = 1000,
-                            get_error = TRUE) {
+                            get_error = FALSE) {
     if (length(track_files) != 2) {
         stop("Must have two track or interval files for correlation.")
     }

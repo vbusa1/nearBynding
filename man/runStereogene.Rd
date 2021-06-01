@@ -9,7 +9,7 @@ runStereogene(track_files,
         pcorProfile = NULL,
         confounder = NULL,
         nShuffle = 1000,
-        get_error = TRUE)
+        get_error = FALSE)
 }
 \arguments{
 \item{track_files}{Vector of at least two track or interval file names to be
@@ -27,7 +27,7 @@ can be found in the StereoGene README. Optional}
 \item{nShuffle}{Permutations used to estimate error. Default 5000.}
 
 \item{get_error}{Whether to calculate the standard error of background
-permutations from nShuffle. FALSE will save calculation time. Default TRUE}
+permutations from nShuffle. FALSE will save calculation time. Default FALSE}
 }
 \value{
 generates StereoGene output files in directory
