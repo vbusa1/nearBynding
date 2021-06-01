@@ -25,3 +25,12 @@ Changes:
 
 * remove variable assignment bugs from symmetryContext
 
+VERSION 1.3.1 (06-01-2021)
+____________________________
+
+Changes:
+
+* include ability to iteratively acquire and visualize Bkg std error
+* new arguments to choose whether to calculate Bkg std error
+* accomodate StereoGene version 2.22, esp. seeding of analysis
+* better run analysis on track files outside local directory
