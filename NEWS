@@ -34,3 +34,10 @@ Changes:
 * new arguments to choose whether to calculate Bkg std error
 * accomodate StereoGene version 2.22, esp. seeding of analysis
 * better run analysis on track files outside local directory
+
+VERSION 1.3.2 (07-27-2021)
+____________________________
+
+Changes:
+
+* update description to accommodate changes in knitr/rmarkdown packages
